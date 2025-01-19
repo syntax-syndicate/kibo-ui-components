@@ -1,6 +1,6 @@
 {
   "name": "kibo-ui",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "bin": {
     "kibo-ui": "dist/index.js"
   },
