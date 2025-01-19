@@ -1,10 +1,12 @@
 {
   "name": "kibo-ui",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "bin": {
     "kibo-ui": "dist/index.js"
   },
-  "files": ["dist/index.js"],
+  "files": [
+    "dist/index.js"
+  ],
   "scripts": {
     "prebuild": "bun scripts/build-registry.ts",
     "build": "turbo build",
