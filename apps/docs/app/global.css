@@ -1,0 +1,15 @@
+.dark * {
+  @apply border-foreground/15;
+}
+
+#nd-docs-layout {
+  @apply !bg-secondary;
+}
+
+#nd-sidebar {
+  @apply !bg-transparent;
+}
+
+#nd-sidebar > div {
+  @apply !border-none;
+}
