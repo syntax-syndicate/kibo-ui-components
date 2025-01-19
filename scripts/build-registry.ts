@@ -1,8 +1,17 @@
 import { promises as fs } from 'node:fs';
+import { readdirSync } from 'node:fs';
 import path, { join } from 'node:path';
 import type { z } from 'zod';
 import type { Registry, registryItemFileSchema } from '../packages/shadcn-ui';
-import { packages } from './utils';
+
+const cwd = process.cwd();
+const packagesPath = join(cwd, 'packages');
+const packagesDir = readdirSync(packagesPath, { withFileTypes: true });
+const internalPackages = ['tailwind-config', 'shadcn-ui', 'typescript-config'];
+
+const packages = packagesDir
+  .filter((dir) => dir.isDirectory() && !internalPackages.includes(dir.name))
+  .map((dir) => dir.name);
 
 const PUBLIC_FOLDER_BASE_PATH = 'apps/docs/public/registry';
 const COMPONENT_FOLDER_PATH = 'ui';
