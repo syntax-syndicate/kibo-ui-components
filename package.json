@@ -1,10 +1,12 @@
 {
   "name": "kibo-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "bin": {
     "next-forge": "dist/index.js"
   },
-  "files": ["dist/index.js"],
+  "files": [
+    "dist/index.js"
+  ],
   "scripts": {
     "prebuild": "bun scripts/build-registry.ts && tsup",
     "build": "turbo build",
