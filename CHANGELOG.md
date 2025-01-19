@@ -1,3 +1,16 @@
+# v1.0.6 (Sun Jan 19 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Create opengraph-image.jpg ([@haydenbleasel](https://github.com/haydenbleasel))
+- Fix dep version issue ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.0.5 (Sun Jan 19 2025)
 
 #### ⚠️ Pushed to `main`
