@@ -1,3 +1,15 @@
+# v1.0.11 (Sun Jan 19 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Update gantt.mdx ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.0.10 (Sun Jan 19 2025)
 
 #### ⚠️ Pushed to `main`
