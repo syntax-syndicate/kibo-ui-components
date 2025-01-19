@@ -1,14 +1,18 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import {
-  SandpackCodeEditor,
-  SandpackConsole,
-  SandpackLayout,
-  SandpackPreview,
-  type SandpackProvider,
-} from '@codesandbox/sandpack-react';
+  SandboxCodeEditor,
+  SandboxConsole,
+  SandboxLayout,
+  SandboxPreview,
+  SandboxProvider,
+  SandboxTabs,
+  SandboxTabsContent,
+  SandboxTabsList,
+  SandboxTabsTrigger,
+} from '@repo/sandbox';
+
 import { AppWindowIcon, CodeIcon, TerminalIcon } from 'lucide-react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
 import { tsconfig } from './tsconfig';
 import { utils } from './utils';
 
@@ -16,7 +20,6 @@ import type { Registry } from '@repo/shadcn-ui';
 import type { ComponentProps } from 'react';
 import { content } from './content';
 import { postcss } from './postcss';
-import { PreviewProvider } from './provider';
 
 // Dynamically import all shadcn components
 const shadcnComponentsDir = join(process.cwd(), '/components/preview/shadcn');
@@ -124,8 +127,9 @@ export const Preview = ({ name, code }: PreviewProps) => {
   }
 
   return (
-    <PreviewProvider
+    <SandboxProvider
       template="react-ts"
+      theme={resolvedTheme as 'light' | 'dark'}
       // options={{ bundlerURL: 'https://sandpack-bundler.codesandbox.io' }}
       options={{
         externalResources: ['https://cdn.tailwindcss.com'],
@@ -153,51 +157,60 @@ export const Preview = ({ name, code }: PreviewProps) => {
       }}
       files={files}
     >
-      <SandpackLayout className="!rounded-none !border-none !bg-transparent">
-        <Tabs
+      <SandboxLayout className="!rounded-none !border-none !bg-transparent">
+        <SandboxTabs
           defaultValue="preview"
           className="not-prose group relative w-full overflow-hidden rounded-lg border bg-fd-secondary/50 text-sm"
         >
           <div className="flex flex-row items-center justify-between border-b bg-fd-muted p-2">
-            <TabsList className="h-auto w-full justify-start rounded-none bg-transparent">
-              <TabsTrigger
+            <SandboxTabsList className="h-auto w-full justify-start rounded-none bg-transparent">
+              <SandboxTabsTrigger
                 value="code"
                 className="flex flex-row items-center gap-1.5"
               >
                 <CodeIcon size={14} />
                 Code
-              </TabsTrigger>
-              <TabsTrigger
+              </SandboxTabsTrigger>
+              <SandboxTabsTrigger
                 value="preview"
                 className="flex flex-row items-center gap-1.5"
               >
                 <AppWindowIcon size={14} />
                 Preview
-              </TabsTrigger>
-              <TabsTrigger
+              </SandboxTabsTrigger>
+              <SandboxTabsTrigger
                 value="console"
                 className="flex flex-row items-center gap-1.5"
               >
                 <TerminalIcon size={14} />
                 Console
-              </TabsTrigger>
-            </TabsList>
+              </SandboxTabsTrigger>
+            </SandboxTabsList>
           </div>
-          <TabsContent value="code" className="m-0 max-h-96 overflow-y-auto">
-            <SandpackCodeEditor className="min-h-96" />
-          </TabsContent>
-          <TabsContent value="preview" className="m-0 max-h-96 overflow-y-auto">
-            <SandpackPreview
+          <SandboxTabsContent
+            value="code"
+            className="m-0 max-h-96 overflow-y-auto"
+          >
+            <SandboxCodeEditor className="min-h-96" />
+          </SandboxTabsContent>
+          <SandboxTabsContent
+            value="preview"
+            className="m-0 max-h-96 overflow-y-auto"
+          >
+            <SandboxPreview
               showOpenInCodeSandbox={false}
               showRefreshButton={false}
               className="min-h-96"
             />
-          </TabsContent>
-          <TabsContent value="console" className="m-0 max-h-96 overflow-y-auto">
-            <SandpackConsole className="min-h-96" />
-          </TabsContent>
-        </Tabs>
-      </SandpackLayout>
-    </PreviewProvider>
+          </SandboxTabsContent>
+          <SandboxTabsContent
+            value="console"
+            className="m-0 max-h-96 overflow-y-auto"
+          >
+            <SandboxConsole className="min-h-96" />
+          </SandboxTabsContent>
+        </SandboxTabs>
+      </SandboxLayout>
+    </SandboxProvider>
   );
 };
