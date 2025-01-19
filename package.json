@@ -4,11 +4,9 @@
   "bin": {
     "kibo-ui": "dist/index.js"
   },
-  "files": [
-    "dist/index.js"
-  ],
+  "files": ["dist/index.js"],
   "scripts": {
-    "prebuild": "bun scripts/build-registry.ts && tsup",
+    "prebuild": "bun scripts/build-registry.ts",
     "build": "turbo build",
     "predev": "pnpm run prebuild",
     "dev": "turbo dev",
