@@ -1,3 +1,15 @@
+# v1.0.10 (Sun Jan 19 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Update index.mdx ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.0.9 (Sun Jan 19 2025)
 
 #### ⚠️ Pushed to `main`
