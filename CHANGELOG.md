@@ -1,3 +1,15 @@
+# v1.0.8 (Sun Jan 19 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Create license.md ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.0.7 (Sun Jan 19 2025)
 
 #### ⚠️ Pushed to `main`
