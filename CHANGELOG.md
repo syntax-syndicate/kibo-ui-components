@@ -1,3 +1,16 @@
+# v1.0.4 (Sun Jan 19 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Update release.yml ([@haydenbleasel](https://github.com/haydenbleasel))
+- Run tsup in build process ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.0.3 (Sun Jan 19 2025)
 
 #### ⚠️ Pushed to `main`
