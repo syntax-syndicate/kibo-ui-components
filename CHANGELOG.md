@@ -1,3 +1,15 @@
+# v1.0.3 (Sun Jan 19 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Remove unused files ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.0.2 (Sun Jan 19 2025)
 
 #### ⚠️ Pushed to `main`
