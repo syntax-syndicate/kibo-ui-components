@@ -1,3 +1,15 @@
+# v1.0.7 (Sun Jan 19 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Fix CLI issue ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.0.6 (Sun Jan 19 2025)
 
 #### ⚠️ Pushed to `main`
