@@ -3,7 +3,7 @@
 <div>
   <img src="https://img.shields.io/npm/dy/kibo-ui" alt="" />
   <img src="https://img.shields.io/npm/v/kibo-ui" alt="" />
-  <img src="https://img.shields.io/github/license/haydenbleasel/kibo-ui" alt="" />
+  <img src="https://img.shields.io/github/license/haydenbleasel/kibo" alt="" />
 </div>
 
 Kibo UI is a custom registry of composable, accessible and open source components designed for use with [shadcn/ui](https://ui.shadcn.com/). The components use the shadcn/ui CSS variables and are designed to work neatly with the existing primitives.
