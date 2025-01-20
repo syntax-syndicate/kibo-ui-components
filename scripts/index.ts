@@ -4,15 +4,24 @@ import { execSync } from 'node:child_process';
 
 const args = process.argv.slice(2);
 
-if (args.length !== 2 || args[0] !== 'add' || !args[1].trim()) {
-  console.log('Usage: npx kibo-ui add [name]');
+if (args.length < 2 || args[0] !== 'add') {
+  console.log('Usage: npx kibo-ui add [...packages]');
   process.exit(1);
 }
 
-const packageName = args[1];
+const packageNames = args.slice(1);
 
-console.log(`Adding ${packageName} component...`);
+for (const packageName of packageNames) {
+  if (!packageName.trim()) {
+    continue;
+  }
 
-const url = new URL(`registry/${packageName}.json`, 'https://www.kibo-ui.com');
+  console.log(`Adding ${packageName} component...`);
 
-execSync(`npx shadcn@latest add ${url.toString()}`);
+  const url = new URL(
+    `registry/${packageName}.json`,
+    'https://www.kibo-ui.com'
+  );
+
+  execSync(`npx shadcn@latest add ${url.toString()}`);
+}
