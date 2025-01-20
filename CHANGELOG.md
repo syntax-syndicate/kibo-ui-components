@@ -1,3 +1,16 @@
+# v1.0.17 (Mon Jan 20 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Fix typo ([@haydenbleasel](https://github.com/haydenbleasel))
+- Add links to source code ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.0.16 (Mon Jan 20 2025)
 
 #### ⚠️ Pushed to `main`
