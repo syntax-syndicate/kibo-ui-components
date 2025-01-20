@@ -1,3 +1,17 @@
+# v1.0.13 (Mon Jan 20 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Merge branch 'main' of https://github.com/haydenbleasel/roadmap-ui ([@haydenbleasel](https://github.com/haydenbleasel))
+- Dynamically load kibo components ([@haydenbleasel](https://github.com/haydenbleasel))
+- Dynamically load shadcn/ui components ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.0.12 (Mon Jan 20 2025)
 
 #### ⚠️ Pushed to `main`
