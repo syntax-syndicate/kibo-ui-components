@@ -1,3 +1,22 @@
+# v1.0.18 (Mon Jan 20 2025)
+
+#### 🐛 Bug Fix
+
+- 48 dynamically generate registry files [#50](https://github.com/haydenbleasel/kibo/pull/50) ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### ⚠️ Pushed to `main`
+
+- Resolves #51 ([@haydenbleasel](https://github.com/haydenbleasel))
+- Misc fixes ([@haydenbleasel](https://github.com/haydenbleasel))
+- Only release on trigger ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update global.css ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.0.17 (Mon Jan 20 2025)
 
 #### ⚠️ Pushed to `main`
