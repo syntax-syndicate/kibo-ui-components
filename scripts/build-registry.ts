@@ -64,14 +64,14 @@ const buildRegistry = async (pkg: string) => {
           type: 'registry:ui',
           path: 'index.tsx',
           content,
-          target: `kibo-ui/${pkg}.tsx`,
+          target: `components/ui/kibo-ui/${pkg}.tsx`,
         },
       ],
     },
     null,
     2
   );
-  const jsonPath = `${PUBLIC_FOLDER_BASE_PATH}/${pkg}.json`;
+  const jsonPath = join(PUBLIC_FOLDER_BASE_PATH, `${pkg}.json`);
   await writeFileRecursive(jsonPath, json);
 };
 
