@@ -5,12 +5,13 @@ import {
   SandboxConsole,
   SandboxLayout,
   SandboxPreview,
-  SandboxProvider,
+  type SandboxProvider,
   SandboxTabs,
   SandboxTabsContent,
   SandboxTabsList,
   SandboxTabsTrigger,
 } from '@repo/sandbox';
+import { PreviewProvider } from './provider';
 
 import { AppWindowIcon, CodeIcon, TerminalIcon } from 'lucide-react';
 import { tsconfig } from './tsconfig';
@@ -104,7 +105,7 @@ const parseContent = (content: string) => {
 };
 
 export const Preview = ({ name, code }: PreviewProps) => {
-  const files: ComponentProps<typeof SandpackProvider>['files'] = {
+  const files: ComponentProps<typeof SandboxProvider>['files'] = {
     '/App.tsx': code,
     '/tsconfig.json': tsconfig,
     '/lib/utils.ts': utils,
@@ -127,9 +128,8 @@ export const Preview = ({ name, code }: PreviewProps) => {
   }
 
   return (
-    <SandboxProvider
+    <PreviewProvider
       template="react-ts"
-      theme={resolvedTheme as 'light' | 'dark'}
       // options={{ bundlerURL: 'https://sandpack-bundler.codesandbox.io' }}
       options={{
         externalResources: ['https://cdn.tailwindcss.com'],
@@ -211,6 +211,6 @@ export const Preview = ({ name, code }: PreviewProps) => {
           </SandboxTabsContent>
         </SandboxTabs>
       </SandboxLayout>
-    </SandboxProvider>
+    </PreviewProvider>
   );
 };
