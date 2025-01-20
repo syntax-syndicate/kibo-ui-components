@@ -2,12 +2,8 @@
   @apply border-foreground/15;
 }
 
-#nd-docs-layout {
+#nd-docs-layout, #nd-sidebar {
   @apply !bg-secondary;
-}
-
-#nd-sidebar {
-  @apply !bg-transparent;
 }
 
 #nd-sidebar > div {
