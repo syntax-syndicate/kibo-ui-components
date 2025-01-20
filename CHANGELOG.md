@@ -1,3 +1,15 @@
+# v1.0.14 (Mon Jan 20 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Update dialog-stack docs, export types ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.0.13 (Mon Jan 20 2025)
 
 #### ⚠️ Pushed to `main`
