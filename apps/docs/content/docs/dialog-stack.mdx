@@ -4,6 +4,8 @@ description: Composable stacked dialogs, useful for creating a wizard, nested fo
 icon: Layers
 ---
 
+import { AutoTypeTable } from 'fumadocs-typescript/ui';
+
 <PoweredBy packages={[
   { name: 'Radix UI Portal', url: 'https://www.radix-ui.com/primitives/docs/components/portal' },
 ]} />
@@ -314,32 +316,52 @@ All components accept the standard attributes relevant to their element and the 
 
 ### DialogStack
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `clickable` | `boolean` | `false` | Whether the user can click previous dialogs to navigate |
-| `open` | `boolean` | `false` | Whether the dialog is open |
-| `onOpenChange` | `(open: boolean) => void` | `undefined` | Callback function to be called when the dialog is opened or closed |
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackProps" />
 
 ### DialogStackTrigger
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Whether the component should render the child as a React element |
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackTriggerProps" />
 
 ### DialogStackContent
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `offset` | `number` | `10` | The offset of the dialog |
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackContentProps" />
 
 ### DialogStackNext
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Whether the component should render the child as a React element |
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackNextProps" />
 
 ### DialogStackPrevious
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `asChild` | `boolean` | `false` | Whether the component should render the child as a React element |
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackPreviousProps" />
+
+### DialogStackOverlay
+
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackOverlayProps" />
+
+### DialogStackBody
+
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackBodyProps" />
+
+### DialogStackHeader
+
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackHeaderProps" />
+
+### DialogStackFooter
+
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackFooterProps" />
+
+### DialogStackTitle
+
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackTitleProps" />
+
+### DialogStackDescription
+
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackDescriptionProps" />
+
+### DialogStackNext
+
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackNextProps" />
+
+### DialogStackPrevious
+
+<AutoTypeTable path="node_modules/@repo/dialog-stack/index.tsx" name="DialogStackPreviousProps" />

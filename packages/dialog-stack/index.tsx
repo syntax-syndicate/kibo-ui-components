@@ -16,7 +16,6 @@ import type {
   HTMLAttributes,
   MouseEventHandler,
   ReactElement,
-  ReactNode,
   SetStateAction,
 } from 'react';
 
@@ -44,6 +43,12 @@ type DialogStackChildProps = {
   index?: number;
 };
 
+export type DialogStackProps = HTMLAttributes<HTMLDivElement> & {
+  open?: boolean;
+  clickable?: boolean;
+  onOpenChange?: (open: boolean) => void;
+};
+
 export const DialogStack = ({
   children,
   className,
@@ -51,11 +56,7 @@ export const DialogStack = ({
   onOpenChange,
   clickable = false,
   ...props
-}: HTMLAttributes<HTMLDivElement> & {
-  open?: boolean;
-  clickable?: boolean;
-  onOpenChange?: (open: boolean) => void;
-}) => {
+}: DialogStackProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(open);
 
@@ -82,13 +83,18 @@ export const DialogStack = ({
   );
 };
 
+export type DialogStackTriggerProps =
+  ButtonHTMLAttributes<HTMLButtonElement> & {
+    asChild?: boolean;
+  };
+
 export const DialogStackTrigger = ({
   children,
   className,
   onClick,
   asChild,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean }) => {
+}: DialogStackTriggerProps) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
@@ -126,10 +132,12 @@ export const DialogStackTrigger = ({
   );
 };
 
+export type DialogStackOverlayProps = HTMLAttributes<HTMLDivElement>;
+
 export const DialogStackOverlay = ({
   className,
   ...props
-}: HTMLAttributes<HTMLDivElement>) => {
+}: DialogStackOverlayProps) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
@@ -155,15 +163,17 @@ export const DialogStackOverlay = ({
   );
 };
 
+export type DialogStackBodyProps = HTMLAttributes<HTMLDivElement> & {
+  children:
+    | ReactElement<DialogStackChildProps>[]
+    | ReactElement<DialogStackChildProps>;
+};
+
 export const DialogStackBody = ({
   children,
   className,
   ...props
-}: HTMLAttributes<HTMLDivElement> & {
-  children:
-    | ReactElement<DialogStackChildProps>[]
-    | ReactElement<DialogStackChildProps>;
-}) => {
+}: DialogStackBodyProps) => {
   const context = useContext(DialogStackContext);
   const [totalDialogs, setTotalDialogs] = useState(Children.count(children));
 
@@ -202,16 +212,18 @@ export const DialogStackBody = ({
   );
 };
 
+export type DialogStackContentProps = HTMLAttributes<HTMLDivElement> & {
+  index?: number;
+  offset?: number;
+};
+
 export const DialogStackContent = ({
   children,
   className,
   index = 0,
   offset = 10,
   ...props
-}: HTMLAttributes<HTMLDivElement> & {
-  index?: number;
-  offset?: number;
-}) => {
+}: DialogStackContentProps) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
@@ -270,11 +282,13 @@ export const DialogStackContent = ({
   );
 };
 
+export type DialogStackTitleProps = HTMLAttributes<HTMLHeadingElement>;
+
 export const DialogStackTitle = ({
   children,
   className,
   ...props
-}: HTMLAttributes<HTMLHeadingElement>) => (
+}: DialogStackTitleProps) => (
   <h2
     className={cn(
       'font-semibold text-lg leading-none tracking-tight',
@@ -286,20 +300,24 @@ export const DialogStackTitle = ({
   </h2>
 );
 
+export type DialogStackDescriptionProps = HTMLAttributes<HTMLParagraphElement>;
+
 export const DialogStackDescription = ({
   children,
   className,
   ...props
-}: HTMLAttributes<HTMLParagraphElement>) => (
+}: DialogStackDescriptionProps) => (
   <p className={cn('text-muted-foreground text-sm', className)} {...props}>
     {children}
   </p>
 );
 
+export type DialogStackHeaderProps = HTMLAttributes<HTMLDivElement>;
+
 export const DialogStackHeader = ({
   className,
   ...props
-}: HTMLAttributes<HTMLDivElement>) => (
+}: DialogStackHeaderProps) => (
   <div
     className={cn(
       'flex flex-col space-y-1.5 text-center sm:text-left',
@@ -309,11 +327,13 @@ export const DialogStackHeader = ({
   />
 );
 
+export type DialogStackFooterProps = HTMLAttributes<HTMLDivElement>;
+
 export const DialogStackFooter = ({
   children,
   className,
   ...props
-}: HTMLAttributes<HTMLDivElement>) => (
+}: DialogStackFooterProps) => (
   <div
     className={cn('flex items-center justify-end space-x-2 pt-4', className)}
     {...props}
@@ -322,14 +342,16 @@ export const DialogStackFooter = ({
   </div>
 );
 
+export type DialogStackNextProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  asChild?: boolean;
+};
+
 export const DialogStackNext = ({
   children,
   className,
   asChild,
   ...props
-}: {
-  asChild?: boolean;
-} & HTMLAttributes<HTMLButtonElement>) => {
+}: DialogStackNextProps) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
@@ -366,16 +388,17 @@ export const DialogStackNext = ({
   );
 };
 
+export type DialogStackPreviousProps =
+  ButtonHTMLAttributes<HTMLButtonElement> & {
+    asChild?: boolean;
+  };
+
 export const DialogStackPrevious = ({
   children,
   className,
   asChild,
   ...props
-}: {
-  children?: ReactNode;
-  className?: string;
-  asChild?: boolean;
-} & HTMLAttributes<HTMLButtonElement>) => {
+}: DialogStackPreviousProps) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
