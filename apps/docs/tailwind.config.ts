@@ -19,6 +19,7 @@ const tailwindConfig: Config = {
     './lib/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './providers/**/*.{ts,tsx}',
+    './content/**/*.mdx',
 
     // Fumadocs UI
     './node_modules/fumadocs-ui/dist/**/*.js',
