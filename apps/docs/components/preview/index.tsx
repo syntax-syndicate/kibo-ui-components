@@ -14,23 +14,6 @@ import { utils } from './utils';
 
 import type { Registry } from '@repo/shadcn-ui';
 import type { ComponentProps } from 'react';
-// Import kibo-ui components
-import kiboCalendar from '../../public/registry/calendar.json' assert {
-  type: 'json',
-};
-import kiboDialogStack from '../../public/registry/dialog-stack.json' assert {
-  type: 'json',
-};
-import kiboGantt from '../../public/registry/gantt.json' assert {
-  type: 'json',
-};
-import kiboKanban from '../../public/registry/kanban.json' assert {
-  type: 'json',
-};
-import kiboList from '../../public/registry/list.json' assert { type: 'json' };
-import kiboTable from '../../public/registry/table.json' assert {
-  type: 'json',
-};
 import { content } from './content';
 import { postcss } from './postcss';
 import { PreviewProvider } from './provider';
@@ -49,19 +32,24 @@ const shadcnImports = Object.fromEntries(
   })
 ) as Record<string, Registry[number]>;
 
+// Dynamically import all kibo components
+const kiboComponentsDir = join(process.cwd(), '/public/registry');
+const kiboFiles = readdirSync(kiboComponentsDir);
+
+const kiboImports = Object.fromEntries(
+  kiboFiles.map((file) => {
+    const name = file.replace('.json', '');
+    const content = JSON.parse(
+      readFileSync(join(kiboComponentsDir, file), 'utf-8')
+    );
+    return [name, content];
+  })
+) as Record<string, Registry[number]>;
+
 type PreviewProps = {
   name: string;
   code: string;
 };
-
-const kiboComponents = [
-  kiboCalendar,
-  kiboDialogStack,
-  kiboGantt,
-  kiboKanban,
-  kiboList,
-  kiboTable,
-];
 
 const dependencies: Record<string, string> = {};
 const devDependencies: Record<string, string> = {};
@@ -69,14 +57,14 @@ const devDependencies: Record<string, string> = {};
 const shadcnDependencies = Object.values(shadcnImports).flatMap((mod) =>
   'dependencies' in mod ? mod.dependencies : []
 ) as string[];
-const kiboDependencies = kiboComponents.flatMap((mod) =>
+const kiboDependencies = Object.values(kiboImports).flatMap((mod) =>
   'dependencies' in mod ? mod.dependencies : []
 ) as string[];
 
 const shadcnDevDependencies = Object.values(shadcnImports).flatMap((mod) =>
   'devDependencies' in mod ? mod.devDependencies : []
 ) as string[];
-const kiboDevDependencies = kiboComponents.flatMap((mod) =>
+const kiboDevDependencies = Object.values(kiboImports).flatMap((mod) =>
   'devDependencies' in mod ? mod.devDependencies : []
 ) as string[];
 
@@ -119,26 +107,16 @@ export const Preview = ({ name, code }: PreviewProps) => {
     '/lib/utils.ts': utils,
     '/lib/content.ts': content,
     '/postcss.config.mjs': postcss,
-
-    // kibo-ui
-    '/components/ui/kibo-ui/calendar.tsx': parseContent(
-      kiboCalendar.files[0].content
-    ),
-    '/components/ui/kibo-ui/dialog-stack.tsx': parseContent(
-      kiboDialogStack.files[0].content
-    ),
-    '/components/ui/kibo-ui/gantt.tsx': parseContent(
-      kiboGantt.files[0].content
-    ),
-    '/components/ui/kibo-ui/kanban.tsx': parseContent(
-      kiboKanban.files[0].content
-    ),
-    '/components/ui/kibo-ui/list.tsx': parseContent(kiboList.files[0].content),
-    '/components/ui/kibo-ui/table.tsx': parseContent(
-      kiboTable.files[0].content
-    ),
   };
 
+  // Add kibo components
+  for (const [name, mod] of Object.entries(kiboImports)) {
+    files[`/components/ui/kibo-ui/${name}.tsx`] = parseContent(
+      mod.files?.[0]?.content ?? ''
+    );
+  }
+
+  // Add shadcn components
   for (const mod of Object.values(shadcnImports)) {
     files[`/components/ui/${mod.name}.tsx`] = parseContent(
       mod.files?.[0]?.content ?? ''
