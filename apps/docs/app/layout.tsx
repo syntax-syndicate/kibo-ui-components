@@ -7,10 +7,9 @@ import { TooltipProvider } from '@repo/shadcn-ui/components/ui/tooltip';
 import { cn } from '@repo/shadcn-ui/lib/utils';
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import { RootProvider } from 'fumadocs-ui/provider';
-import { GeistMono } from 'geist/font/mono';
-import { GeistSans } from 'geist/font/sans';
 import type { ReactNode } from 'react';
 import { env } from '../env';
+import { fonts } from './lib/fonts';
 
 type LayoutProps = {
   readonly children: ReactNode;
@@ -18,13 +17,7 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => (
   <html lang="en" suppressHydrationWarning>
-    <body
-      className={cn(
-        'flex min-h-screen touch-manipulation flex-col font-sans antialiased',
-        GeistSans.variable,
-        GeistMono.variable
-      )}
-    >
+    <body className={cn('flex min-h-screen flex-col', fonts)}>
       <ThemeProvider>
         <RootProvider>
           <TooltipProvider>{children}</TooltipProvider>
