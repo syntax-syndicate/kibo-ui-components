@@ -76,6 +76,9 @@ export async function generateMetadata(props: {
     title: page.data.title,
     description: page.data.description,
     openGraph: {
+      title: page.data.title,
+      description: page.data.description,
+      type: 'website',
       images: [
         {
           url: `/og?slug=${params.slug?.join('/') ?? ''}`,
