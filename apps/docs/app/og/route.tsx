@@ -11,7 +11,7 @@ const loadGoogleFont = async (font: string, text: string, weights: string) => {
 
   if (resource) {
     const response = await fetch(resource[1]);
-    if (response.status == 200) {
+    if (response.status === 200) {
       return await response.arrayBuffer();
     }
   }
@@ -81,7 +81,7 @@ export const GET = async (request: NextRequest) => {
     </div>,
     {
       width: 1200,
-      height: 600,
+      height: 630,
       fonts: [
         {
           name: 'Geist Semibold',

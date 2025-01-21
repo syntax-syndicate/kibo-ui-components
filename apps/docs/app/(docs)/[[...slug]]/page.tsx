@@ -83,7 +83,7 @@ export async function generateMetadata(props: {
         {
           url: `/og?slug=${params.slug?.join('/') ?? ''}`,
           width: 1200,
-          height: 600,
+          height: 630,
         },
       ],
     },
