@@ -468,7 +468,7 @@ export const GanttHeader: FC<GanttHeaderProps> = ({ className }) => {
 
 export type GanttSidebarItemProps = {
   feature: GanttFeature;
-  onSelectItem: (id: string) => void;
+  onSelectItem?: (id: string) => void;
   className?: string;
 };
 
@@ -487,13 +487,13 @@ export const GanttSidebarItem: FC<GanttSidebarItemProps> = ({
 
   const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
     if (event.target === event.currentTarget) {
-      onSelectItem(feature.id);
+      onSelectItem?.(feature.id);
     }
   };
 
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
     if (event.key === 'Enter') {
-      onSelectItem(feature.id);
+      onSelectItem?.(feature.id);
     }
   };
 
