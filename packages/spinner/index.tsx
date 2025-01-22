@@ -26,21 +26,28 @@ const CircleFilled = ({
   ...props
 }: SpinnerVariantProps) => (
   <div className="relative" style={{ width: size, height: size }}>
-    <div className="absolute inset-0.5 rounded-full border-2 border-current opacity-20" />
+    <div className="absolute inset-0 rotate-180">
+      <LoaderCircleIcon
+        className={cn('animate-spin', className, 'text-foreground opacity-20')}
+        size={size}
+        {...props}
+      />
+    </div>
     <LoaderCircleIcon
       className={cn('relative animate-spin', className)}
+      size={size}
       {...props}
     />
   </div>
 );
 
-const Ellipsis = (props: SpinnerVariantProps) => {
+const Ellipsis = ({ size = 24, ...props }: SpinnerVariantProps) => {
   return (
     <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
       {...props}
     >
       <title>Loading...</title>
@@ -80,7 +87,7 @@ const Ellipsis = (props: SpinnerVariantProps) => {
   );
 };
 
-const Ring = ({ className, size = 24, ...props }: SpinnerVariantProps) => (
+const Ring = ({ size = 24, ...props }: SpinnerVariantProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -139,7 +146,7 @@ const Ring = ({ className, size = 24, ...props }: SpinnerVariantProps) => (
   </svg>
 );
 
-const Bars = ({ className, size = 24, ...props }: SpinnerVariantProps) => (
+const Bars = ({ size = 24, ...props }: SpinnerVariantProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -171,13 +178,21 @@ const Bars = ({ className, size = 24, ...props }: SpinnerVariantProps) => (
         }
       }
     `}</style>
-    <rect className="spinner-bar" x="1" y="1" width="6" height="22" />
+    <rect
+      className="spinner-bar"
+      x="1"
+      y="1"
+      width="6"
+      height="22"
+      fill="currentColor"
+    />
     <rect
       className="spinner-bar spinner-bars-2"
       x="9"
       y="1"
       width="6"
       height="22"
+      fill="currentColor"
     />
     <rect
       className="spinner-bar spinner-bars-3"
@@ -185,11 +200,12 @@ const Bars = ({ className, size = 24, ...props }: SpinnerVariantProps) => (
       y="1"
       width="6"
       height="22"
+      fill="currentColor"
     />
   </svg>
 );
 
-const Infinite = ({ className, size = 24, ...props }: SpinnerVariantProps) => (
+const Infinite = ({ size = 24, ...props }: SpinnerVariantProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
