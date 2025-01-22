@@ -82,3 +82,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif !important;
+    font-optical-sizing: auto !important;
+    font-style: normal !important;
+    @apply !antialiased;
+  }
+}

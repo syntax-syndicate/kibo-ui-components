@@ -128,7 +128,10 @@ export const Preview = ({ name, code }: PreviewProps) => {
       template="react-ts"
       // options={{ bundlerURL: 'https://sandpack-bundler.codesandbox.io' }}
       options={{
-        externalResources: ['https://cdn.tailwindcss.com'],
+        externalResources: [
+          'https://cdn.tailwindcss.com',
+          'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
+        ],
         visibleFiles: ['/App.tsx', `/components/ui/kibo-ui/${name}.tsx`],
         activeFile: '/App.tsx',
       }}
