@@ -1,106 +1,52 @@
-import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
 import {
   SandpackCodeEditor,
   SandpackConsole,
+  SandpackFileExplorer,
   SandpackLayout,
   SandpackPreview,
   type SandpackProvider,
 } from '@codesandbox/sandpack-react';
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from '@repo/shadcn-ui/components/ui/resizable';
 import { AppWindowIcon, CodeIcon, TerminalIcon } from 'lucide-react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
-import { tsconfig } from './tsconfig';
-import { utils } from './utils';
-
-import type { Registry } from '@repo/shadcn-ui';
 import type { ComponentProps } from 'react';
 import { content } from './content';
 import { postcss } from './postcss';
 import { PreviewProvider } from './provider';
-
-// Dynamically import all shadcn components
-const shadcnComponentsDir = join(process.cwd(), '/components/preview/shadcn');
-const shadcnFiles = readdirSync(shadcnComponentsDir);
-
-const shadcnImports = Object.fromEntries(
-  shadcnFiles.map((file) => {
-    const name = file.replace('.json', '');
-    const content = JSON.parse(
-      readFileSync(join(shadcnComponentsDir, file), 'utf-8')
-    );
-    return [name, content];
-  })
-) as Record<string, Registry[number]>;
-
-// Dynamically import all kibo components
-const kiboComponentsDir = join(process.cwd(), '/public/registry');
-const kiboFiles = readdirSync(kiboComponentsDir);
-
-const kiboImports = Object.fromEntries(
-  kiboFiles.map((file) => {
-    const name = file.replace('.json', '');
-    const content = JSON.parse(
-      readFileSync(join(kiboComponentsDir, file), 'utf-8')
-    );
-    return [name, content];
-  })
-) as Record<string, Registry[number]>;
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
+import { tsconfig } from './tsconfig';
+import { utils } from './utils';
 
 type PreviewProps = {
   name: string;
   code: string;
 };
 
-const dependencies: Record<string, string> = {};
-const devDependencies: Record<string, string> = {};
-
-const shadcnDependencies = Object.values(shadcnImports).flatMap((mod) =>
-  'dependencies' in mod ? mod.dependencies : []
-) as string[];
-const kiboDependencies = Object.values(kiboImports).flatMap((mod) =>
-  'dependencies' in mod ? mod.dependencies : []
-) as string[];
-
-const shadcnDevDependencies = Object.values(shadcnImports).flatMap((mod) =>
-  'devDependencies' in mod ? mod.devDependencies : []
-) as string[];
-const kiboDevDependencies = Object.values(kiboImports).flatMap((mod) =>
-  'devDependencies' in mod ? mod.devDependencies : []
-) as string[];
-
-const uniqueDependencies = new Set([
-  ...shadcnDependencies,
-  ...kiboDependencies,
-]);
-
-const uniqueDevDependencies = new Set([
-  ...shadcnDevDependencies,
-  ...kiboDevDependencies,
-]);
-
-for (const dependency of uniqueDependencies) {
-  const [name, version] =
+const parseDependencyVersion = (dependency: string) => {
+  const [, version] =
     (dependency as string).match(/^(.+?)(?:@(.+))?$/)?.slice(1) ?? [];
 
-  if (name) {
-    dependencies[name] = version ?? 'latest';
-  }
-}
-
-for (const devDependency of uniqueDevDependencies) {
-  const [name, version] =
-    (devDependency as string).match(/^(.+?)(?:@(.+))?$/)?.slice(1) ?? [];
-
-  if (name) {
-    devDependencies[name] = version ?? 'latest';
-  }
-}
+  return version ?? 'latest';
+};
 
 const parseContent = (content: string) => {
   return content.replace(/@\/registry\/new-york\/ui\//g, '@/components/ui/');
 };
 
-export const Preview = ({ name, code }: PreviewProps) => {
+export const Preview = async ({ name, code }: PreviewProps) => {
+  const registry = (await import(`../../public/registry/${name}.json`)) as {
+    dependencies?: Record<string, string>;
+    devDependencies?: Record<string, string>;
+    registryDependencies?: Record<string, string>;
+    files?: { content: string }[];
+  };
+
+  const dependencies: Record<string, string> = {};
+  const devDependencies: Record<string, string> = {};
+
   const files: ComponentProps<typeof SandpackProvider>['files'] = {
     '/App.tsx': code,
     '/tsconfig.json': tsconfig,
@@ -109,18 +55,94 @@ export const Preview = ({ name, code }: PreviewProps) => {
     '/postcss.config.mjs': postcss,
   };
 
-  // Add kibo components
-  for (const [name, mod] of Object.entries(kiboImports)) {
-    files[`/components/ui/kibo-ui/${name}.tsx`] = parseContent(
-      mod.files?.[0]?.content ?? ''
-    );
+  // Load selected Kibo UI component
+  files[`/components/ui/kibo-ui/${name}.tsx`] = parseContent(
+    registry.files?.[0]?.content ?? ''
+  );
+
+  // Load required dependencies from selected Kibo UI component
+  if (registry.dependencies) {
+    for (const dep of Object.values(registry.dependencies)) {
+      dependencies[dep] = parseDependencyVersion(dep);
+    }
   }
 
-  // Add shadcn components
-  for (const mod of Object.values(shadcnImports)) {
-    files[`/components/ui/${mod.name}.tsx`] = parseContent(
-      mod.files?.[0]?.content ?? ''
-    );
+  // Load required devDependencies from selected Kibo UI component
+  if (registry.devDependencies) {
+    for (const dep of Object.values(registry.devDependencies)) {
+      devDependencies[dep] = parseDependencyVersion(dep);
+    }
+  }
+
+  // Process registry dependencies
+  if (registry.registryDependencies) {
+    for (const dependency of Object.values(registry.registryDependencies)) {
+      const mod = (await import(`./shadcn/${dependency}.json`)) as {
+        name: string;
+        dependencies?: Record<string, string>;
+        devDependencies?: Record<string, string>;
+        files?: { content: string }[];
+      };
+
+      // Load required shadcn/ui component
+      files[`/components/ui/${mod.name}.tsx`] = parseContent(
+        mod.files?.[0]?.content ?? ''
+      );
+
+      // Load required dependencies from shadcn/ui component
+      if (mod.dependencies) {
+        for (const dep of Object.values(mod.dependencies)) {
+          dependencies[dep] = parseDependencyVersion(dep);
+        }
+      }
+
+      // Load required devDependencies from shadcn/ui component
+      if (mod.devDependencies) {
+        for (const dep of Object.values(mod.devDependencies)) {
+          devDependencies[dep] = parseDependencyVersion(dep);
+        }
+      }
+    }
+  }
+
+  // Scan the demo code for any imports of shadcn/ui components
+  const matches = code.match(/@\/components\/ui\/([^'"\s]+)/g);
+  if (matches) {
+    const components = [
+      ...new Set(matches.map((m) => m.replace('@/components/ui/', ''))),
+    ];
+
+    for (const component of components) {
+      try {
+        const mod = (await import(`./shadcn/${component}.json`)) as {
+          name: string;
+          dependencies?: Record<string, string>;
+          devDependencies?: Record<string, string>;
+          files?: { content: string }[];
+        };
+
+        // Load required shadcn/ui component
+        files[`/components/ui/${mod.name}.tsx`] = parseContent(
+          mod.files?.[0]?.content ?? ''
+        );
+
+        // Load required dependencies
+        if (mod.dependencies) {
+          for (const dep of Object.values(mod.dependencies)) {
+            dependencies[dep] = parseDependencyVersion(dep);
+          }
+        }
+
+        // Load required devDependencies
+        if (mod.devDependencies) {
+          for (const dep of Object.values(mod.devDependencies)) {
+            devDependencies[dep] = parseDependencyVersion(dep);
+          }
+        }
+      } catch (error) {
+        console.warn(`Failed to load shadcn component: ${component}`);
+      }
+    }
   }
 
   return (
@@ -186,8 +208,19 @@ export const Preview = ({ name, code }: PreviewProps) => {
               </TabsTrigger>
             </TabsList>
           </div>
-          <TabsContent value="code" className="m-0 max-h-96 overflow-y-auto">
-            <SandpackCodeEditor className="min-h-96" />
+          <TabsContent
+            value="code"
+            className="m-0 h-full max-h-96 overflow-hidden"
+          >
+            <ResizablePanelGroup direction="horizontal">
+              <ResizablePanel className="!overflow-y-auto h-full">
+                <SandpackFileExplorer />
+              </ResizablePanel>
+              <ResizableHandle withHandle />
+              <ResizablePanel className="!overflow-y-auto h-full">
+                <SandpackCodeEditor showTabs={false} />
+              </ResizablePanel>
+            </ResizablePanelGroup>
           </TabsContent>
           <TabsContent value="preview" className="m-0 max-h-96 overflow-y-auto">
             <SandpackPreview

@@ -127,7 +127,7 @@ const TabsContent = React.forwardRef<HTMLDivElement, TabsContentProps>(
           'mt-2 ring-offset-background transition-opacity duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
           selectedTab === value
             ? 'h-auto w-auto opacity-100'
-            : 'pointer-events-none h-0 w-0 opacity-0',
+            : '!h-0 !w-0 pointer-events-none opacity-0',
           className
         )}
         {...props}
