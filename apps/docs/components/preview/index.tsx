@@ -212,6 +212,8 @@ export const Preview = async ({ name, code }: PreviewProps) => {
               <ResizablePanel
                 className="!overflow-y-auto h-full"
                 defaultSize={25}
+                minSize={20}
+                maxSize={40}
               >
                 <SandpackFileExplorer autoHiddenFiles />
               </ResizablePanel>
