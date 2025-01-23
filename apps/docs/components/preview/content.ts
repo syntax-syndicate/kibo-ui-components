@@ -5,15 +5,12 @@ export const content = `import {
   subDays,
   subMonths,
 } from 'date-fns';
-import resolveConfig from 'tailwindcss/resolveConfig';
-
-const tailwind = resolveConfig(window.tailwind.config);
 const today = new Date();
 
 export const exampleStatuses = [
-  { id: '1', name: 'Planned', color: tailwind.theme.colors.gray[500] },
-  { id: '2', name: 'In Progress', color: tailwind.theme.colors.amber[500] },
-  { id: '3', name: 'Done', color: tailwind.theme.colors.emerald[500] },
+  { id: '1', name: 'Planned', color: '#6B7280' },
+  { id: '2', name: 'In Progress', color: '#F59E0B' }, 
+  { id: '3', name: 'Done', color: '#10B981' },
 ];
 
 export const exampleFeatures = [
