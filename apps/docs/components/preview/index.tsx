@@ -14,7 +14,6 @@ import {
 import { AppWindowIcon, CodeIcon, TerminalIcon } from 'lucide-react';
 import type { ComponentProps } from 'react';
 import { content } from './content';
-import { postcss } from './postcss';
 import { PreviewProvider } from './provider';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
 import { tsconfig } from './tsconfig';
@@ -52,7 +51,6 @@ export const Preview = async ({ name, code }: PreviewProps) => {
     '/tsconfig.json': tsconfig,
     '/lib/utils.ts': utils,
     '/lib/content.ts': content,
-    '/postcss.config.mjs': postcss,
   };
 
   // Load selected Kibo UI component
@@ -154,8 +152,6 @@ export const Preview = async ({ name, code }: PreviewProps) => {
           'https://cdn.tailwindcss.com',
           'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
         ],
-        visibleFiles: ['/App.tsx', `/components/ui/kibo-ui/${name}.tsx`],
-        activeFile: '/App.tsx',
       }}
       customSetup={{
         dependencies: {
@@ -213,8 +209,11 @@ export const Preview = async ({ name, code }: PreviewProps) => {
             className="m-0 h-full max-h-96 overflow-hidden"
           >
             <ResizablePanelGroup direction="horizontal">
-              <ResizablePanel className="!overflow-y-auto h-full">
-                <SandpackFileExplorer />
+              <ResizablePanel
+                className="!overflow-y-auto h-full"
+                defaultSize={25}
+              >
+                <SandpackFileExplorer autoHiddenFiles />
               </ResizablePanel>
               <ResizableHandle withHandle />
               <ResizablePanel className="!overflow-y-auto h-full">
