@@ -22,20 +22,25 @@ import { utils } from './utils';
 type PreviewProps = {
   name: string;
   code: string;
+  dependencies?: Record<string, string>;
 };
 
 const parseDependencyVersion = (dependency: string) => {
-  const [, version] =
+  const [name, version] =
     (dependency as string).match(/^(.+?)(?:@(.+))?$/)?.slice(1) ?? [];
 
-  return version ?? 'latest';
+  return { name, version: version ?? 'latest' };
 };
 
 const parseContent = (content: string) => {
   return content.replace(/@\/registry\/new-york\/ui\//g, '@/components/ui/');
 };
 
-export const Preview = async ({ name, code }: PreviewProps) => {
+export const Preview = async ({
+  name,
+  code,
+  dependencies: demoDependencies,
+}: PreviewProps) => {
   const registry = (await import(`../../public/registry/${name}.json`)) as {
     dependencies?: Record<string, string>;
     devDependencies?: Record<string, string>;
@@ -53,22 +58,82 @@ export const Preview = async ({ name, code }: PreviewProps) => {
     '/lib/content.ts': content,
   };
 
+  const parseShadcnComponents = async (str: string) => {
+    const parsedString = parseContent(str);
+    const matches = parsedString.match(
+      /@\/components\/ui\/(?!kibo-ui\/)([^'"\s]+)/g
+    );
+
+    if (matches) {
+      const components = [
+        ...new Set(matches.map((m) => m.replace('@/components/ui/', ''))),
+      ];
+
+      for (const component of components) {
+        try {
+          const mod = (await import(`./shadcn/${component}.json`)) as {
+            name: string;
+            dependencies?: Record<string, string>;
+            devDependencies?: Record<string, string>;
+            files?: { content: string }[];
+          };
+
+          // Load required shadcn/ui component
+          files[`/components/ui/${mod.name}.tsx`] = parseContent(
+            mod.files?.[0]?.content ?? ''
+          );
+
+          // Load required dependencies
+          if (mod.dependencies) {
+            for (const dep of Object.values(mod.dependencies)) {
+              const { name, version } = parseDependencyVersion(dep);
+
+              dependencies[name] = version;
+            }
+          }
+
+          // Load required devDependencies
+          if (mod.devDependencies) {
+            for (const dep of Object.values(mod.devDependencies)) {
+              const { name, version } = parseDependencyVersion(dep);
+
+              devDependencies[name] = version;
+            }
+          }
+
+          await parseShadcnComponents(mod.files?.[0]?.content ?? '');
+        } catch (error) {
+          console.warn(`Failed to load shadcn component: ${component}`);
+        }
+      }
+    }
+  };
+
   // Load selected Kibo UI component
+  const selectedComponent = registry.files?.[0]?.content;
+  const selectedComponentContent = parseContent(selectedComponent ?? '');
+
+  await parseShadcnComponents(selectedComponentContent);
+
   files[`/components/ui/kibo-ui/${name}.tsx`] = parseContent(
-    registry.files?.[0]?.content ?? ''
+    selectedComponentContent
   );
 
   // Load required dependencies from selected Kibo UI component
   if (registry.dependencies) {
     for (const dep of Object.values(registry.dependencies)) {
-      dependencies[dep] = parseDependencyVersion(dep);
+      const { name, version } = parseDependencyVersion(dep);
+
+      dependencies[name] = version;
     }
   }
 
   // Load required devDependencies from selected Kibo UI component
   if (registry.devDependencies) {
     for (const dep of Object.values(registry.devDependencies)) {
-      devDependencies[dep] = parseDependencyVersion(dep);
+      const { name, version } = parseDependencyVersion(dep);
+
+      devDependencies[name] = version;
     }
   }
 
@@ -83,63 +148,38 @@ export const Preview = async ({ name, code }: PreviewProps) => {
       };
 
       // Load required shadcn/ui component
-      files[`/components/ui/${mod.name}.tsx`] = parseContent(
-        mod.files?.[0]?.content ?? ''
-      );
+      const componentContent = mod.files?.[0]?.content ?? '';
+      files[`/components/ui/${mod.name}.tsx`] = parseContent(componentContent);
 
       // Load required dependencies from shadcn/ui component
       if (mod.dependencies) {
         for (const dep of Object.values(mod.dependencies)) {
-          dependencies[dep] = parseDependencyVersion(dep);
+          const { name, version } = parseDependencyVersion(dep);
+
+          dependencies[name] = version;
         }
       }
 
       // Load required devDependencies from shadcn/ui component
       if (mod.devDependencies) {
         for (const dep of Object.values(mod.devDependencies)) {
-          devDependencies[dep] = parseDependencyVersion(dep);
+          const { name, version } = parseDependencyVersion(dep);
+
+          devDependencies[name] = version;
         }
       }
+
+      await parseShadcnComponents(componentContent);
     }
   }
 
   // Scan the demo code for any imports of shadcn/ui components
-  const matches = code.match(/@\/components\/ui\/([^'"\s]+)/g);
-  if (matches) {
-    const components = [
-      ...new Set(matches.map((m) => m.replace('@/components/ui/', ''))),
-    ];
+  await parseShadcnComponents(code);
 
-    for (const component of components) {
-      try {
-        const mod = (await import(`./shadcn/${component}.json`)) as {
-          name: string;
-          dependencies?: Record<string, string>;
-          devDependencies?: Record<string, string>;
-          files?: { content: string }[];
-        };
-
-        // Load required shadcn/ui component
-        files[`/components/ui/${mod.name}.tsx`] = parseContent(
-          mod.files?.[0]?.content ?? ''
-        );
-
-        // Load required dependencies
-        if (mod.dependencies) {
-          for (const dep of Object.values(mod.dependencies)) {
-            dependencies[dep] = parseDependencyVersion(dep);
-          }
-        }
-
-        // Load required devDependencies
-        if (mod.devDependencies) {
-          for (const dep of Object.values(mod.devDependencies)) {
-            devDependencies[dep] = parseDependencyVersion(dep);
-          }
-        }
-      } catch (error) {
-        console.warn(`Failed to load shadcn component: ${component}`);
-      }
+  // Load demo dependencies
+  if (demoDependencies) {
+    for (const [name, version] of Object.entries(demoDependencies)) {
+      dependencies[name] = version;
     }
   }
 
@@ -165,6 +205,9 @@ export const Preview = async ({ name, code }: PreviewProps) => {
           tailwindcss: 'latest',
           'tailwindcss-animate': 'latest',
           ...dependencies,
+
+          // Common utilities
+          'date-fns': 'latest',
         },
         devDependencies: {
           autoprefixer: 'latest',
