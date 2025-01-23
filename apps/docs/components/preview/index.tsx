@@ -1,11 +1,15 @@
 import {
-  SandpackCodeEditor,
-  SandpackConsole,
-  SandpackFileExplorer,
-  SandpackLayout,
-  SandpackPreview,
-  type SandpackProvider,
-} from '@codesandbox/sandpack-react';
+  SandboxCodeEditor,
+  SandboxConsole,
+  SandboxFileExplorer,
+  SandboxLayout,
+  SandboxPreview,
+  type SandboxProvider,
+  SandboxTabs,
+  SandboxTabsContent,
+  SandboxTabsList,
+  SandboxTabsTrigger,
+} from '@repo/sandbox';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -15,7 +19,6 @@ import { AppWindowIcon, CodeIcon, TerminalIcon } from 'lucide-react';
 import type { ComponentProps } from 'react';
 import { content } from './content';
 import { PreviewProvider } from './provider';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
 import { tsconfig } from './tsconfig';
 import { utils } from './utils';
 
@@ -51,7 +54,7 @@ export const Preview = async ({
   const dependencies: Record<string, string> = {};
   const devDependencies: Record<string, string> = {};
 
-  const files: ComponentProps<typeof SandpackProvider>['files'] = {
+  const files: ComponentProps<typeof SandboxProvider>['files'] = {
     '/App.tsx': code,
     '/tsconfig.json': tsconfig,
     '/lib/utils.ts': utils,
@@ -216,68 +219,51 @@ export const Preview = async ({
         },
       }}
       files={files}
+      className="not-prose max-h-[30rem]"
     >
-      <SandpackLayout className="!rounded-none !border-none !bg-transparent">
-        <Tabs
-          defaultValue="preview"
-          className="not-prose group relative w-full overflow-hidden rounded-lg border bg-fd-secondary/50 text-sm"
-        >
-          <div className="flex flex-row items-center justify-between border-b bg-fd-muted p-2">
-            <TabsList className="h-auto w-full justify-start rounded-none bg-transparent">
-              <TabsTrigger
-                value="code"
-                className="flex flex-row items-center gap-1.5"
-              >
-                <CodeIcon size={14} />
-                Code
-              </TabsTrigger>
-              <TabsTrigger
-                value="preview"
-                className="flex flex-row items-center gap-1.5"
-              >
-                <AppWindowIcon size={14} />
-                Preview
-              </TabsTrigger>
-              <TabsTrigger
-                value="console"
-                className="flex flex-row items-center gap-1.5"
-              >
-                <TerminalIcon size={14} />
-                Console
-              </TabsTrigger>
-            </TabsList>
-          </div>
-          <TabsContent
-            value="code"
-            className="m-0 h-full max-h-96 overflow-hidden"
-          >
-            <ResizablePanelGroup direction="horizontal">
+      <SandboxLayout>
+        <SandboxTabs defaultValue="preview">
+          <SandboxTabsList>
+            <SandboxTabsTrigger value="code">
+              <CodeIcon size={14} />
+              Code
+            </SandboxTabsTrigger>
+            <SandboxTabsTrigger value="preview">
+              <AppWindowIcon size={14} />
+              Preview
+            </SandboxTabsTrigger>
+            <SandboxTabsTrigger value="console">
+              <TerminalIcon size={14} />
+              Console
+            </SandboxTabsTrigger>
+          </SandboxTabsList>
+          <SandboxTabsContent value="code" className="overflow-hidden">
+            <ResizablePanelGroup
+              direction="horizontal"
+              className="overflow-hidden"
+            >
               <ResizablePanel
-                className="!overflow-y-auto h-full"
+                className="!overflow-y-auto"
                 defaultSize={25}
                 minSize={20}
                 maxSize={40}
               >
-                <SandpackFileExplorer autoHiddenFiles />
+                <SandboxFileExplorer />
               </ResizablePanel>
               <ResizableHandle withHandle />
-              <ResizablePanel className="!overflow-y-auto h-full">
-                <SandpackCodeEditor showTabs={false} />
+              <ResizablePanel className="!overflow-y-auto">
+                <SandboxCodeEditor />
               </ResizablePanel>
             </ResizablePanelGroup>
-          </TabsContent>
-          <TabsContent value="preview" className="m-0 max-h-96 overflow-y-auto">
-            <SandpackPreview
-              showOpenInCodeSandbox={false}
-              showRefreshButton={false}
-              className="min-h-96"
-            />
-          </TabsContent>
-          <TabsContent value="console" className="m-0 max-h-96 overflow-y-auto">
-            <SandpackConsole className="min-h-96" />
-          </TabsContent>
-        </Tabs>
-      </SandpackLayout>
+          </SandboxTabsContent>
+          <SandboxTabsContent value="preview">
+            <SandboxPreview />
+          </SandboxTabsContent>
+          <SandboxTabsContent value="console">
+            <SandboxConsole />
+          </SandboxTabsContent>
+        </SandboxTabs>
+      </SandboxLayout>
     </PreviewProvider>
   );
 };
