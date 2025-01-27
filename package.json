@@ -4,9 +4,7 @@
   "bin": {
     "kibo-ui": "dist/index.js"
   },
-  "files": [
-    "dist/index.js"
-  ],
+  "files": ["dist/index.js"],
   "scripts": {
     "prebuild": "bun scripts/build-registry.ts",
     "build": "turbo build",
@@ -16,7 +14,7 @@
     "format": "ultracite format",
     "test": "turbo test",
     "analyze": "turbo analyze",
-    "bump-deps": "npx npm-check-updates --deep -u -x react-day-picker && pnpm install",
+    "bump-deps": "npx npm-check-updates --deep -u -x react-day-picker,tailwindcss && pnpm install",
     "bump-ui": "npx shadcn@latest add --all --overwrite -c packages/shadcn-ui",
     "clean": "git clean -xdf node_modules"
   },
