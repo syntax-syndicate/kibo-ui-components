@@ -4,9 +4,19 @@
   "name": "color-picker",
   "type": "registry:ui",
   "author": "Hayden Bleasel <hello@haydenbleasel.com>",
-  "registryDependencies": ["button", "input", "select"],
-  "dependencies": ["@radix-ui/react-slider", "color", "lucide-react"],
-  "devDependencies": ["@types/color"],
+  "registryDependencies": [
+    "button",
+    "input",
+    "select"
+  ],
+  "dependencies": [
+    "@radix-ui/react-slider",
+    "color",
+    "lucide-react"
+  ],
+  "devDependencies": [
+    "@types/color"
+  ],
   "files": [
     {
       "type": "registry:ui",
