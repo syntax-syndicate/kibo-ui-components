@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 import {
   type ComponentProps,
+  type HTMLAttributes,
   type ReactElement,
   cloneElement,
   useState,
@@ -23,7 +24,7 @@ export const Snippet = ({ className, ...props }: SnippetProps) => (
   />
 );
 
-export type SnippetHeaderProps = ComponentProps<'div'>;
+export type SnippetHeaderProps = HTMLAttributes<HTMLDivElement>;
 
 export const SnippetHeader = ({ className, ...props }: SnippetHeaderProps) => (
   <div
