@@ -170,9 +170,11 @@ export const ColorPickerSelection = ({
       ref={containerRef}
       className={cn(
         'relative aspect-[4/3] w-full cursor-crosshair rounded',
-        `bg-[linear-gradient(0deg,rgb(0,0,0),transparent),linear-gradient(90deg,rgb(255,255,255),hsl(${hue},100%,50%))]`,
         className
       )}
+      style={{
+        background: `linear-gradient(0deg,rgb(0,0,0),transparent),linear-gradient(90deg,rgb(255,255,255),hsl(${hue},100%,50%))`,
+      }}
       onPointerDown={(e) => {
         e.preventDefault();
         setIsDragging(true);
