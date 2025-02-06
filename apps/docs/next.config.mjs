@@ -1,9 +1,7 @@
-import { env } from '@/env';
 import { withLogtail } from '@logtail/next';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
 import { createMDX } from 'fumadocs-mdx/next';
-import type { NextConfig } from 'next';
 
 // @ts-expect-error No declaration file
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
@@ -11,9 +9,9 @@ import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
 const otelRegex = /@opentelemetry\/instrumentation/;
 const withMDX = createMDX();
 
-const sentryConfig: Parameters<typeof withSentryConfig>[1] = {
-  org: env.SENTRY_ORG,
-  project: env.SENTRY_PROJECT,
+const sentryConfig = {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -49,7 +47,7 @@ const sentryConfig: Parameters<typeof withSentryConfig>[1] = {
   automaticVercelMonitors: true,
 };
 
-const config: NextConfig = {
+const config = {
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
@@ -73,13 +71,13 @@ const config: NextConfig = {
   },
 };
 
-let nextConfig: NextConfig = withMDX(withLogtail({ ...config }));
+let nextConfig = withMDX(withLogtail({ ...config }));
 
-if (env.VERCEL) {
+if (process.env.VERCEL) {
   nextConfig = withSentryConfig(nextConfig, sentryConfig);
 }
 
-if (env.ANALYZE === 'true') {
+if (process.env.ANALYZE === 'true') {
   nextConfig = withBundleAnalyzer()(nextConfig);
 }
 
