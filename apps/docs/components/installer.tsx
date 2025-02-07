@@ -8,7 +8,6 @@ import {
   SnippetTabsList,
   SnippetTabsTrigger,
 } from '@repo/snippet';
-import {} from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { toast } from 'sonner';
