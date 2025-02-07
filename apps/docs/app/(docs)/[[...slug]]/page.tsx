@@ -14,16 +14,11 @@ import { PoweredBy } from '../../../components/powered-by';
 import { Preview } from '../../../components/preview';
 import { source } from '../../../lib/source';
 
-const components = {
-  ...defaultMdxComponents,
-  Installer,
-  Preview,
-  PoweredBy,
+type PageProps = {
+  params: Promise<{ slug?: string[] }>;
 };
 
-export default async function Page(props: {
-  params: Promise<{ slug?: string[] }>;
-}) {
+const Page = async (props: PageProps) => {
   const params = await props.params;
   const page = source.getPage(params.slug);
 
@@ -52,13 +47,20 @@ export default async function Page(props: {
               'prose-a:border-fd-primary prose-a:border-b-px prose-a:font-semibold prose-a:text-foreground prose-a:decoration-none prose-a:transition-all hover:prose-a:border-b-2'
             )}
           >
-            <MDX components={{ ...defaultMdxComponents, ...components }} />
+            <MDX
+              components={{
+                ...defaultMdxComponents,
+                Installer,
+                Preview,
+                PoweredBy,
+              }}
+            />
           </DocsBody>
         </DocsPage>
       </div>
     </div>
   );
-}
+};
 
 export const generateStaticParams = async () => source.generateParams();
 
@@ -89,3 +91,5 @@ export async function generateMetadata(props: {
     },
   };
 }
+
+export default Page;
