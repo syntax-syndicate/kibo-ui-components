@@ -72,22 +72,18 @@ const parseShadcnComponents = async (str: string) => {
           await Promise.all([
             // Load required dependencies
             mod.dependencies
-              ? Promise.all(
-                  Object.values(mod.dependencies).map(async (dep) => {
-                    const { name, version } = parseDependencyVersion(dep);
-                    dependencies[name] = version;
-                  })
-                )
+              ? Object.values(mod.dependencies).map((dep) => {
+                  const { name, version } = parseDependencyVersion(dep);
+                  dependencies[name] = version;
+                })
               : Promise.resolve(),
 
             // Load required devDependencies
             mod.devDependencies
-              ? Promise.all(
-                  Object.values(mod.devDependencies).map(async (dep) => {
-                    const { name, version } = parseDependencyVersion(dep);
-                    devDependencies[name] = version;
-                  })
-                )
+              ? Object.values(mod.devDependencies).map((dep) => {
+                  const { name, version } = parseDependencyVersion(dep);
+                  devDependencies[name] = version;
+                })
               : Promise.resolve(),
 
             // Parse nested components
