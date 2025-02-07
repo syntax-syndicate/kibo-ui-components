@@ -52,43 +52,52 @@ const parseShadcnComponents = async (str: string) => {
       ...new Set(matches.map((m) => m.replace('@/components/ui/', ''))),
     ];
 
-    for (const component of components) {
-      try {
-        const mod = (await import(`./shadcn/${component}.json`)) as {
-          name: string;
-          dependencies?: Record<string, string>;
-          devDependencies?: Record<string, string>;
-          files?: { content: string }[];
-        };
+    // Process all components in parallel instead of sequentially
+    await Promise.all(
+      components.map(async (component) => {
+        try {
+          const mod = (await import(`./shadcn/${component}.json`)) as {
+            name: string;
+            dependencies?: Record<string, string>;
+            devDependencies?: Record<string, string>;
+            files?: { content: string }[];
+          };
 
-        // Load required shadcn/ui component
-        files[`/components/ui/${mod.name}.tsx`] = parseContent(
-          mod.files?.[0]?.content ?? ''
-        );
+          // Load required shadcn/ui component
+          files[`/components/ui/${mod.name}.tsx`] = parseContent(
+            mod.files?.[0]?.content ?? ''
+          );
 
-        // Load required dependencies
-        if (mod.dependencies) {
-          for (const dep of Object.values(mod.dependencies)) {
-            const { name, version } = parseDependencyVersion(dep);
+          // Process dependencies and devDependencies in parallel
+          await Promise.all([
+            // Load required dependencies
+            mod.dependencies
+              ? Promise.all(
+                  Object.values(mod.dependencies).map(async (dep) => {
+                    const { name, version } = parseDependencyVersion(dep);
+                    dependencies[name] = version;
+                  })
+                )
+              : Promise.resolve(),
 
-            dependencies[name] = version;
-          }
+            // Load required devDependencies
+            mod.devDependencies
+              ? Promise.all(
+                  Object.values(mod.devDependencies).map(async (dep) => {
+                    const { name, version } = parseDependencyVersion(dep);
+                    devDependencies[name] = version;
+                  })
+                )
+              : Promise.resolve(),
+
+            // Parse nested components
+            parseShadcnComponents(mod.files?.[0]?.content ?? ''),
+          ]);
+        } catch (error) {
+          console.warn(`Failed to load shadcn component: ${component}`);
         }
-
-        // Load required devDependencies
-        if (mod.devDependencies) {
-          for (const dep of Object.values(mod.devDependencies)) {
-            const { name, version } = parseDependencyVersion(dep);
-
-            devDependencies[name] = version;
-          }
-        }
-
-        await parseShadcnComponents(mod.files?.[0]?.content ?? '');
-      } catch (error) {
-        console.warn(`Failed to load shadcn component: ${component}`);
-      }
-    }
+      })
+    );
   }
 
   return { files, dependencies, devDependencies };
@@ -99,89 +108,91 @@ export const Preview = async ({
   code,
   dependencies: demoDependencies,
 }: PreviewProps) => {
-  const registry = (await import(`../../public/registry/${name}.json`)) as {
-    dependencies?: Record<string, string>;
-    devDependencies?: Record<string, string>;
-    registryDependencies?: Record<string, string>;
-    files?: { content: string }[];
-  };
+  // Load and parse everything in parallel for better performance
+  const [registry, initialParsedComponents] = await Promise.all([
+    import(`../../public/registry/${name}.json`) as Promise<{
+      dependencies?: Record<string, string>;
+      devDependencies?: Record<string, string>;
+      registryDependencies?: Record<string, string>;
+      files?: { content: string }[];
+    }>,
+    parseShadcnComponents(code),
+  ]);
 
-  const { files, dependencies, devDependencies } =
-    await parseShadcnComponents(code);
+  const { files, dependencies, devDependencies } = initialParsedComponents;
 
+  // Set up initial files
   files['/App.tsx'] = code;
   files['/tsconfig.json'] = tsconfig;
   files['/lib/utils.ts'] = utils;
   files['/lib/content.ts'] = content;
 
-  // Load selected Kibo UI component
+  // Process Kibo UI component
   const selectedComponent = registry.files?.[0]?.content;
   const selectedComponentContent = parseContent(selectedComponent ?? '');
 
-  await parseShadcnComponents(selectedComponentContent);
+  // Run these operations in parallel
+  await Promise.all([
+    parseShadcnComponents(selectedComponentContent),
+
+    // Process registry dependencies if they exist
+    registry.registryDependencies
+      ? Promise.all(
+          Object.values(registry.registryDependencies).map(
+            async (dependency) => {
+              const mod = (await import(`./shadcn/${dependency}.json`)) as {
+                name: string;
+                dependencies?: Record<string, string>;
+                devDependencies?: Record<string, string>;
+                files?: { content: string }[];
+              };
+
+              const componentContent = mod.files?.[0]?.content ?? '';
+              files[`/components/ui/${mod.name}.tsx`] =
+                parseContent(componentContent);
+
+              // Process dependencies
+              if (mod.dependencies) {
+                for (const dep of Object.values(mod.dependencies)) {
+                  const { name, version } = parseDependencyVersion(dep);
+                  dependencies[name] = version;
+                }
+              }
+
+              if (mod.devDependencies) {
+                for (const dep of Object.values(mod.devDependencies)) {
+                  const { name, version } = parseDependencyVersion(dep);
+                  devDependencies[name] = version;
+                }
+              }
+
+              return parseShadcnComponents(componentContent);
+            }
+          )
+        )
+      : Promise.resolve(),
+  ]);
 
   files[`/components/ui/kibo-ui/${name}.tsx`] = parseContent(
     selectedComponentContent
   );
 
-  // Load required dependencies from selected Kibo UI component
+  // Process main component dependencies
   if (registry.dependencies) {
     for (const dep of Object.values(registry.dependencies)) {
       const { name, version } = parseDependencyVersion(dep);
-
       dependencies[name] = version;
     }
   }
 
-  // Load required devDependencies from selected Kibo UI component
   if (registry.devDependencies) {
     for (const dep of Object.values(registry.devDependencies)) {
       const { name, version } = parseDependencyVersion(dep);
-
       devDependencies[name] = version;
     }
   }
 
-  // Process registry dependencies
-  if (registry.registryDependencies) {
-    for (const dependency of Object.values(registry.registryDependencies)) {
-      const mod = (await import(`./shadcn/${dependency}.json`)) as {
-        name: string;
-        dependencies?: Record<string, string>;
-        devDependencies?: Record<string, string>;
-        files?: { content: string }[];
-      };
-
-      // Load required shadcn/ui component
-      const componentContent = mod.files?.[0]?.content ?? '';
-      files[`/components/ui/${mod.name}.tsx`] = parseContent(componentContent);
-
-      // Load required dependencies from shadcn/ui component
-      if (mod.dependencies) {
-        for (const dep of Object.values(mod.dependencies)) {
-          const { name, version } = parseDependencyVersion(dep);
-
-          dependencies[name] = version;
-        }
-      }
-
-      // Load required devDependencies from shadcn/ui component
-      if (mod.devDependencies) {
-        for (const dep of Object.values(mod.devDependencies)) {
-          const { name, version } = parseDependencyVersion(dep);
-
-          devDependencies[name] = version;
-        }
-      }
-
-      await parseShadcnComponents(componentContent);
-    }
-  }
-
-  // Scan the demo code for any imports of shadcn/ui components
-  await parseShadcnComponents(code);
-
-  // Load demo dependencies
+  // Add demo dependencies
   if (demoDependencies) {
     for (const [name, version] of Object.entries(demoDependencies)) {
       dependencies[name] = version;
