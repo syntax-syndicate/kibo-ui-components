@@ -4,7 +4,6 @@ import {
   SandboxFileExplorer,
   SandboxLayout,
   SandboxPreview,
-  type SandboxProvider,
   SandboxTabs,
   SandboxTabsContent,
   SandboxTabsList,
@@ -16,7 +15,6 @@ import {
   ResizablePanelGroup,
 } from '@repo/shadcn-ui/components/ui/resizable';
 import { AppWindowIcon, CodeIcon, TerminalIcon } from 'lucide-react';
-import type { ComponentProps } from 'react';
 import { content } from './content';
 import { PreviewProvider } from './provider';
 import { tsconfig } from './tsconfig';
@@ -39,6 +37,63 @@ const parseContent = (content: string) => {
   return content.replace(/@\/registry\/new-york\/ui\//g, '@/components/ui/');
 };
 
+const parseShadcnComponents = async (str: string) => {
+  const parsedString = parseContent(str);
+  const matches = parsedString.match(
+    /@\/components\/ui\/(?!kibo-ui\/)([^'"\s]+)/g
+  );
+
+  const files: Record<string, string> = {};
+  const dependencies: Record<string, string> = {};
+  const devDependencies: Record<string, string> = {};
+
+  if (matches) {
+    const components = [
+      ...new Set(matches.map((m) => m.replace('@/components/ui/', ''))),
+    ];
+
+    for (const component of components) {
+      try {
+        const mod = (await import(`./shadcn/${component}.json`)) as {
+          name: string;
+          dependencies?: Record<string, string>;
+          devDependencies?: Record<string, string>;
+          files?: { content: string }[];
+        };
+
+        // Load required shadcn/ui component
+        files[`/components/ui/${mod.name}.tsx`] = parseContent(
+          mod.files?.[0]?.content ?? ''
+        );
+
+        // Load required dependencies
+        if (mod.dependencies) {
+          for (const dep of Object.values(mod.dependencies)) {
+            const { name, version } = parseDependencyVersion(dep);
+
+            dependencies[name] = version;
+          }
+        }
+
+        // Load required devDependencies
+        if (mod.devDependencies) {
+          for (const dep of Object.values(mod.devDependencies)) {
+            const { name, version } = parseDependencyVersion(dep);
+
+            devDependencies[name] = version;
+          }
+        }
+
+        await parseShadcnComponents(mod.files?.[0]?.content ?? '');
+      } catch (error) {
+        console.warn(`Failed to load shadcn component: ${component}`);
+      }
+    }
+  }
+
+  return { files, dependencies, devDependencies };
+};
+
 export const Preview = async ({
   name,
   code,
@@ -51,66 +106,13 @@ export const Preview = async ({
     files?: { content: string }[];
   };
 
-  const dependencies: Record<string, string> = {};
-  const devDependencies: Record<string, string> = {};
+  const { files, dependencies, devDependencies } =
+    await parseShadcnComponents(code);
 
-  const files: ComponentProps<typeof SandboxProvider>['files'] = {
-    '/App.tsx': code,
-    '/tsconfig.json': tsconfig,
-    '/lib/utils.ts': utils,
-    '/lib/content.ts': content,
-  };
-
-  const parseShadcnComponents = async (str: string) => {
-    const parsedString = parseContent(str);
-    const matches = parsedString.match(
-      /@\/components\/ui\/(?!kibo-ui\/)([^'"\s]+)/g
-    );
-
-    if (matches) {
-      const components = [
-        ...new Set(matches.map((m) => m.replace('@/components/ui/', ''))),
-      ];
-
-      for (const component of components) {
-        try {
-          const mod = (await import(`./shadcn/${component}.json`)) as {
-            name: string;
-            dependencies?: Record<string, string>;
-            devDependencies?: Record<string, string>;
-            files?: { content: string }[];
-          };
-
-          // Load required shadcn/ui component
-          files[`/components/ui/${mod.name}.tsx`] = parseContent(
-            mod.files?.[0]?.content ?? ''
-          );
-
-          // Load required dependencies
-          if (mod.dependencies) {
-            for (const dep of Object.values(mod.dependencies)) {
-              const { name, version } = parseDependencyVersion(dep);
-
-              dependencies[name] = version;
-            }
-          }
-
-          // Load required devDependencies
-          if (mod.devDependencies) {
-            for (const dep of Object.values(mod.devDependencies)) {
-              const { name, version } = parseDependencyVersion(dep);
-
-              devDependencies[name] = version;
-            }
-          }
-
-          await parseShadcnComponents(mod.files?.[0]?.content ?? '');
-        } catch (error) {
-          console.warn(`Failed to load shadcn component: ${component}`);
-        }
-      }
-    }
-  };
+  files['/App.tsx'] = code;
+  files['/tsconfig.json'] = tsconfig;
+  files['/lib/utils.ts'] = utils;
+  files['/lib/content.ts'] = content;
 
   // Load selected Kibo UI component
   const selectedComponent = registry.files?.[0]?.content;
