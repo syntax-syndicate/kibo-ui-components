@@ -189,7 +189,7 @@ import {
 const code = [{
   language: 'JavaScript',
   filename: 'MyComponent.jsx',
-  code: \`function MyComponent(props) {
+  code: \`function MyComponent(props) { // [!code highlight]
   return (
     <div>
       <h1>Hello, {props.name}!</h1> // [!code highlight]
@@ -200,7 +200,7 @@ const code = [{
 }, {
   language: 'Typescript',
   filename: 'MyComponent.tsx',
-  code: \`function MyComponent(props: { name: string }) {
+  code: \`function MyComponent(props: { name: string }) { // [!code highlight]
   return (
     <div>
       <h1>Hello, {props.name}!</h1> // [!code highlight]
