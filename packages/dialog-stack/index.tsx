@@ -2,6 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import * as Portal from '@radix-ui/react-portal';
+import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import {
   Children,
   cloneElement,
@@ -47,21 +48,27 @@ export type DialogStackProps = HTMLAttributes<HTMLDivElement> & {
   open?: boolean;
   clickable?: boolean;
   onOpenChange?: (open: boolean) => void;
+  defaultOpen?: boolean;
 };
 
 export const DialogStack = ({
   children,
   className,
   open = false,
+  defaultOpen = false,
   onOpenChange,
   clickable = false,
   ...props
 }: DialogStackProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isOpen, setIsOpen] = useState(open);
+  const [isOpen, setIsOpen] = useControllableState({
+    defaultProp: defaultOpen,
+    prop: open,
+    onChange: onOpenChange,
+  });
 
   useEffect(() => {
-    onOpenChange?.(isOpen);
+    onOpenChange?.(isOpen ?? false);
   }, [isOpen, onOpenChange]);
 
   return (
@@ -71,8 +78,8 @@ export const DialogStack = ({
         setActiveIndex,
         totalDialogs: 0,
         setTotalDialogs: () => {},
-        isOpen,
-        setIsOpen,
+        isOpen: isOpen ?? false,
+        setIsOpen: (value) => setIsOpen(Boolean(value)),
         clickable,
       }}
     >

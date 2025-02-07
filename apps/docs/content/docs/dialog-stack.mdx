@@ -310,6 +310,88 @@ const Example = () => (
 
 export default Example;`} />
 
+### Controlled
+
+<Preview name="dialog-stack" code={`'use client';
+
+import {
+  DialogStack,
+  DialogStackBody,
+  DialogStackContent,
+  DialogStackDescription,
+  DialogStackFooter,
+  DialogStackHeader,
+  DialogStackNext,
+  DialogStackOverlay,
+  DialogStackPrevious,
+  DialogStackTitle,
+  DialogStackTrigger,
+} from '@/components/ui/kibo-ui/dialog-stack';
+import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+const Example = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="flex items-center justify-center w-full h-screen bg-secondary">
+      <Button variant="outline" onClick={() => setOpen(!open)}>Toggle Dialog</Button>
+      
+      <DialogStack open={open} onOpenChange={setOpen}>
+        <DialogStackOverlay />
+        <DialogStackBody>
+          <DialogStackContent>
+            <DialogStackHeader>
+              <DialogStackTitle>I'm the first dialog</DialogStackTitle>
+              <DialogStackDescription>
+                With a fancy description
+              </DialogStackDescription>
+            </DialogStackHeader>
+            <DialogStackFooter className="justify-end">
+              <DialogStackNext asChild>
+                <Button variant="outline">Next</Button>
+              </DialogStackNext>
+            </DialogStackFooter>
+          </DialogStackContent>
+
+          <DialogStackContent>
+            <DialogStackHeader>
+              <DialogStackTitle>I'm the second dialog</DialogStackTitle>
+              <DialogStackDescription>
+                With a fancy description
+              </DialogStackDescription>
+            </DialogStackHeader>
+            <DialogStackFooter className="justify-between">
+              <DialogStackPrevious asChild>
+                <Button variant="outline">Previous</Button>
+              </DialogStackPrevious>
+              <DialogStackNext asChild>
+                <Button variant="outline">Next</Button>
+              </DialogStackNext>
+            </DialogStackFooter>
+          </DialogStackContent>
+
+          <DialogStackContent>
+            <DialogStackHeader>
+              <DialogStackTitle>I'm the third dialog</DialogStackTitle>
+              <DialogStackDescription>
+                With a fancy description
+              </DialogStackDescription>
+            </DialogStackHeader>
+            <DialogStackFooter className="justify-between">
+              <DialogStackPrevious asChild>
+                <Button variant="outline">Previous</Button>
+              </DialogStackPrevious>
+            </DialogStackFooter>
+          </DialogStackContent>
+
+        </DialogStackBody>
+      </DialogStack>
+    </div>
+  );
+};
+
+export default Example;`} />
+
 ## Props
 
 All components accept the standard attributes relevant to their element and the `className` prop for custom styling. Below are the custom props for each component.
