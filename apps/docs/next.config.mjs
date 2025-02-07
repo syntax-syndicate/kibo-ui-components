@@ -58,10 +58,6 @@ const config = {
     ],
   },
 
-  experimental: {
-    staticPageGenerationTimeout: 120,
-  },
-
   transpilePackages: ['@sentry/nextjs'],
 
   webpack(config, { isServer }) {
