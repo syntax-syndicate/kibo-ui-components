@@ -47,6 +47,9 @@ const sentryConfig = {
   automaticVercelMonitors: true,
 };
 
+/**
+ * @type {import('next').NextConfig}
+ */
 const config = {
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -57,6 +60,7 @@ const config = {
       },
     ],
   },
+  staticPageGenerationTimeout: 180,
 
   transpilePackages: ['@sentry/nextjs'],
 
