@@ -834,6 +834,92 @@ const Example = () => (
 
 export default Example;`} />
 
+### Custom Theme
+
+<Preview name="code-block" code={`'use client';
+
+import { useState } from 'react';
+import {
+  CodeBlock,
+  CodeBlockHeader,
+  CodeBlockFilename,
+  CodeBlockSelect,
+  CodeBlockSelectTrigger,
+  CodeBlockSelectItem,
+  CodeBlockSelectValue,
+  CodeBlockSelectContent,
+  CodeBlockCopyButton,
+  CodeBlockContent,
+} from '@/components/ui/kibo-ui/code-block';
+
+const code = [{
+  language: 'JavaScript',
+  filename: 'MyComponent.jsx',
+  code: \`function MyComponent(props) {
+  return (
+    <div>
+      <h1>Hello, {props.name}!</h1>
+      <p>This is an example React component.</p>
+    </div>
+  );
+}\`,
+}, {
+  language: 'Typescript',
+  filename: 'MyComponent.tsx',
+  code: \`function MyComponent(props: { name: string }) {
+  return (
+    <div>
+      <h1>Hello, {props.name}!</h1>
+      <p>This is an example React component.</p>
+    </div>
+  );
+}\`
+}];
+
+const Example = () => (
+  <div className="p-4">
+    <CodeBlock defaultValue={code[0].language}>
+      <CodeBlockHeader>
+        {code.map((item) => (
+          <CodeBlockFilename key={item.language} value={item.language}>
+            {item.filename}
+          </CodeBlockFilename>
+        ))}
+        <CodeBlockSelect>
+          <CodeBlockSelectTrigger>
+            <CodeBlockSelectValue />
+          </CodeBlockSelectTrigger>
+          <CodeBlockSelectContent>
+            {code.map((item) => (
+              <CodeBlockSelectItem key={item.language} value={item.language}>
+                {item.language}
+              </CodeBlockSelectItem>
+            ))}
+          </CodeBlockSelectContent>
+        </CodeBlockSelect>
+        <CodeBlockCopyButton
+          onCopy={() =>
+            console.log(\`Copied "\${activeCode?.code}" to clipboard\`)
+          }
+          onError={() =>
+            console.error(\`Failed to copy "\${activeCode?.code}" to clipboard\`)
+          }
+        />
+      </CodeBlockHeader>
+      {code.map((item) => (
+        <CodeBlockContent key={item.language} value={item.language} themes={{
+          light: 'github-light',
+          dark: 'github-dark-default',
+        }}>
+          {item.code}
+        </CodeBlockContent>
+      ))}
+    </CodeBlock>
+  </div>
+);
+
+export default Example;`} />
+
 ## Props
 
 The Code Block component is made up of the following subcomponents:
