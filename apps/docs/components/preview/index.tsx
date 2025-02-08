@@ -25,15 +25,20 @@ type PreviewProps = {
   code: string;
   dependencies?: Record<string, string>;
 };
-
 const dependencyRegex = /^(.+?)(?:@(.+))?$/;
 const registryRegex = /@\/registry\/new-york\/ui\//g;
 const kiboRegex = /@\/components\/ui\/(?!kibo-ui\/)([^'"\s]+)/g;
 
+type ComponentModule = {
+  name: string;
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+  files?: { content: string }[];
+};
+
 const parseDependencyVersion = (dependency: string) => {
   const [name, version] =
     (dependency as string).match(dependencyRegex)?.slice(1) ?? [];
-
   return { name, version: version ?? 'latest' };
 };
 
@@ -54,46 +59,59 @@ const processDependencies = (
   }
 };
 
+const processComponentModule = async (
+  mod: ComponentModule,
+  files: Record<string, string>,
+  dependencies: Record<string, string>,
+  devDependencies: Record<string, string>
+) => {
+  const componentContent = mod.files?.[0]?.content ?? '';
+  files[`/components/ui/${mod.name}.tsx`] = parseContent(componentContent);
+
+  await Promise.all([
+    processDependencies(mod.dependencies, dependencies),
+    processDependencies(mod.devDependencies, devDependencies),
+    parseShadcnComponents(componentContent),
+  ]);
+};
+
 const parseShadcnComponents = async (str: string) => {
   const parsedString = parseContent(str);
   const matches = parsedString.match(kiboRegex);
 
-  const files: Record<string, string> = {};
-  const dependencies: Record<string, string> = {};
-  const devDependencies: Record<string, string> = {};
+  const result = {
+    files: {} as Record<string, string>,
+    dependencies: {} as Record<string, string>,
+    devDependencies: {} as Record<string, string>,
+  };
 
-  if (matches) {
-    const components = [
-      ...new Set(matches.map((m) => m.replace('@/components/ui/', ''))),
-    ];
-
-    await Promise.all(
-      components.map(async (component) => {
-        try {
-          const mod = (await import(`./shadcn/${component}.json`)) as {
-            name: string;
-            dependencies?: Record<string, string>;
-            devDependencies?: Record<string, string>;
-            files?: { content: string }[];
-          };
-
-          const componentContent = mod.files?.[0]?.content ?? '';
-          files[`/components/ui/${mod.name}.tsx`] =
-            parseContent(componentContent);
-
-          await Promise.all([
-            processDependencies(mod.dependencies, dependencies),
-            processDependencies(mod.devDependencies, devDependencies),
-            parseShadcnComponents(componentContent),
-          ]);
-        } catch (error) {
-          console.warn(`Failed to load shadcn component: ${component}`);
-        }
-      })
-    );
+  if (!matches) {
+    return result;
   }
 
-  return { files, dependencies, devDependencies };
+  const components = [
+    ...new Set(matches.map((m) => m.replace('@/components/ui/', ''))),
+  ];
+
+  await Promise.all(
+    components.map(async (component) => {
+      try {
+        const mod = (await import(
+          `./shadcn/${component}.json`
+        )) as ComponentModule;
+        await processComponentModule(
+          mod,
+          result.files,
+          result.dependencies,
+          result.devDependencies
+        );
+      } catch (error) {
+        console.warn(`Failed to load shadcn component: ${component}`);
+      }
+    })
+  );
+
+  return result;
 };
 
 export const Preview = async ({
@@ -114,10 +132,12 @@ export const Preview = async ({
   const { files, dependencies, devDependencies } = initialParsedComponents;
 
   // Set up initial files
-  files['/App.tsx'] = code;
-  files['/tsconfig.json'] = tsconfig;
-  files['/lib/utils.ts'] = utils;
-  files['/lib/content.ts'] = content;
+  Object.assign(files, {
+    '/App.tsx': code,
+    '/tsconfig.json': tsconfig,
+    '/lib/utils.ts': utils,
+    '/lib/content.ts': content,
+  });
 
   const selectedComponentContent = parseContent(
     registry.files?.[0]?.content ?? ''
@@ -128,21 +148,15 @@ export const Preview = async ({
     registry.registryDependencies &&
       Promise.all(
         Object.values(registry.registryDependencies).map(async (dependency) => {
-          const mod = (await import(`./shadcn/${dependency}.json`)) as {
-            name: string;
-            dependencies?: Record<string, string>;
-            devDependencies?: Record<string, string>;
-            files?: { content: string }[];
-          };
-
-          const componentContent = mod.files?.[0]?.content ?? '';
-          files[`/components/ui/${mod.name}.tsx`] =
-            parseContent(componentContent);
-
-          processDependencies(mod.dependencies, dependencies);
-          processDependencies(mod.devDependencies, devDependencies);
-
-          return parseShadcnComponents(componentContent);
+          const mod = (await import(
+            `./shadcn/${dependency}.json`
+          )) as ComponentModule;
+          await processComponentModule(
+            mod,
+            files,
+            dependencies,
+            devDependencies
+          );
         })
       ),
   ]);
@@ -152,9 +166,13 @@ export const Preview = async ({
   );
 
   // Process all dependencies
-  processDependencies(registry.dependencies, dependencies);
-  processDependencies(registry.devDependencies, devDependencies);
-  processDependencies(demoDependencies, dependencies);
+  for (const deps of [
+    registry.dependencies,
+    registry.devDependencies,
+    demoDependencies,
+  ]) {
+    processDependencies(deps, dependencies);
+  }
 
   return (
     <PreviewProvider
