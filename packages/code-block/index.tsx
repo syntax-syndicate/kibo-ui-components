@@ -387,6 +387,7 @@ export type CodeBlockContentProps = HTMLAttributes<HTMLDivElement> & {
   value: string;
   themes?: CodeOptionsMultipleThemes['themes'];
   lineNumbers?: boolean;
+  syntaxHighlighting?: boolean;
 };
 
 export const CodeBlockContent = ({
@@ -395,6 +396,7 @@ export const CodeBlockContent = ({
   themes,
   className,
   lineNumbers = true,
+  syntaxHighlighting = true,
   ...props
 }: CodeBlockContentProps) => {
   const [html, setHtml] = useState<string | null>(null);
@@ -422,14 +424,6 @@ export const CodeBlockContent = ({
     return null;
   }
 
-  if (!html) {
-    return (
-      <div className={cn('mt-0 p-4 text-sm', className)} {...props}>
-        <pre className="w-full">{children}</pre>
-      </div>
-    );
-  }
-
   const lineNumberClassNames = cn(
     '[&_code]:[counter-reset:line]',
     '[&_code]:[counter-increment:line_0]',
@@ -445,38 +439,58 @@ export const CodeBlockContent = ({
     '[&_.line]:before:select-none'
   );
 
+  const codeBlockClassName = cn(
+    'mt-0 py-4 text-sm',
+    '[&_code]:w-full',
+    '[&_code]:grid',
+    '[&_code]:overflow-x-auto',
+    '[&_.line]:px-4',
+    '[&_.line]:w-full',
+    '[&_.line]:relative',
+    '[&_.line.highlighted]:bg-blue-50',
+    '[&_.line.highlighted]:after:bg-blue-500',
+    '[&_.line.highlighted]:after:absolute',
+    '[&_.line.highlighted]:after:left-0',
+    '[&_.line.highlighted]:after:top-0',
+    '[&_.line.highlighted]:after:bottom-0',
+    '[&_.line.highlighted]:after:w-0.5',
+    '[&_.line.diff]:after:absolute',
+    '[&_.line.diff]:after:left-0',
+    '[&_.line.diff]:after:top-0',
+    '[&_.line.diff]:after:bottom-0',
+    '[&_.line.diff]:after:w-0.5',
+    '[&_.line.diff.add]:bg-emerald-50',
+    '[&_.line.diff.add]:after:bg-emerald-500',
+    '[&_.line.diff.remove]:bg-rose-50',
+    '[&_.line.diff.remove]:after:bg-rose-500',
+    '[&_.highlighted-word]:bg-blue-50',
+    '[&_code:has(.focused)_.line]:blur-[2px]',
+    '[&_code:has(.focused)_.line.focused]:blur-none',
+    lineNumbers && lineNumberClassNames,
+    className
+  );
+
+  if (!html || !syntaxHighlighting) {
+    const lines = children?.toString().split('\n') ?? [];
+
+    return (
+      <div className={codeBlockClassName} {...props}>
+        <pre className="w-full">
+          <code>
+            {lines.map((line, i) => (
+              <span key={i} className="line">
+                {line}
+              </span>
+            ))}
+          </code>
+        </pre>
+      </div>
+    );
+  }
+
   return (
     <div
-      className={cn(
-        'mt-0 py-4 text-sm',
-        '[&_code]:w-full',
-        '[&_code]:grid',
-        '[&_code]:overflow-x-auto',
-        '[&_.line]:px-4',
-        '[&_.line]:w-full',
-        '[&_.line]:relative',
-        '[&_.line.highlighted]:bg-blue-50',
-        '[&_.line.highlighted]:after:bg-blue-500',
-        '[&_.line.highlighted]:after:absolute',
-        '[&_.line.highlighted]:after:left-0',
-        '[&_.line.highlighted]:after:top-0',
-        '[&_.line.highlighted]:after:bottom-0',
-        '[&_.line.highlighted]:after:w-0.5',
-        '[&_.line.diff]:after:absolute',
-        '[&_.line.diff]:after:left-0',
-        '[&_.line.diff]:after:top-0',
-        '[&_.line.diff]:after:bottom-0',
-        '[&_.line.diff]:after:w-0.5',
-        '[&_.line.diff.add]:bg-emerald-50',
-        '[&_.line.diff.add]:after:bg-emerald-500',
-        '[&_.line.diff.remove]:bg-rose-50',
-        '[&_.line.diff.remove]:after:bg-rose-500',
-        '[&_.highlighted-word]:bg-blue-50',
-        '[&_code:has(.focused)_.line]:blur-[2px]',
-        '[&_code:has(.focused)_.line.focused]:blur-none',
-        lineNumbers && lineNumberClassNames,
-        className
-      )}
+      className={codeBlockClassName}
       // biome-ignore lint/security/noDangerouslySetInnerHtml: "Kinda how Shiki works"
       dangerouslySetInnerHTML={{ __html: html }}
       {...props}
