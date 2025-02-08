@@ -439,8 +439,23 @@ export const CodeBlockContent = ({
     '[&_.line]:before:select-none'
   );
 
+  const darkModeClassNames = cn(
+    'dark:[&_.shiki]:![color:var(--shiki-dark)]',
+    'dark:[&_.shiki]:![background-color:var(--shiki-dark-bg)]',
+    'dark:[&_.shiki]:![font-style:var(--shiki-dark-font-style)]',
+    'dark:[&_.shiki]:![font-weight:var(--shiki-dark-font-weight)]',
+    'dark:[&_.shiki]:![text-decoration:var(--shiki-dark-text-decoration)]',
+    'dark:[&_.shiki_span]:![color:var(--shiki-dark)]',
+    'dark:[&_.shiki_span]:![background-color:var(--shiki-dark-bg)]',
+    'dark:[&_.shiki_span]:![font-style:var(--shiki-dark-font-style)]',
+    'dark:[&_.shiki_span]:![font-weight:var(--shiki-dark-font-weight)]',
+    'dark:[&_.shiki_span]:![text-decoration:var(--shiki-dark-text-decoration)]'
+  );
+
   const codeBlockClassName = cn(
-    'mt-0 py-4 text-sm',
+    'mt-0 text-sm',
+    '[&_.shiki]:py-4',
+    '[&_.shiki]:![background-color:var(--shiki-bg)]',
     '[&_code]:w-full',
     '[&_code]:grid',
     '[&_code]:overflow-x-auto',
@@ -467,6 +482,7 @@ export const CodeBlockContent = ({
     '[&_code:has(.focused)_.line]:blur-[2px]',
     '[&_code:has(.focused)_.line.focused]:blur-none',
     lineNumbers && lineNumberClassNames,
+    darkModeClassNames,
     className
   );
 
