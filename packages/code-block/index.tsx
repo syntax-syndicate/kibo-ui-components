@@ -454,7 +454,7 @@ export const CodeBlockContent = ({
 
   const codeBlockClassName = cn(
     'mt-0 text-sm',
-    '[&_.shiki]:py-4',
+    '[&_pre]:py-4',
     '[&_.shiki]:![background-color:var(--shiki-bg)]',
     '[&_code]:w-full',
     '[&_code]:grid',
