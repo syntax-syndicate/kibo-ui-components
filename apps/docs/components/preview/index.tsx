@@ -26,22 +26,37 @@ type PreviewProps = {
   dependencies?: Record<string, string>;
 };
 
+const dependencyRegex = /^(.+?)(?:@(.+))?$/;
+const registryRegex = /@\/registry\/new-york\/ui\//g;
+const kiboRegex = /@\/components\/ui\/(?!kibo-ui\/)([^'"\s]+)/g;
+
 const parseDependencyVersion = (dependency: string) => {
   const [name, version] =
-    (dependency as string).match(/^(.+?)(?:@(.+))?$/)?.slice(1) ?? [];
+    (dependency as string).match(dependencyRegex)?.slice(1) ?? [];
 
   return { name, version: version ?? 'latest' };
 };
 
-const parseContent = (content: string) => {
-  return content.replace(/@\/registry\/new-york\/ui\//g, '@/components/ui/');
+const parseContent = (content: string) =>
+  content.replace(registryRegex, '@/components/ui/');
+
+const processDependencies = (
+  deps: Record<string, string> | undefined,
+  target: Record<string, string>
+) => {
+  if (!deps) {
+    return;
+  }
+
+  for (const dep of Object.values(deps)) {
+    const { name, version } = parseDependencyVersion(dep);
+    target[name] = version;
+  }
 };
 
 const parseShadcnComponents = async (str: string) => {
   const parsedString = parseContent(str);
-  const matches = parsedString.match(
-    /@\/components\/ui\/(?!kibo-ui\/)([^'"\s]+)/g
-  );
+  const matches = parsedString.match(kiboRegex);
 
   const files: Record<string, string> = {};
   const dependencies: Record<string, string> = {};
@@ -52,7 +67,6 @@ const parseShadcnComponents = async (str: string) => {
       ...new Set(matches.map((m) => m.replace('@/components/ui/', ''))),
     ];
 
-    // Process all components in parallel instead of sequentially
     await Promise.all(
       components.map(async (component) => {
         try {
@@ -63,31 +77,14 @@ const parseShadcnComponents = async (str: string) => {
             files?: { content: string }[];
           };
 
-          // Load required shadcn/ui component
-          files[`/components/ui/${mod.name}.tsx`] = parseContent(
-            mod.files?.[0]?.content ?? ''
-          );
+          const componentContent = mod.files?.[0]?.content ?? '';
+          files[`/components/ui/${mod.name}.tsx`] =
+            parseContent(componentContent);
 
-          // Process dependencies and devDependencies in parallel
           await Promise.all([
-            // Load required dependencies
-            mod.dependencies
-              ? Object.values(mod.dependencies).map((dep) => {
-                  const { name, version } = parseDependencyVersion(dep);
-                  dependencies[name] = version;
-                })
-              : Promise.resolve(),
-
-            // Load required devDependencies
-            mod.devDependencies
-              ? Object.values(mod.devDependencies).map((dep) => {
-                  const { name, version } = parseDependencyVersion(dep);
-                  devDependencies[name] = version;
-                })
-              : Promise.resolve(),
-
-            // Parse nested components
-            parseShadcnComponents(mod.files?.[0]?.content ?? ''),
+            processDependencies(mod.dependencies, dependencies),
+            processDependencies(mod.devDependencies, devDependencies),
+            parseShadcnComponents(componentContent),
           ]);
         } catch (error) {
           console.warn(`Failed to load shadcn component: ${component}`);
@@ -104,7 +101,6 @@ export const Preview = async ({
   code,
   dependencies: demoDependencies,
 }: PreviewProps) => {
-  // Load and parse everything in parallel for better performance
   const [registry, initialParsedComponents] = await Promise.all([
     import(`../../public/registry/${name}.json`) as Promise<{
       dependencies?: Record<string, string>;
@@ -123,77 +119,42 @@ export const Preview = async ({
   files['/lib/utils.ts'] = utils;
   files['/lib/content.ts'] = content;
 
-  // Process Kibo UI component
-  const selectedComponent = registry.files?.[0]?.content;
-  const selectedComponentContent = parseContent(selectedComponent ?? '');
+  const selectedComponentContent = parseContent(
+    registry.files?.[0]?.content ?? ''
+  );
 
-  // Run these operations in parallel
   await Promise.all([
     parseShadcnComponents(selectedComponentContent),
+    registry.registryDependencies &&
+      Promise.all(
+        Object.values(registry.registryDependencies).map(async (dependency) => {
+          const mod = (await import(`./shadcn/${dependency}.json`)) as {
+            name: string;
+            dependencies?: Record<string, string>;
+            devDependencies?: Record<string, string>;
+            files?: { content: string }[];
+          };
 
-    // Process registry dependencies if they exist
-    registry.registryDependencies
-      ? Promise.all(
-          Object.values(registry.registryDependencies).map(
-            async (dependency) => {
-              const mod = (await import(`./shadcn/${dependency}.json`)) as {
-                name: string;
-                dependencies?: Record<string, string>;
-                devDependencies?: Record<string, string>;
-                files?: { content: string }[];
-              };
+          const componentContent = mod.files?.[0]?.content ?? '';
+          files[`/components/ui/${mod.name}.tsx`] =
+            parseContent(componentContent);
 
-              const componentContent = mod.files?.[0]?.content ?? '';
-              files[`/components/ui/${mod.name}.tsx`] =
-                parseContent(componentContent);
+          processDependencies(mod.dependencies, dependencies);
+          processDependencies(mod.devDependencies, devDependencies);
 
-              // Process dependencies
-              if (mod.dependencies) {
-                for (const dep of Object.values(mod.dependencies)) {
-                  const { name, version } = parseDependencyVersion(dep);
-                  dependencies[name] = version;
-                }
-              }
-
-              if (mod.devDependencies) {
-                for (const dep of Object.values(mod.devDependencies)) {
-                  const { name, version } = parseDependencyVersion(dep);
-                  devDependencies[name] = version;
-                }
-              }
-
-              return parseShadcnComponents(componentContent);
-            }
-          )
-        )
-      : Promise.resolve(),
+          return parseShadcnComponents(componentContent);
+        })
+      ),
   ]);
 
   files[`/components/ui/kibo-ui/${name}.tsx`] = parseContent(
     selectedComponentContent
   );
 
-  // Process main component dependencies
-  if (registry.dependencies) {
-    for (const dep of Object.values(registry.dependencies)) {
-      const { name, version } = parseDependencyVersion(dep);
-      dependencies[name] = version;
-    }
-  }
-
-  if (registry.devDependencies) {
-    for (const dep of Object.values(registry.devDependencies)) {
-      const { name, version } = parseDependencyVersion(dep);
-      devDependencies[name] = version;
-    }
-  }
-
-  // Add demo dependencies
-  if (demoDependencies) {
-    for (const [name, version] of Object.entries(demoDependencies)) {
-      dependencies[name] = version;
-    }
-  }
+  // Process all dependencies
+  processDependencies(registry.dependencies, dependencies);
+  processDependencies(registry.devDependencies, devDependencies);
+  processDependencies(demoDependencies, dependencies);
 
   return (
     <PreviewProvider
