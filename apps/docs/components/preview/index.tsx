@@ -20,21 +20,34 @@ import { PreviewProvider } from './provider';
 import { tsconfig } from './tsconfig';
 import { utils } from './utils';
 
-type PreviewProps = {
-  name: string;
-  code: string;
-  dependencies?: Record<string, string>;
-};
-const dependencyRegex = /^(.+?)(?:@(.+))?$/;
-const registryRegex = /@\/registry\/new-york\/ui\//g;
-const kiboRegex = /@\/components\/ui\/(?!kibo-ui\/)([^'"\s]+)/g;
-
 type ComponentModule = {
   name: string;
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
   files?: { content: string }[];
 };
+
+type ShadcnModule = {
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+  registryDependencies?: Record<string, string>;
+  files?: { content: string }[];
+};
+
+type PreviewProps = {
+  name: string;
+  code: string;
+  dependencies?: Record<string, string>;
+};
+
+// Caches to avoid repeated imports
+const componentModuleCache = new Map<string, ComponentModule>();
+const registryCache = new Map<string, ShadcnModule>();
+
+// Regexes to parse dependencies, registry, and components
+const dependencyRegex = /^(.+?)(?:@(.+))?$/;
+const registryRegex = /@\/registry\/new-york\/ui\//g;
+const kiboRegex = /@\/components\/ui\/(?!kibo-ui\/)([^'"\s]+)/g;
 
 const parseDependencyVersion = (dependency: string) => {
   const [name, version] =
@@ -96,9 +109,13 @@ const parseShadcnComponents = async (str: string) => {
   await Promise.all(
     components.map(async (component) => {
       try {
-        const mod = (await import(
-          `./shadcn/${component}.json`
-        )) as ComponentModule;
+        // Check cache first
+        let mod = componentModuleCache.get(component);
+        if (!mod) {
+          mod = (await import(`./shadcn/${component}.json`)) as ComponentModule;
+          componentModuleCache.set(component, mod);
+        }
+
         await processComponentModule(
           mod,
           result.files,
@@ -119,13 +136,16 @@ export const Preview = async ({
   code,
   dependencies: demoDependencies,
 }: PreviewProps) => {
-  const [registry, initialParsedComponents] = await Promise.all([
-    import(`../../public/registry/${name}.json`) as Promise<{
-      dependencies?: Record<string, string>;
-      devDependencies?: Record<string, string>;
-      registryDependencies?: Record<string, string>;
-      files?: { content: string }[];
-    }>,
+  let registry = registryCache.get(name);
+  if (!registry) {
+    registry = (await import(
+      `../../public/registry/${name}.json`
+    )) as ShadcnModule;
+    registryCache.set(name, registry);
+  }
+
+  const [, initialParsedComponents] = await Promise.all([
+    Promise.resolve(registry),
     parseShadcnComponents(code),
   ]);
 
@@ -148,9 +168,15 @@ export const Preview = async ({
     registry.registryDependencies &&
       Promise.all(
         Object.values(registry.registryDependencies).map(async (dependency) => {
-          const mod = (await import(
-            `./shadcn/${dependency}.json`
-          )) as ComponentModule;
+          // Check cache first
+          let mod = componentModuleCache.get(dependency);
+          if (!mod) {
+            mod = (await import(
+              `./shadcn/${dependency}.json`
+            )) as ComponentModule;
+            componentModuleCache.set(dependency, mod);
+          }
+
           await processComponentModule(
             mod,
             files,
@@ -177,7 +203,6 @@ export const Preview = async ({
   return (
     <PreviewProvider
       template="react-ts"
-      // options={{ bundlerURL: 'https://sandpack-bundler.codesandbox.io' }}
       options={{
         externalResources: [
           'https://cdn.tailwindcss.com',
