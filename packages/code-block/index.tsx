@@ -97,7 +97,11 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { type CodeOptionsMultipleThemes, codeToHtml } from 'shiki';
+import {
+  type BundledLanguage,
+  type CodeOptionsMultipleThemes,
+  codeToHtml,
+} from 'shiki';
 
 const filenameIconMap = {
   '.env': SiDotenv,
@@ -388,6 +392,7 @@ export type CodeBlockContentProps = HTMLAttributes<HTMLDivElement> & {
   themes?: CodeOptionsMultipleThemes['themes'];
   lineNumbers?: boolean;
   syntaxHighlighting?: boolean;
+  language?: BundledLanguage;
 };
 
 export const CodeBlockContent = ({
@@ -395,15 +400,17 @@ export const CodeBlockContent = ({
   children,
   themes,
   className,
+  language = 'typescript',
   lineNumbers = true,
   syntaxHighlighting = true,
   ...props
 }: CodeBlockContentProps) => {
   const [html, setHtml] = useState<string | null>(null);
   const { value: activeValue } = useContext(CodeBlockContext);
+
   useEffect(() => {
     codeToHtml(children as string, {
-      lang: 'javascript',
+      lang: language,
       themes: themes ?? {
         light: 'vitesse-light',
         dark: 'vitesse-dark',
@@ -418,7 +425,7 @@ export const CodeBlockContent = ({
     })
       .then(setHtml)
       .catch(console.error);
-  }, [children, themes]);
+  }, [children, themes, language]);
 
   if (value !== activeValue) {
     return null;
