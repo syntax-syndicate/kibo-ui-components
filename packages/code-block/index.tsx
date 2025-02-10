@@ -195,7 +195,6 @@ export type CodeBlockProps = HTMLAttributes<HTMLDivElement> &
   };
 
 export const CodeBlock = ({
-  children,
   value: controlledValue,
   onValueChange: controlledOnValueChange,
   defaultValue,
@@ -213,9 +212,7 @@ export const CodeBlock = ({
       <div
         className={cn('overflow-hidden rounded-md border', className)}
         {...props}
-      >
-        {children}
-      </div>
+      />
     </CodeBlockContext.Provider>
   );
 };
