@@ -273,61 +273,43 @@ export const CodeBlockFilename = ({
 
 export type CodeBlockSelectProps = ComponentProps<typeof Select>;
 
-export const CodeBlockSelect = ({
-  children,
-  ...props
-}: CodeBlockSelectProps) => {
+export const CodeBlockSelect = (props: CodeBlockSelectProps) => {
   const { value, onValueChange } = useContext(CodeBlockContext);
 
-  return (
-    <Select value={value} onValueChange={onValueChange} {...props}>
-      {children}
-    </Select>
-  );
+  return <Select value={value} onValueChange={onValueChange} {...props} />;
 };
 
 export type CodeBlockSelectTriggerProps = ComponentProps<typeof SelectTrigger>;
 
 export const CodeBlockSelectTrigger = ({
-  children,
+  className,
   ...props
 }: CodeBlockSelectTriggerProps) => (
   <SelectTrigger
-    className="w-fit border-none text-muted-foreground text-xs shadow-none"
+    className={cn(
+      'w-fit border-none text-muted-foreground text-xs shadow-none',
+      className
+    )}
     {...props}
-  >
-    {children}
-  </SelectTrigger>
+  />
 );
 
 export type CodeBlockSelectValueProps = ComponentProps<typeof SelectValue>;
 
-export const CodeBlockSelectValue = ({
-  children,
-  ...props
-}: CodeBlockSelectValueProps) => (
-  <SelectValue {...props}>{children}</SelectValue>
+export const CodeBlockSelectValue = (props: CodeBlockSelectValueProps) => (
+  <SelectValue {...props} />
 );
 
 export type CodeBlockSelectContentProps = ComponentProps<typeof SelectContent>;
 
-export const CodeBlockSelectContent = ({
-  children,
-  ...props
-}: CodeBlockSelectContentProps) => (
-  <SelectContent {...props}>{children}</SelectContent>
+export const CodeBlockSelectContent = (props: CodeBlockSelectContentProps) => (
+  <SelectContent {...props} />
 );
 
 export type CodeBlockSelectItemProps = ComponentProps<typeof SelectItem>;
 
-export const CodeBlockSelectItem = ({
-  children,
-  className,
-  ...props
-}: CodeBlockSelectItemProps) => (
-  <SelectItem className={cn('text-sm', className)} value={props.value}>
-    {children}
-  </SelectItem>
+export const CodeBlockSelectItem = (props: CodeBlockSelectItemProps) => (
+  <SelectItem className={cn('text-sm', props.className)} value={props.value} />
 );
 
 export type CodeBlockCopyButtonProps = ComponentProps<typeof Button> & {
