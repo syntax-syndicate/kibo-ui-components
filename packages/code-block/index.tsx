@@ -305,8 +305,11 @@ export const CodeBlockSelectContent = (props: CodeBlockSelectContentProps) => (
 
 export type CodeBlockSelectItemProps = ComponentProps<typeof SelectItem>;
 
-export const CodeBlockSelectItem = (props: CodeBlockSelectItemProps) => (
-  <SelectItem className={cn('text-sm', props.className)} value={props.value} />
+export const CodeBlockSelectItem = ({
+  className,
+  ...props
+}: CodeBlockSelectItemProps) => (
+  <SelectItem className={cn('text-sm', className)} {...props} />
 );
 
 export type CodeBlockCopyButtonProps = ComponentProps<typeof Button> & {
