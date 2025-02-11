@@ -443,7 +443,8 @@ export const CodeBlockBody = ({
     '[&_.line.highlighted]:after:left-0',
     '[&_.line.highlighted]:after:top-0',
     '[&_.line.highlighted]:after:bottom-0',
-    '[&_.line.highlighted]:after:w-0.5'
+    '[&_.line.highlighted]:after:w-0.5',
+    'dark:[&_.line.highlighted]:bg-blue-800'
   );
 
   const lineDiffClassNames = cn(
@@ -455,7 +456,9 @@ export const CodeBlockBody = ({
     '[&_.line.diff.add]:bg-emerald-50',
     '[&_.line.diff.add]:after:bg-emerald-500',
     '[&_.line.diff.remove]:bg-rose-50',
-    '[&_.line.diff.remove]:after:bg-rose-500'
+    '[&_.line.diff.remove]:after:bg-rose-500',
+    'dark:[&_.line.diff.add]:bg-emerald-800',
+    'dark:[&_.line.diff.remove]:bg-rose-800'
   );
 
   const lineFocusedClassNames = cn(
@@ -463,7 +466,10 @@ export const CodeBlockBody = ({
     '[&_code:has(.focused)_.line.focused]:blur-none'
   );
 
-  const wordHighlightClassNames = cn('[&_.highlighted-word]:bg-blue-50');
+  const wordHighlightClassNames = cn(
+    '[&_.highlighted-word]:bg-blue-50',
+    'dark:[&_.highlighted-word]:bg-blue-800'
+  );
 
   const codeBlockClassName = cn(
     'mt-0 text-sm',
