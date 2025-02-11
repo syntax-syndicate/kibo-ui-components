@@ -40,11 +40,25 @@ const buildRegistry = async (pkg: string) => {
       ].includes(dep)
   );
 
-  const contentPath = join(cwd, 'packages', pkg, 'index.tsx');
-  const content = await fs.readFile(contentPath, 'utf-8');
+  const packageDir = join(cwd, 'packages', pkg);
+  const files = readdirSync(packageDir, { withFileTypes: true })
+    .filter((file) => file.isFile() && file.name.endsWith('.tsx'))
+    .map(async (file) => {
+      const filePath = join(packageDir, file.name);
+      const content = await fs.readFile(filePath, 'utf-8');
+      return {
+        type: 'registry:ui',
+        path: file.name,
+        content,
+        target: `components/ui/kibo-ui/${pkg}/${file.name}`,
+      };
+    });
+
+  const allFiles = await Promise.all(files);
+  const allContent = allFiles.map((f) => f.content).join('\n');
 
   const registryDependencies = (
-    content.match(/@\/components\/ui\/([a-z-]+)/g) || []
+    allContent.match(/@\/components\/ui\/([a-z-]+)/g) || []
   )
     .map((path) => path.split('/').pop())
     .filter((name): name is string => !!name);
@@ -59,14 +73,7 @@ const buildRegistry = async (pkg: string) => {
       registryDependencies,
       dependencies,
       devDependencies,
-      files: [
-        {
-          type: 'registry:ui',
-          path: 'index.tsx',
-          content,
-          target: `components/ui/kibo-ui/${pkg}.tsx`,
-        },
-      ],
+      files: allFiles,
     },
     null,
     2
