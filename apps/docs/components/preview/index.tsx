@@ -27,7 +27,7 @@ type ComponentModule = {
   files?: { content: string }[];
 };
 
-type ShadcnModule = {
+type RegistryItem = {
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
   registryDependencies?: Record<string, string>;
@@ -42,7 +42,7 @@ type PreviewProps = {
 
 // Caches to avoid repeated imports
 const componentModuleCache = new Map<string, ComponentModule>();
-const registryCache = new Map<string, ShadcnModule>();
+const registryCache = new Map<string, RegistryItem>();
 
 // Regexes to parse dependencies, registry, and components
 const dependencyRegex = /^(.+?)(?:@(.+))?$/;
@@ -81,11 +81,14 @@ const processComponentModule = async (
   const componentContent = mod.files?.[0]?.content ?? '';
   files[`/components/ui/${mod.name}.tsx`] = parseContent(componentContent);
 
-  await Promise.all([
-    processDependencies(mod.dependencies, dependencies),
-    processDependencies(mod.devDependencies, devDependencies),
-    parseShadcnComponents(componentContent),
-  ]);
+  // Parse the component content to find additional dependencies
+  const nestedComponents = await parseShadcnComponents(componentContent);
+  Object.assign(files, nestedComponents.files);
+  Object.assign(dependencies, nestedComponents.dependencies);
+  Object.assign(devDependencies, nestedComponents.devDependencies);
+
+  processDependencies(mod.dependencies, dependencies);
+  processDependencies(mod.devDependencies, devDependencies);
 };
 
 const parseShadcnComponents = async (str: string) => {
@@ -140,7 +143,7 @@ export const Preview = async ({
   if (!registry) {
     registry = (await import(
       `../../public/registry/${name}.json`
-    )) as ShadcnModule;
+    )) as RegistryItem;
     registryCache.set(name, registry);
   }
 
@@ -163,29 +166,30 @@ export const Preview = async ({
     registry.files?.[0]?.content ?? ''
   );
 
-  await Promise.all([
-    parseShadcnComponents(selectedComponentContent),
-    registry.registryDependencies &&
-      Promise.all(
-        Object.values(registry.registryDependencies).map(async (dependency) => {
-          // Check cache first
-          let mod = componentModuleCache.get(dependency);
-          if (!mod) {
-            mod = (await import(
-              `./shadcn/${dependency}.json`
-            )) as ComponentModule;
-            componentModuleCache.set(dependency, mod);
-          }
+  // Parse the selected component content
+  const selectedComponentDeps = await parseShadcnComponents(
+    selectedComponentContent
+  );
+  Object.assign(files, selectedComponentDeps.files);
+  Object.assign(dependencies, selectedComponentDeps.dependencies);
+  Object.assign(devDependencies, selectedComponentDeps.devDependencies);
 
-          await processComponentModule(
-            mod,
-            files,
-            dependencies,
-            devDependencies
-          );
-        })
-      ),
-  ]);
+  // Process registry dependencies
+  if (registry.registryDependencies) {
+    await Promise.all(
+      Object.values(registry.registryDependencies).map(async (dependency) => {
+        let mod = componentModuleCache.get(dependency);
+        if (!mod) {
+          mod = (await import(
+            `./shadcn/${dependency}.json`
+          )) as ComponentModule;
+          componentModuleCache.set(dependency, mod);
+        }
+
+        await processComponentModule(mod, files, dependencies, devDependencies);
+      })
+    );
+  }
 
   files[`/components/ui/kibo-ui/${name}.tsx`] = parseContent(
     selectedComponentContent
