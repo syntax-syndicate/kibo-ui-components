@@ -189,10 +189,11 @@ const CodeBlockContext = createContext<CodeBlockContextType>({
   onValueChange: undefined,
 });
 
-export type CodeBlockProps = HTMLAttributes<HTMLDivElement> &
-  CodeBlockContextType & {
-    defaultValue?: string;
-  };
+export type CodeBlockProps = HTMLAttributes<HTMLDivElement> & {
+  defaultValue?: string;
+  value?: string;
+  onValueChange?: (value: string) => void;
+};
 
 export const CodeBlock = ({
   value: controlledValue,
@@ -526,11 +527,21 @@ export const CodeBlockContent = ({
         dark: 'vitesse-dark',
       },
       transformers: [
-        transformerNotationDiff(),
-        transformerNotationHighlight(),
-        transformerNotationWordHighlight(),
-        transformerNotationFocus(),
-        transformerNotationErrorLevel(),
+        transformerNotationDiff({
+          matchAlgorithm: 'v3',
+        }),
+        transformerNotationHighlight({
+          matchAlgorithm: 'v3',
+        }),
+        transformerNotationWordHighlight({
+          matchAlgorithm: 'v3',
+        }),
+        transformerNotationFocus({
+          matchAlgorithm: 'v3',
+        }),
+        transformerNotationErrorLevel({
+          matchAlgorithm: 'v3',
+        }),
       ],
     })
       .then(setHtml)
