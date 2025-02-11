@@ -366,45 +366,40 @@ export const CodeBlockCopyButton = ({
   );
 };
 
-export type CodeBlockContentProps = HTMLAttributes<HTMLDivElement> & {
+type CodeBlockFallbackProps = HTMLAttributes<HTMLDivElement>;
+
+const CodeBlockFallback = ({ children, ...props }: CodeBlockFallbackProps) => (
+  <div {...props}>
+    <pre className="w-full">
+      <code>
+        {children
+          ?.toString()
+          .split('\n')
+          .map((line, i) => (
+            <span key={i} className="line">
+              {line}
+            </span>
+          ))}
+      </code>
+    </pre>
+  </div>
+);
+
+export type CodeBlockBodyProps = HTMLAttributes<HTMLDivElement> & {
   value: string;
-  themes?: CodeOptionsMultipleThemes['themes'];
   lineNumbers?: boolean;
   syntaxHighlighting?: boolean;
-  language?: BundledLanguage;
 };
 
-export const CodeBlockContent = ({
+export const CodeBlockBody = ({
   value,
-  children,
-  themes,
-  className,
-  language = 'typescript',
   lineNumbers = true,
   syntaxHighlighting = true,
+  children,
+  className,
   ...props
-}: CodeBlockContentProps) => {
-  const [html, setHtml] = useState<string | null>(null);
+}: CodeBlockBodyProps) => {
   const { value: activeValue } = useContext(CodeBlockContext);
-
-  useEffect(() => {
-    codeToHtml(children as string, {
-      lang: language,
-      themes: themes ?? {
-        light: 'vitesse-light',
-        dark: 'vitesse-dark',
-      },
-      transformers: [
-        transformerNotationDiff(),
-        transformerNotationHighlight(),
-        transformerNotationWordHighlight(),
-        transformerNotationFocus(),
-        transformerNotationErrorLevel(),
-      ],
-    })
-      .then(setHtml)
-      .catch(console.error);
-  }, [children, themes, language]);
 
   if (value !== activeValue) {
     return null;
@@ -486,30 +481,61 @@ export const CodeBlockContent = ({
     className
   );
 
-  if (!html || !syntaxHighlighting) {
-    const lines = children?.toString().split('\n') ?? [];
-
+  if (!syntaxHighlighting) {
     return (
-      <div className={codeBlockClassName} {...props}>
-        <pre className="w-full">
-          <code>
-            {lines.map((line, i) => (
-              <span key={i} className="line">
-                {line}
-              </span>
-            ))}
-          </code>
-        </pre>
-      </div>
+      <CodeBlockFallback className={codeBlockClassName} {...props}>
+        {children}
+      </CodeBlockFallback>
     );
   }
 
   return (
+    <div className={codeBlockClassName} {...props}>
+      {children}
+    </div>
+  );
+};
+
+export type CodeBlockContentProps = {
+  themes?: CodeOptionsMultipleThemes['themes'];
+  language?: BundledLanguage;
+  children: string;
+};
+
+export const CodeBlockContent = ({
+  children,
+  themes,
+  language = 'typescript',
+}: CodeBlockContentProps) => {
+  const [html, setHtml] = useState<string | null>(null);
+
+  useEffect(() => {
+    codeToHtml(children as string, {
+      lang: language,
+      themes: themes ?? {
+        light: 'vitesse-light',
+        dark: 'vitesse-dark',
+      },
+      transformers: [
+        transformerNotationDiff(),
+        transformerNotationHighlight(),
+        transformerNotationWordHighlight(),
+        transformerNotationFocus(),
+        transformerNotationErrorLevel(),
+      ],
+    })
+      .then(setHtml)
+      .catch(console.error);
+  }, [children, themes, language]);
+
+  if (!html) {
+    return <CodeBlockFallback>{children}</CodeBlockFallback>;
+  }
+
+  return (
     <div
-      className={codeBlockClassName}
       // biome-ignore lint/security/noDangerouslySetInnerHtml: "Kinda how Shiki works"
       dangerouslySetInnerHTML={{ __html: html }}
-      {...props}
     />
   );
 };
