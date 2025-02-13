@@ -40,6 +40,7 @@ import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 import { TaskItem } from '@tiptap/extension-task-item';
 import { TaskList } from '@tiptap/extension-task-list';
+import TextStyle from '@tiptap/extension-text-style';
 import Typography from '@tiptap/extension-typography';
 import type { DOMOutputSpec, Node as ProseMirrorNode } from '@tiptap/pm/model';
 import { PluginKey } from '@tiptap/pm/state';
@@ -693,6 +694,7 @@ export const EditorProvider = ({
       },
       nested: true,
     }),
+    TextStyle.configure({ mergeNestedSpanStyles: true }),
   ];
 
   return (
