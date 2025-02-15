@@ -11,7 +11,7 @@ export const Repo = async () => {
     auth: process.env.GITHUB_TOKEN,
   });
 
-  const repo = await octokit.rest.repos.get({
+  const repo = await octokit.repos.get({
     owner: 'haydenbleasel',
     repo: 'kibo',
   });
