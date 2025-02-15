@@ -8,6 +8,7 @@ import {
   SnippetTabsList,
   SnippetTabsTrigger,
 } from '@repo/snippet';
+import { track } from '@vercel/analytics/react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -55,7 +56,12 @@ export const Installer = ({ packageName }: InstallerProps) => {
         </SnippetTabsList>
         <SnippetCopyButton
           value={commands[value as keyof typeof commands].code}
-          onCopy={() => toast.success('Copied to clipboard')}
+          onCopy={() => {
+            toast.success('Copied to clipboard');
+            track('copy_installer_code', {
+              package: value,
+            });
+          }}
           onError={() => toast.error('Failed to copy to clipboard')}
         />
       </SnippetHeader>
