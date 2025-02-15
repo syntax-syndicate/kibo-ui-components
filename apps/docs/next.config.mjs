@@ -3,10 +3,6 @@ import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
 import { createMDX } from 'fumadocs-mdx/next';
 
-// @ts-expect-error No declaration file
-import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
-
-const otelRegex = /@opentelemetry\/instrumentation/;
 const withMDX = createMDX();
 
 const sentryConfig = {
@@ -63,16 +59,6 @@ const config = {
   staticPageGenerationTimeout: 180,
 
   transpilePackages: ['@sentry/nextjs'],
-
-  webpack(config, { isServer }) {
-    if (isServer) {
-      config.plugins = [...config.plugins, new PrismaPlugin()];
-    }
-
-    config.ignoreWarnings = [{ module: otelRegex }];
-
-    return config;
-  },
 };
 
 let nextConfig = withMDX(withLogtail({ ...config }));
