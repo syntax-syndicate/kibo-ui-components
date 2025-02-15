@@ -1,6 +1,7 @@
 import { Octokit } from '@octokit/rest';
 import { cn } from '@repo/shadcn-ui/lib/utils';
 import { StarIcon } from 'lucide-react';
+import { unstable_cache } from 'next/cache';
 
 if (!process.env.GITHUB_TOKEN) {
   throw new Error('GITHUB_TOKEN is not set');
@@ -10,14 +11,21 @@ const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
 
-const getRepo = async () => {
-  const { data } = await octokit.rest.repos.get({
-    owner: 'haydenbleasel',
-    repo: 'kibo',
-  });
+const getRepo = unstable_cache(
+  async () => {
+    const { data } = await octokit.rest.repos.get({
+      owner: 'haydenbleasel',
+      repo: 'kibo',
+    });
 
-  return data;
-};
+    return data;
+  },
+  ['github-repo-kibo'],
+  {
+    revalidate: 3600, // Cache for 1 hour
+    tags: ['github-repo'],
+  }
+);
 
 export const Repo = async () => {
   const repo = await getRepo();
