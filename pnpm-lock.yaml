@@ -57,6 +57,9 @@ importers:
       '@repo/announcement':
         specifier: workspace:*
         version: link:../../packages/announcement
+      '@repo/avatar-stack':
+        specifier: workspace:*
+        version: link:../../packages/avatar-stack
       '@repo/calendar':
         specifier: workspace:*
         version: link:../../packages/calendar
@@ -257,6 +260,31 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.0.3(@types/react@19.0.7)
+      typescript:
+        specifier: ^5
+        version: 5.7.3
+
+  packages/avatar-stack:
+    dependencies:
+      '@repo/shadcn-ui':
+        specifier: workspace:*
+        version: link:../shadcn-ui
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.0.0(react@19.0.0)
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/react':
+        specifier: ^19
+        version: 19.0.8
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.0.3(@types/react@19.0.8)
       typescript:
         specifier: ^5
         version: 5.7.3

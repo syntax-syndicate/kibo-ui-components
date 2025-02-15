@@ -16,6 +16,7 @@
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
     "@repo/announcement": "workspace:*",
+    "@repo/avatar-stack": "workspace:*",
     "@repo/calendar": "workspace:*",
     "@repo/code-block": "workspace:*",
     "@repo/color-picker": "workspace:*",
