@@ -109,30 +109,28 @@
 :root {
   --nav-height: 61px;
 
-  --fd-background: var(--background);
-  --fd-primary: var(--primary);
-  --fd-border: var(--border);
-  --fd-accent: var(--accent);
-  --fd-accent-foreground: var(--accent-foreground);
-  --fd-muted: var(--muted);
-  --fd-muted-foreground: var(--muted-foreground);
-  --fd-foreground: var(--foreground);
-  --fd-secondary: var(--secondary);
-  --fd-secondary-foreground: var(--secondary-foreground);
-  --fd-card: var(--card);
-  --fd-card-foreground: var(--card-foreground);
-  --fd-popover-foreground: var(--popover-foreground);
-  --fd-popover: var(--popover);
-  --fd-primary-foreground: var(--primary-foreground);
-  --fd-ring: var(--ring);
+  --color-fd-background: var(--background);
+  --color-fd-primary: var(--primary);
+  --color-fd-border: var(--border);
+  --color-fd-accent: var(--accent);
+  --color-fd-accent-foreground: var(--accent-foreground);
+  --color-fd-muted: var(--muted);
+  --color-fd-muted-foreground: var(--muted-foreground);
+  --color-fd-foreground: var(--foreground);
+  --color-fd-secondary: var(--secondary);
+  --color-fd-secondary-foreground: var(--secondary-foreground);
+  --color-fd-card: var(--card);
+  --color-fd-card-foreground: var(--card-foreground);
+  --color-fd-popover-foreground: var(--popover-foreground);
+  --color-fd-popover: var(--popover);
+  --color-fd-primary-foreground: var(--primary-foreground);
+  --color-fd-ring: var(--ring);
 }
 
 #nd-sidebar {
-  --fd-sidebar-height: calc(100dvh - var(--fd-banner-height) - var(--fd-nav-height) - var(--nav-height)) !important;
   @apply bg-transparent;
-}
-
-.top-fd-layout-top {
+  
+  --fd-sidebar-height: calc(100dvh - var(--fd-banner-height) - var(--fd-nav-height) - var(--nav-height)) !important;
   top: calc(var(--fd-banner-height) + var(--fd-nav-height) + var(--nav-height));
 }
 
