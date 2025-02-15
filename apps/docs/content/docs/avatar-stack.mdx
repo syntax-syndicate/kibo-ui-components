@@ -77,69 +77,6 @@ const Example = () => (
 
 export default Example;`} />
 
-### With tooltips
-
-<Preview name="avatar-stack" code={`'use client';
-
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { AvatarStack } from '@/components/ui/kibo-ui/avatar-stack';
-
-const Example = () => (
-  <TooltipProvider>
-    <div className="flex h-screen w-full items-center justify-center bg-secondary p-8">
-      <AvatarStack>
-        <Tooltip delayDuration={0}>
-          <TooltipTrigger asChild>
-            <Avatar>
-              <AvatarImage src="https://github.com/haydenbleasel.png" />
-              <AvatarFallback>HB</AvatarFallback>
-            </Avatar>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Hayden Bleasel</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip delayDuration={0}>
-          <TooltipTrigger asChild>
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Shadcn</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip delayDuration={0}>
-          <TooltipTrigger asChild>
-            <Avatar>
-              <AvatarImage src="https://github.com/leerob.png" />
-              <AvatarFallback>LR</AvatarFallback>
-            </Avatar>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Leerob</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip delayDuration={0}>
-          <TooltipTrigger asChild>
-            <Avatar>
-              <AvatarImage src="https://github.com/serafimcloud.png" />
-              <AvatarFallback>SC</AvatarFallback>
-            </Avatar>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Serafim Cloud</p>
-          </TooltipContent>
-        </Tooltip>
-      </AvatarStack>
-    </div>
-  </TooltipProvider>
-);
-
-export default Example;`} />
-
 ## Props
 
 The avatar stack component is made up of the following subcomponents:
