@@ -131,7 +131,14 @@
   @apply bg-transparent;
   
   --fd-sidebar-height: calc(100dvh - var(--fd-banner-height) - var(--fd-nav-height) - var(--nav-height)) !important;
+}
+
+#nd-sidebar, #nd-toc {
   top: calc(var(--fd-banner-height) + var(--fd-nav-height) + var(--nav-height));
+}
+
+#nd-toc {
+  @apply pt-8;
 }
 
 #nd-tocnav {

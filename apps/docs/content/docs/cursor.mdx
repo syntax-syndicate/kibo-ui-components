@@ -8,13 +8,35 @@ icon: MousePointer2
 
 import {
   Cursor,
+  CursorName,
+  CursorMessage,
+  CursorPointer,
+  CursorBody,
 } from '@/components/ui/kibo-ui/cursor';
 
 const Example = () => (
   <div className="flex w-full h-screen items-center justify-center gap-4">
-    <Cursor color="#10b981" name="@haydenbleasel" message="Can we adjust the color?" className="absolute top-24 left-24" />
-    <Cursor color="#f43f5e" name="@leerob" message="One more thing..." className="absolute top-48 right-32" />
-    <Cursor color="#0ea5e9" name="@shadcn" message="Another new component?!" className="absolute bottom-24 left-48" />
+    <Cursor className="absolute top-24 left-24">
+      <CursorPointer className="text-emerald-500" />
+      <CursorBody className="bg-emerald-100 text-emerald-700">
+        <CursorName>@haydenbleasel</CursorName>
+        <CursorMessage>Can we adjust the color?</CursorMessage>
+      </CursorBody>
+    </Cursor>
+    <Cursor className="absolute top-48 right-32">
+      <CursorPointer className="text-rose-500" />
+      <CursorBody className="bg-rose-100 text-rose-700">
+        <CursorName>@leerob</CursorName>
+        <CursorMessage>One more thing...</CursorMessage>
+      </CursorBody>
+    </Cursor>
+    <Cursor className="absolute bottom-24 left-48">
+      <CursorPointer className="text-sky-500" />
+      <CursorBody className="bg-sky-100 text-sky-700">
+        <CursorName>@shadcn</CursorName>
+        <CursorMessage>Another new component?!!</CursorMessage>
+      </CursorBody>
+    </Cursor>
   </div>
 );
 
@@ -41,11 +63,14 @@ export default Example;`} />
 
 import {
   Cursor,
+  CursorPointer,
 } from '@/components/ui/kibo-ui/cursor';
 
 const Example = () => (
   <div className="flex w-full h-screen items-center justify-center gap-4">
-    <Cursor color="#000000" />
+    <Cursor>
+      <CursorPointer />
+    </Cursor>
   </div>
 );
 
@@ -57,11 +82,19 @@ export default Example;`} />
 
 import {
   Cursor,
+  CursorPointer,
+  CursorBody,
+  CursorName,
 } from '@/components/ui/kibo-ui/cursor';
 
 const Example = () => (
   <div className="flex w-full h-screen items-center justify-center gap-4">
-    <Cursor color="#000000" name="Hayden" />
+    <Cursor>
+      <CursorPointer />
+      <CursorBody>
+        <CursorName>Hayden</CursorName>
+      </CursorBody>
+    </Cursor>
   </div>
 );
 
@@ -73,11 +106,19 @@ export default Example;`} />
 
 import {
   Cursor,
+  CursorPointer,
+  CursorBody,
+  CursorMessage,
 } from '@/components/ui/kibo-ui/cursor';
 
 const Example = () => (
   <div className="flex w-full h-screen items-center justify-center gap-4">
-    <Cursor color="#000000" message="That looks great!" />
+    <Cursor color="#000000">
+      <CursorPointer />
+      <CursorBody>
+        <CursorMessage>That looks great!</CursorMessage>
+      </CursorBody>
+    </Cursor>
   </div>
 );
 
@@ -89,11 +130,21 @@ export default Example;`} />
 
 import {
   Cursor,
+  CursorPointer,
+  CursorBody,
+  CursorName,
+  CursorMessage,
 } from '@/components/ui/kibo-ui/cursor';
 
 const Example = () => (
   <div className="flex w-full h-screen items-center justify-center gap-4">
-    <Cursor color="#000000" name="Hayden" message="That looks great!" />
+    <Cursor color="#000000">
+      <CursorPointer />
+      <CursorBody>
+        <CursorName>Hayden</CursorName>
+        <CursorMessage>That looks great!</CursorMessage>
+      </CursorBody>
+    </Cursor>
   </div>
 );
 
@@ -105,11 +156,21 @@ export default Example;`} />
 
 import {
   Cursor,
+  CursorPointer,
+  CursorBody,
+  CursorName,
+  CursorMessage,
 } from '@/components/ui/kibo-ui/cursor';
 
 const Example = () => (
   <div className="flex w-full h-screen items-center justify-center gap-4">
-    <Cursor color="#f43f5e" name="Hayden" message="That looks great!" />
+    <Cursor>
+      <CursorPointer className="text-indigo-500" />
+      <CursorBody className="bg-indigo-100 text-indigo-700">
+        <CursorName>@haydenbleasel</CursorName>
+        <CursorMessage>Can we adjust the color?</CursorMessage>
+      </CursorBody>
+    </Cursor>
   </div>
 );
 
@@ -124,3 +185,28 @@ The cursor component is made up of the following subcomponents:
 The `Cursor` component is used to display a cursor.
 
 <AutoTypeTable path="node_modules/@repo/cursor/index.tsx" name="CursorProps" />
+
+### CursorPointer
+
+The `CursorPointer` component is used to display a cursor pointer.
+
+<AutoTypeTable path="node_modules/@repo/cursor/index.tsx" name="CursorPointerProps" />
+
+### CursorBody
+
+The `CursorBody` component is used to display a cursor body.
+
+<AutoTypeTable path="node_modules/@repo/cursor/index.tsx" name="CursorBodyProps" />
+
+### CursorName
+
+The `CursorName` component is used to display a cursor name.
+
+<AutoTypeTable path="node_modules/@repo/cursor/index.tsx" name="CursorNameProps" />
+
+### CursorMessage
+
+The `CursorMessage` component is used to display a cursor message.
+
+<AutoTypeTable path="node_modules/@repo/cursor/index.tsx" name="CursorMessageProps" />
+
