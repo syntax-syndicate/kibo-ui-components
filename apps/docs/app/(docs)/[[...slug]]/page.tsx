@@ -1,4 +1,5 @@
 import { cn } from '@repo/shadcn-ui/lib/utils';
+import { AutoTypeTable } from 'fumadocs-typescript/ui';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import {
   DocsBody,
@@ -53,6 +54,7 @@ const Page = async (props: PageProps) => {
                 Installer,
                 Preview,
                 PoweredBy,
+                AutoTypeTable,
               }}
             />
           </DocsBody>
