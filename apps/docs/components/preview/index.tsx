@@ -237,7 +237,7 @@ export const Preview = async ({
         },
       }}
       files={files}
-      className="not-prose max-h-[30rem]"
+      className="not-prose h-[30rem]"
     >
       <SandboxLayout>
         <SandboxTabs defaultValue="preview">
