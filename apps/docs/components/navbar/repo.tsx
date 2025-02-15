@@ -1,4 +1,5 @@
 import { Octokit } from '@octokit/rest';
+import { cn } from '@repo/shadcn-ui/lib/utils';
 import { StarIcon } from 'lucide-react';
 
 const octokit = new Octokit();
@@ -20,9 +21,13 @@ export const Repo = async () => {
       href={repo.html_url}
       target="_blank"
       rel="noreferrer"
-      className="group flex items-center rounded-full border px-3"
+      className={cn(
+        'group hidden items-center rounded-full border px-3 transition-colors',
+        'lg:flex',
+        'hover:bg-background/50'
+      )}
     >
-      <div className="flex h-8 items-center gap-1.5">
+      <div className="flex h-8 items-center gap-2">
         <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -44,8 +49,8 @@ export const Repo = async () => {
             {repo.full_name}
           </span>
         </div>
-        <div className="ml-1 flex items-center gap-1.5">
-          <StarIcon className="size-3.5" />
+        <div className="flex items-center gap-1 text-muted-foreground">
+          <StarIcon size={14} />
           <span className="text-sm">{repo.stargazers_count}</span>
         </div>
       </div>

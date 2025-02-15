@@ -4,10 +4,10 @@ import Grid from './grid.svg';
 
 export const Header = () => (
   <span
-    className="pointer-events-none absolute inset-0 block h-[64rem] select-none overflow-hidden"
+    className="pointer-events-none absolute inset-0 flex h-[64rem] select-none justify-center overflow-hidden"
     style={{
       background:
-        'radial-gradient(49.63% 57.02% at 58.99% -7.2%, hsl(var(--fd-primary) / 0.1) 39.4%, hsl(var(--fd-primary) / 0) 100%)',
+        'radial-gradient(49.63% 57.02% at 58.99% -7.2%, hsl(var(--primary) / 0.1) 39.4%, hsl(var(--primary) / 0) 100%)',
     }}
   >
     <Image

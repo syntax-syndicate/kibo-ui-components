@@ -12,7 +12,7 @@ export const Search = () => {
       type="button"
       onClick={() => setOpenSearch(true)}
       variant="outline"
-      className="w-full max-w-[464px] justify-between rounded-xl px-3 text-muted-foreground shadow-none"
+      className="flex-1 justify-between rounded-xl bg-background px-3 text-muted-foreground shadow-none md:max-w-[440px]"
     >
       <div className="flex min-w-[42px] items-center gap-3">
         <SearchIcon size={16} />

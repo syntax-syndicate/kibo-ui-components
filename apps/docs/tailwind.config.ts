@@ -2,9 +2,7 @@ import { config } from '@repo/tailwind-config/config';
 import { createPreset } from 'fumadocs-ui/tailwind-plugin';
 import type { Config } from 'tailwindcss';
 
-const fumadocs = createPreset({
-  preset: 'vitepress',
-});
+const fumadocs = createPreset();
 
 const tailwindConfig: Config = {
   ...config,

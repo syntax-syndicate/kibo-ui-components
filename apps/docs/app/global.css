@@ -1,11 +1,62 @@
-.dark * {
-  @apply border-foreground/15;
+:root {
+  --nav-height: 61px;
+
+  --fd-background: var(--background);
+  --fd-primary: var(--primary);
+  --fd-border: var(--border);
+  --fd-accent: var(--accent);
+  --fd-accent-foreground: var(--accent-foreground);
+  --fd-muted: var(--muted);
+  --fd-muted-foreground: var(--muted-foreground);
+  --fd-foreground: var(--foreground);
+  --fd-secondary: var(--secondary);
+  --fd-secondary-foreground: var(--secondary-foreground);
+  --fd-card: var(--card);
+  --fd-card-foreground: var(--card-foreground);
+  --fd-popover-foreground: var(--popover-foreground);
+  --fd-popover: var(--popover);
+  --fd-primary-foreground: var(--primary-foreground);
+  --fd-ring: var(--ring);
 }
 
-#nd-docs-layout, #nd-sidebar {
-  @apply !bg-secondary;
+#nd-sidebar {
+  --fd-sidebar-height: calc(100dvh - var(--fd-banner-height) - var(--fd-nav-height) - var(--nav-height)) !important;
+  @apply bg-transparent;
+}
+
+.top-fd-layout-top {
+  top: calc(var(--fd-banner-height) + var(--fd-nav-height) + var(--nav-height));
+}
+
+#nd-tocnav {
+  @apply hidden;
 }
 
 #nd-sidebar > div {
-  @apply !border-none;
+  @apply pt-0 border-none;
+}
+
+#nd-sidebar a[data-active] {
+  @apply py-2;
+}
+
+#nd-docs-layout {
+  @apply container mx-auto px-0;
+}
+
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6 {
+  @apply tracking-tight;
+}
+
+.prose :where(a):not(:where([class~=not-prose],[class~=not-prose] *)) {
+  @apply font-semibold border-b hover:border-b-2 border-primary no-underline hover:-mb-px;
+}
+
+#nd-page {
+  @apply z-10 relative;
 }

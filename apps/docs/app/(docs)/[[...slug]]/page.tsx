@@ -1,4 +1,3 @@
-import { cn } from '@repo/shadcn-ui/lib/utils';
 import { AutoTypeTable } from 'fumadocs-typescript/ui';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import {
@@ -30,37 +29,28 @@ const Page = async (props: PageProps) => {
   const MDX = page.data.body;
 
   return (
-    <div className="relative w-full bg-background md:mt-4 md:overflow-clip md:rounded-tl-2xl md:border-t md:border-l">
+    <>
       <Header />
-      <div className="relative z-10 grid xl:grid-cols-[1fr_268px]">
-        <DocsPage
-          toc={page.data.toc}
-          full={page.data.full}
-          tableOfContent={{ style: 'clerk' }}
-        >
-          <DocsTitle className="tracking-tighter lg:text-4xl">
-            {page.data.title}
-          </DocsTitle>
-          <DocsDescription>{page.data.description}</DocsDescription>
-          <DocsBody
-            className={cn(
-              'prose-h2:tracking-tighter',
-              'prose-a:border-fd-primary prose-a:border-b-px prose-a:font-semibold prose-a:text-foreground prose-a:decoration-none prose-a:transition-all hover:prose-a:border-b-2'
-            )}
-          >
-            <MDX
-              components={{
-                ...defaultMdxComponents,
-                Installer,
-                Preview,
-                PoweredBy,
-                AutoTypeTable,
-              }}
-            />
-          </DocsBody>
-        </DocsPage>
-      </div>
-    </div>
+      <DocsPage
+        toc={page.data.toc}
+        full={page.data.full}
+        tableOfContent={{ style: 'clerk' }}
+      >
+        <DocsTitle>{page.data.title}</DocsTitle>
+        <DocsDescription>{page.data.description}</DocsDescription>
+        <DocsBody>
+          <MDX
+            components={{
+              ...defaultMdxComponents,
+              Installer,
+              Preview,
+              PoweredBy,
+              AutoTypeTable,
+            }}
+          />
+        </DocsBody>
+      </DocsPage>
+    </>
   );
 };
 
