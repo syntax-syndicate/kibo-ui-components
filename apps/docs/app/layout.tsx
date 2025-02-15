@@ -8,6 +8,7 @@ import { cn } from '@repo/shadcn-ui/lib/utils';
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import { RootProvider } from 'fumadocs-ui/provider';
 import type { ReactNode } from 'react';
+import { Navbar } from '../components/navbar';
 import { env } from '../env';
 import { fonts } from './lib/fonts';
 
@@ -20,7 +21,10 @@ const Layout = ({ children }: LayoutProps) => (
     <body className={cn('flex min-h-screen flex-col', fonts)}>
       <ThemeProvider>
         <RootProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <TooltipProvider>
+            <Navbar />
+            {children}
+          </TooltipProvider>
           <Toaster />
         </RootProvider>
         <VercelAnalytics />

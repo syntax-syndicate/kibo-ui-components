@@ -2,7 +2,13 @@ import { Octokit } from '@octokit/rest';
 import { cn } from '@repo/shadcn-ui/lib/utils';
 import { StarIcon } from 'lucide-react';
 
-const octokit = new Octokit();
+if (!process.env.GITHUB_TOKEN) {
+  throw new Error('GITHUB_TOKEN is not set');
+}
+
+const octokit = new Octokit({
+  auth: process.env.GITHUB_TOKEN,
+});
 
 const getRepo = async () => {
   const { data } = await octokit.rest.repos.get({
