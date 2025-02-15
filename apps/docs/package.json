@@ -21,6 +21,7 @@
     "@repo/calendar": "workspace:*",
     "@repo/code-block": "workspace:*",
     "@repo/color-picker": "workspace:*",
+    "@repo/cursor": "workspace:*",
     "@repo/dialog-stack": "workspace:*",
     "@repo/dropzone": "workspace:*",
     "@repo/editor": "workspace:*",

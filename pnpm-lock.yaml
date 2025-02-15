@@ -72,6 +72,9 @@ importers:
       '@repo/color-picker':
         specifier: workspace:*
         version: link:../../packages/color-picker
+      '@repo/cursor':
+        specifier: workspace:*
+        version: link:../../packages/cursor
       '@repo/dialog-stack':
         specifier: workspace:*
         version: link:../../packages/dialog-stack
@@ -399,6 +402,31 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.0.3(@types/react@19.0.7)
+      typescript:
+        specifier: ^5
+        version: 5.7.3
+
+  packages/cursor:
+    dependencies:
+      '@repo/shadcn-ui':
+        specifier: workspace:*
+        version: link:../shadcn-ui
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.0.0(react@19.0.0)
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/react':
+        specifier: ^19
+        version: 19.0.8
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.0.3(@types/react@19.0.8)
       typescript:
         specifier: ^5
         version: 5.7.3

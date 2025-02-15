@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "homepage": "https://www.kibo-ui.com/cursor",
+  "name": "cursor",
+  "type": "registry:ui",
+  "author": "Hayden Bleasel <hello@haydenbleasel.com>",
+  "registryDependencies": [],
+  "dependencies": [],
+  "devDependencies": [],
+  "files": [
+    {
+      "type": "registry:ui",
+      "path": "index.tsx",
+      "content": "import { cn } from '@/lib/utils';\nimport type { HTMLAttributes } from 'react';\n\nexport type CursorProps = HTMLAttributes<HTMLSpanElement> & {\n  name?: string;\n  message?: string;\n};\n\nconst getTextColor = (bgColor: string) => {\n  const hex = bgColor.replace('#', '');\n\n  // Handle both 3 and 6 digit hex\n  const r =\n    hex.length === 3\n      ? Number.parseInt(hex[0] + hex[0], 16)\n      : Number.parseInt(hex.substring(0, 2), 16);\n  const g =\n    hex.length === 3\n      ? Number.parseInt(hex[1] + hex[1], 16)\n      : Number.parseInt(hex.substring(2, 4), 16);\n  const b =\n    hex.length === 3\n      ? Number.parseInt(hex[2] + hex[2], 16)\n      : Number.parseInt(hex.substring(4, 6), 16);\n\n  const luminance = r * 0.299 + g * 0.587 + b * 0.114;\n\n  return luminance > 186 ? '#000000' : '#ffffff';\n};\n\nexport const Cursor = ({\n  name,\n  message,\n  color = '#FFFFFF',\n  className,\n  ...props\n}: CursorProps) => {\n  const textColor = getTextColor(color);\n\n  return (\n    <span\n      className={cn('relative', className)}\n      style={{\n        opacity: 1,\n        filter: 'blur(0px)',\n        willChange: 'auto',\n        transform: 'none',\n      }}\n      {...props}\n    >\n      <span className=\"pointer-events-none relative select-none\">\n        <svg\n          aria-hidden=\"true\"\n          focusable=\"false\"\n          className=\"size-3.5\"\n          xmlns=\"http://www.w3.org/2000/svg\"\n          width=\"20\"\n          height=\"20\"\n          fill=\"none\"\n          viewBox=\"0 0 20 20\"\n        >\n          <path\n            fill={color}\n            d=\"M19.438 6.716 1.115.05A.832.832 0 0 0 .05 1.116L6.712 19.45a.834.834 0 0 0 1.557.025l3.198-8 7.995-3.2a.833.833 0 0 0 0-1.559h-.024Z\"\n          />\n        </svg>\n        {(name || message) && (\n          <span\n            className={cn(\n              'relative ml-3.5 flex items-center whitespace-nowrap rounded-xl py-1 pr-3 pl-2.5 text-xs',\n              message && 'rounded-tl'\n            )}\n            style={{ backgroundColor: color, color: textColor }}\n          >\n            <span className=\"flex flex-col\">\n              {name && (\n                <span className={cn('text-2xs', message && 'opacity-70')}>\n                  {name}\n                </span>\n              )}\n              {message && <span>{message}</span>}\n            </span>\n          </span>\n        )}\n      </span>\n    </span>\n  );\n};\n",
+      "target": "components/ui/kibo-ui/cursor/index.tsx"
+    }
+  ]
+}

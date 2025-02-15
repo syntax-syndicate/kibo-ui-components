@@ -1,0 +1,122 @@
+---
+title: Cursor
+description: A cursor component, great for realtime interactive applications.
+icon: MousePointer2
+---
+
+<Preview name="cursor" code={`'use client';
+
+import {
+  Cursor,
+} from '@/components/ui/kibo-ui/cursor';
+
+const Example = () => (
+  <div className="flex w-full h-screen items-center justify-center gap-4 bg-secondary">
+    <Cursor color="#10b981" name="@haydenbleasel" message="Can we adjust the color?" className="absolute top-24 left-24" />
+    <Cursor color="#f43f5e" name="@leerob" message="One more thing..." className="absolute top-48 right-32" />
+    <Cursor color="#0ea5e9" name="@shadcn" message="Another new component?!" className="absolute bottom-24 left-48" />
+  </div>
+);
+
+export default Example;`} />
+
+## Installation
+
+<Installer packageName="cursor" />
+
+## Features
+
+- Customizable cursor color with automatic text color contrast adjustment
+- Optional name label display
+- Optional message display
+- Smooth cursor pointer with tooltip-style appearance
+- Fully accessible with ARIA attributes
+- Responsive and performant with optimized rendering
+
+## Examples
+
+### Cursor only
+
+<Preview name="cursor" code={`'use client';
+
+import {
+  Cursor,
+} from '@/components/ui/kibo-ui/cursor';
+
+const Example = () => (
+  <div className="flex w-full h-screen items-center justify-center gap-4 bg-secondary">
+    <Cursor color="#000000" />
+  </div>
+);
+
+export default Example;`} />
+
+### Cursor with name
+
+<Preview name="cursor" code={`'use client';
+
+import {
+  Cursor,
+} from '@/components/ui/kibo-ui/cursor';
+
+const Example = () => (
+  <div className="flex w-full h-screen items-center justify-center gap-4 bg-secondary">
+    <Cursor color="#000000" name="Hayden" />
+  </div>
+);
+
+export default Example;`} />
+
+### Cursor with message
+
+<Preview name="cursor" code={`'use client';
+
+import {
+  Cursor,
+} from '@/components/ui/kibo-ui/cursor';
+
+const Example = () => (
+  <div className="flex w-full h-screen items-center justify-center gap-4 bg-secondary">
+    <Cursor color="#000000" message="That looks great!" />
+  </div>
+);
+
+export default Example;`} />
+
+### Cursor with name and message
+
+<Preview name="cursor" code={`'use client';
+
+import {
+  Cursor,
+} from '@/components/ui/kibo-ui/cursor';
+
+const Example = () => (
+  <div className="flex w-full h-screen items-center justify-center gap-4 bg-secondary">
+    <Cursor color="#000000" name="Hayden" message="That looks great!" />
+  </div>
+);
+
+export default Example;`} />
+
+### Cursor with custom color
+
+<Preview name="cursor" code={`'use client';
+
+import {
+  Cursor,
+} from '@/components/ui/kibo-ui/cursor';
+
+const Example = () => (
+  <div className="flex w-full h-screen items-center justify-center gap-4 bg-secondary">
+    <Cursor color="#f43f5e" name="Hayden" message="That looks great!" />
+  </div>
+);
+
+export default Example;`} />
+
+## Props
+
+The `Cursor` component is used to display a cursor.
+
+<AutoTypeTable path="node_modules/@repo/cursor/index.tsx" name="CursorProps" />
