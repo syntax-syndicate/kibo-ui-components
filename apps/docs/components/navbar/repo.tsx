@@ -1,24 +1,10 @@
-import { Octokit } from '@octokit/rest';
 import { cn } from '@repo/shadcn-ui/lib/utils';
 import { StarIcon } from 'lucide-react';
 
-if (!process.env.GITHUB_TOKEN) {
-  throw new Error('GITHUB_TOKEN is not set');
-}
-
-export const Repo = async () => {
-  const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
-  });
-
-  const repo = await octokit.repos.get({
-    owner: 'haydenbleasel',
-    repo: 'kibo',
-  });
-
+export const Repo = () => {
   return (
     <a
-      href={repo.data.html_url}
+      href="https://github.com/haydenbleasel/kibo"
       target="_blank"
       rel="noreferrer"
       className={cn(
@@ -46,12 +32,12 @@ export const Repo = async () => {
             />
           </svg>
           <span className="font-medium text-gray-700 text-sm group-hover:text-primary dark:text-gray-300 dark:group-hover:text-primary-light">
-            {repo.data.full_name}
+            haydenbleasel/kibo
           </span>
         </div>
         <div className="flex items-center gap-1 text-muted-foreground">
           <StarIcon size={14} />
-          <span className="text-sm">{repo.data.stargazers_count}</span>
+          <span className="text-sm">500+</span>
         </div>
       </div>
     </a>
