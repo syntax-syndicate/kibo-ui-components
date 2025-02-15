@@ -11,21 +11,14 @@ const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
 
-const getRepo = unstable_cache(
-  async () => {
-    const { data } = await octokit.rest.repos.get({
-      owner: 'haydenbleasel',
-      repo: 'kibo',
-    });
+const getRepo = unstable_cache(async () => {
+  const { data } = await octokit.rest.repos.get({
+    owner: 'haydenbleasel',
+    repo: 'kibo',
+  });
 
-    return data;
-  },
-  ['github-repo-kibo'],
-  {
-    revalidate: 3600, // Cache for 1 hour
-    tags: ['github-repo'],
-  }
-);
+  return data;
+}, ['github-repo-kibo']);
 
 export const Repo = async () => {
   const repo = await getRepo();
