@@ -59,7 +59,8 @@ export const Installer = ({ packageName }: InstallerProps) => {
           onCopy={() => {
             toast.success('Copied to clipboard');
             track('copy_installer_code', {
-              package: value,
+              method: value,
+              package: packageName,
             });
           }}
           onError={() => toast.error('Failed to copy to clipboard')}
