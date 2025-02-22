@@ -54,6 +54,9 @@ importers:
       '@repo/avatar-stack':
         specifier: workspace:*
         version: link:../../packages/avatar-stack
+      '@repo/banner':
+        specifier: workspace:*
+        version: link:../../packages/banner
       '@repo/calendar':
         specifier: workspace:*
         version: link:../../packages/calendar
@@ -309,6 +312,37 @@ importers:
       '@repo/shadcn-ui':
         specifier: workspace:*
         version: link:../shadcn-ui
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.0.0(react@19.0.0)
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/react':
+        specifier: ^19
+        version: 19.0.8
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.0.3(@types/react@19.0.8)
+      typescript:
+        specifier: ^5
+        version: 5.7.3
+
+  packages/banner:
+    dependencies:
+      '@radix-ui/react-use-controllable-state':
+        specifier: ^1.1.0
+        version: 1.1.0(@types/react@19.0.8)(react@19.0.0)
+      '@repo/shadcn-ui':
+        specifier: workspace:*
+        version: link:../shadcn-ui
+      lucide-react:
+        specifier: ^0.475.0
+        version: 0.475.0(react@19.0.0)
       react:
         specifier: ^19.0.0
         version: 19.0.0
