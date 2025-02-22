@@ -126,3 +126,11 @@
   --color-fd-primary-foreground: var(--primary-foreground);
   --color-fd-ring: var(--ring);
 }
+
+#nd-sidebar > div {
+  @apply pt-0;
+}
+
+#nd-toc {
+  @apply pt-6;
+}
