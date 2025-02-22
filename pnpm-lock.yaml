@@ -193,8 +193,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(typescript@5.7.3)
       shiki:
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: 2.3.2
+        version: 2.3.2
       sonner:
         specifier: ^2.0.1
         version: 2.0.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -3257,9 +3257,6 @@ packages:
 
   '@shikijs/types@3.0.0':
     resolution: {integrity: sha512-kh/xgZHxI6m9trVvPw+C47jyVHx190r0F5gkF+VO5vYB54UtcoPJe66dzZmK7GbJbzmtGEGbOwct/jsoPjjUqg==}
-
-  '@shikijs/vscode-textmate@10.0.1':
-    resolution: {integrity: sha512-fTIQwLF+Qhuws31iw7Ncl1R3HUDtGwIipiJ9iU+UsDUwMhegFcQKQHd51nZjb7CArq0MvON8rbgCGQYWHUKAdg==}
 
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
@@ -9271,7 +9268,7 @@ snapshots:
       '@shikijs/engine-javascript': 2.3.2
       '@shikijs/engine-oniguruma': 2.3.2
       '@shikijs/types': 2.3.2
-      '@shikijs/vscode-textmate': 10.0.1
+      '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.4
 
@@ -9285,7 +9282,7 @@ snapshots:
   '@shikijs/engine-javascript@2.3.2':
     dependencies:
       '@shikijs/types': 2.3.2
-      '@shikijs/vscode-textmate': 10.0.1
+      '@shikijs/vscode-textmate': 10.0.2
       oniguruma-to-es: 3.1.0
 
   '@shikijs/engine-javascript@3.0.0':
@@ -9297,7 +9294,7 @@ snapshots:
   '@shikijs/engine-oniguruma@2.3.2':
     dependencies:
       '@shikijs/types': 2.3.2
-      '@shikijs/vscode-textmate': 10.0.1
+      '@shikijs/vscode-textmate': 10.0.2
 
   '@shikijs/engine-oniguruma@3.0.0':
     dependencies:
@@ -9336,15 +9333,13 @@ snapshots:
 
   '@shikijs/types@2.3.2':
     dependencies:
-      '@shikijs/vscode-textmate': 10.0.1
+      '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
 
   '@shikijs/types@3.0.0':
     dependencies:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
-
-  '@shikijs/vscode-textmate@10.0.1': {}
 
   '@shikijs/vscode-textmate@10.0.2': {}
 
@@ -12842,7 +12837,7 @@ snapshots:
       '@shikijs/langs': 2.3.2
       '@shikijs/themes': 2.3.2
       '@shikijs/types': 2.3.2
-      '@shikijs/vscode-textmate': 10.0.1
+      '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
 
   shiki@3.0.0:
