@@ -96,6 +96,9 @@ importers:
       '@repo/rating':
         specifier: workspace:*
         version: link:../../packages/rating
+      '@repo/relative-time':
+        specifier: workspace:*
+        version: link:../../packages/relative-time
       '@repo/sandbox':
         specifier: workspace:*
         version: link:../../packages/sandbox
@@ -858,6 +861,37 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.0.3(@types/react@19.0.8)
+      typescript:
+        specifier: ^5
+        version: 5.7.3
+
+  packages/relative-time:
+    dependencies:
+      '@radix-ui/react-use-controllable-state':
+        specifier: ^1.1.0
+        version: 1.1.0(@types/react@19.0.10)(react@19.0.0)
+      '@repo/shadcn-ui':
+        specifier: workspace:*
+        version: link:../shadcn-ui
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.0.0(react@19.0.0)
+      react-fast-marquee:
+        specifier: ^1.6.5
+        version: 1.6.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/react':
+        specifier: ^19
+        version: 19.0.10
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.0.4(@types/react@19.0.10)
       typescript:
         specifier: ^5
         version: 5.7.3

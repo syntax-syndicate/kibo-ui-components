@@ -29,6 +29,7 @@
     "@repo/marquee": "workspace:*",
     "@repo/pill": "workspace:*",
     "@repo/rating": "workspace:*",
+    "@repo/relative-time": "workspace:*",
     "@repo/sandbox": "workspace:*",
     "@repo/shadcn-ui": "workspace:*",
     "@repo/snippet": "workspace:*",
