@@ -10,7 +10,7 @@ import {
 } from 'react';
 
 const formatDate = (
-  date: number | Date,
+  date: Date,
   timeZone: string,
   options?: Intl.DateTimeFormatOptions
 ) =>
@@ -23,7 +23,7 @@ const formatDate = (
   ).format(date);
 
 const formatTime = (
-  date: number | Date,
+  date: Date,
   timeZone: string,
   options?: Intl.DateTimeFormatOptions
 ) =>
@@ -38,7 +38,7 @@ const formatTime = (
   ).format(date);
 
 type RelativeTimeContextType = {
-  time: number | Date;
+  time: Date;
   dateFormatOptions?: Intl.DateTimeFormatOptions;
   timeFormatOptions?: Intl.DateTimeFormatOptions;
 };
@@ -55,23 +55,23 @@ const RelativeTimeContext = createContext<RelativeTimeContextType>({
 });
 
 export type RelativeTimeProps = HTMLAttributes<HTMLDivElement> & {
-  time?: number | Date;
-  defaultTime?: number | Date;
-  onTimeChange?: (time: number | Date) => void;
+  time?: Date;
+  defaultTime?: Date;
+  onTimeChange?: (time: Date) => void;
   dateFormatOptions?: Intl.DateTimeFormatOptions;
   timeFormatOptions?: Intl.DateTimeFormatOptions;
 };
 
 export const RelativeTime = ({
   time: controlledTime,
-  defaultTime,
+  defaultTime = new Date(),
   onTimeChange,
   dateFormatOptions,
   timeFormatOptions,
   className,
   ...props
 }: RelativeTimeProps) => {
-  const [time, setTime] = useControllableState({
+  const [time, setTime] = useControllableState<Date>({
     defaultProp: defaultTime,
     prop: controlledTime,
     onChange: onTimeChange,
@@ -89,13 +89,13 @@ export const RelativeTime = ({
     return () => clearInterval(interval);
   }, [setTime, controlledTime]);
 
-  if (!time) {
-    return null;
-  }
-
   return (
     <RelativeTimeContext.Provider
-      value={{ time, dateFormatOptions, timeFormatOptions }}
+      value={{
+        time: time ?? defaultTime,
+        dateFormatOptions,
+        timeFormatOptions,
+      }}
     >
       <div className={cn('grid gap-2', className)} {...props} />
     </RelativeTimeContext.Provider>
