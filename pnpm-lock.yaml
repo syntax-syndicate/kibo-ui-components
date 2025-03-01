@@ -277,7 +277,7 @@ importers:
         version: 19.0.8
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.8)
+        version: 19.0.4(@types/react@19.0.8)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -305,7 +305,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -330,7 +330,7 @@ importers:
         version: 19.0.8
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.8)
+        version: 19.0.4(@types/react@19.0.8)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -361,7 +361,7 @@ importers:
         version: 19.0.8
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.8)
+        version: 19.0.4(@types/react@19.0.8)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -395,7 +395,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -435,7 +435,7 @@ importers:
         version: 19.0.8
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.8)
+        version: 19.0.4(@types/react@19.0.8)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -444,7 +444,7 @@ importers:
     dependencies:
       '@radix-ui/react-slider':
         specifier: ^1.2.3
-        version: 1.2.3(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 1.2.3(@types/react-dom@19.0.4(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@repo/shadcn-ui':
         specifier: workspace:*
         version: link:../shadcn-ui
@@ -472,7 +472,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -497,7 +497,7 @@ importers:
         version: 19.0.8
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.8)
+        version: 19.0.4(@types/react@19.0.8)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -506,7 +506,7 @@ importers:
     dependencies:
       '@radix-ui/react-portal':
         specifier: ^1.1.4
-        version: 1.1.4(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 1.1.4(@types/react-dom@19.0.4(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-use-controllable-state':
         specifier: ^1.1.0
         version: 1.1.0(@types/react@19.0.7)(react@19.0.0)
@@ -531,7 +531,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -562,7 +562,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -653,7 +653,7 @@ importers:
         version: 19.0.8
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.8)
+        version: 19.0.4(@types/react@19.0.8)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -702,7 +702,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -717,7 +717,7 @@ importers:
         version: 9.0.0(@dnd-kit/core@6.3.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-portal':
         specifier: ^1.1.4
-        version: 1.1.4(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 1.1.4(@types/react-dom@19.0.4(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@repo/shadcn-ui':
         specifier: workspace:*
         version: link:../shadcn-ui
@@ -739,7 +739,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -773,7 +773,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -801,7 +801,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -829,7 +829,7 @@ importers:
         version: 19.0.8
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.8)
+        version: 19.0.4(@types/react@19.0.8)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -860,7 +860,7 @@ importers:
         version: 19.0.8
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.8)
+        version: 19.0.4(@types/react@19.0.8)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -922,7 +922,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -1101,7 +1101,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -1129,7 +1129,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -1163,7 +1163,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -1188,7 +1188,7 @@ importers:
         version: 19.0.7
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.7)
+        version: 19.0.4(@types/react@19.0.7)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -1241,7 +1241,7 @@ importers:
         version: 19.0.8
       '@types/react-dom':
         specifier: ^19
-        version: 19.0.3(@types/react@19.0.8)
+        version: 19.0.4(@types/react@19.0.8)
       typescript:
         specifier: ^5
         version: 5.8.2
@@ -3684,11 +3684,6 @@ packages:
 
   '@types/pg@8.6.1':
     resolution: {integrity: sha512-1Kc4oAGzAl7uqUStZCDvaLFqZrW9qWSjXOmBfdgyBP5La7Us6Mg4GBvRlSoaZMhQF/zSj1C8CtKMBkoiT8eL8w==}
-
-  '@types/react-dom@19.0.3':
-    resolution: {integrity: sha512-0Knk+HJiMP/qOZgMyNFamlIjw9OFCsyC2ZbigmEEyXXixgre6IQpm/4V+r3qH4GC1JPvRJKInw+on2rV6YZLeA==}
-    peerDependencies:
-      '@types/react': ^19.0.0
 
   '@types/react-dom@19.0.4':
     resolution: {integrity: sha512-4fSQ8vWFkg+TGhePfUzVmat3eC14TXYSsiiDSLI0dVLsrm9gZFABjPy/Qu6TKgl1tq1Bu1yDsuQgY3A3DOjCcg==}
@@ -8093,18 +8088,6 @@ snapshots:
       '@types/react': 19.0.10
       '@types/react-dom': 19.0.4(@types/react@19.0.10)
 
-  '@radix-ui/react-collection@1.1.2(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
-    dependencies:
-      '@radix-ui/react-compose-refs': 1.1.1(@types/react@19.0.7)(react@19.0.0)
-      '@radix-ui/react-context': 1.1.1(@types/react@19.0.7)(react@19.0.0)
-      '@radix-ui/react-primitive': 2.0.2(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-slot': 1.1.2(@types/react@19.0.7)(react@19.0.0)
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-    optionalDependencies:
-      '@types/react': 19.0.7
-      '@types/react-dom': 19.0.3(@types/react@19.0.7)
-
   '@radix-ui/react-collection@1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@radix-ui/react-compose-refs': 1.1.1(@types/react@19.0.10)(react@19.0.0)
@@ -8116,6 +8099,18 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.0.10
       '@types/react-dom': 19.0.4(@types/react@19.0.10)
+
+  '@radix-ui/react-collection@1.1.2(@types/react-dom@19.0.4(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@radix-ui/react-compose-refs': 1.1.1(@types/react@19.0.7)(react@19.0.0)
+      '@radix-ui/react-context': 1.1.1(@types/react@19.0.7)(react@19.0.0)
+      '@radix-ui/react-primitive': 2.0.2(@types/react-dom@19.0.4(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-slot': 1.1.2(@types/react@19.0.7)(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    optionalDependencies:
+      '@types/react': 19.0.7
+      '@types/react-dom': 19.0.4(@types/react@19.0.7)
 
   '@radix-ui/react-compose-refs@1.1.1(@types/react@19.0.10)(react@19.0.0)':
     dependencies:
@@ -8378,16 +8373,6 @@ snapshots:
       '@types/react': 19.0.10
       '@types/react-dom': 19.0.4(@types/react@19.0.10)
 
-  '@radix-ui/react-portal@1.1.4(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
-    dependencies:
-      '@radix-ui/react-primitive': 2.0.2(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-use-layout-effect': 1.1.0(@types/react@19.0.7)(react@19.0.0)
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-    optionalDependencies:
-      '@types/react': 19.0.7
-      '@types/react-dom': 19.0.3(@types/react@19.0.7)
-
   '@radix-ui/react-portal@1.1.4(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@radix-ui/react-primitive': 2.0.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -8397,6 +8382,16 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.0.10
       '@types/react-dom': 19.0.4(@types/react@19.0.10)
+
+  '@radix-ui/react-portal@1.1.4(@types/react-dom@19.0.4(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@radix-ui/react-primitive': 2.0.2(@types/react-dom@19.0.4(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-use-layout-effect': 1.1.0(@types/react@19.0.7)(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    optionalDependencies:
+      '@types/react': 19.0.7
+      '@types/react-dom': 19.0.4(@types/react@19.0.7)
 
   '@radix-ui/react-presence@1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -8417,15 +8412,6 @@ snapshots:
       '@types/react': 19.0.10
       '@types/react-dom': 19.0.4(@types/react@19.0.10)
 
-  '@radix-ui/react-primitive@2.0.2(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
-    dependencies:
-      '@radix-ui/react-slot': 1.1.2(@types/react@19.0.7)(react@19.0.0)
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-    optionalDependencies:
-      '@types/react': 19.0.7
-      '@types/react-dom': 19.0.3(@types/react@19.0.7)
-
   '@radix-ui/react-primitive@2.0.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@radix-ui/react-slot': 1.1.2(@types/react@19.0.10)(react@19.0.0)
@@ -8434,6 +8420,15 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.0.10
       '@types/react-dom': 19.0.4(@types/react@19.0.10)
+
+  '@radix-ui/react-primitive@2.0.2(@types/react-dom@19.0.4(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@radix-ui/react-slot': 1.1.2(@types/react@19.0.7)(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    optionalDependencies:
+      '@types/react': 19.0.7
+      '@types/react-dom': 19.0.4(@types/react@19.0.7)
 
   '@radix-ui/react-progress@1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -8535,25 +8530,6 @@ snapshots:
       '@types/react': 19.0.10
       '@types/react-dom': 19.0.4(@types/react@19.0.10)
 
-  '@radix-ui/react-slider@1.2.3(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
-    dependencies:
-      '@radix-ui/number': 1.1.0
-      '@radix-ui/primitive': 1.1.1
-      '@radix-ui/react-collection': 1.1.2(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-compose-refs': 1.1.1(@types/react@19.0.7)(react@19.0.0)
-      '@radix-ui/react-context': 1.1.1(@types/react@19.0.7)(react@19.0.0)
-      '@radix-ui/react-direction': 1.1.0(@types/react@19.0.7)(react@19.0.0)
-      '@radix-ui/react-primitive': 2.0.2(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-use-controllable-state': 1.1.0(@types/react@19.0.7)(react@19.0.0)
-      '@radix-ui/react-use-layout-effect': 1.1.0(@types/react@19.0.7)(react@19.0.0)
-      '@radix-ui/react-use-previous': 1.1.0(@types/react@19.0.7)(react@19.0.0)
-      '@radix-ui/react-use-size': 1.1.0(@types/react@19.0.7)(react@19.0.0)
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-    optionalDependencies:
-      '@types/react': 19.0.7
-      '@types/react-dom': 19.0.3(@types/react@19.0.7)
-
   '@radix-ui/react-slider@1.2.3(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@radix-ui/number': 1.1.0
@@ -8572,6 +8548,25 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.0.10
       '@types/react-dom': 19.0.4(@types/react@19.0.10)
+
+  '@radix-ui/react-slider@1.2.3(@types/react-dom@19.0.4(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@radix-ui/number': 1.1.0
+      '@radix-ui/primitive': 1.1.1
+      '@radix-ui/react-collection': 1.1.2(@types/react-dom@19.0.4(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-compose-refs': 1.1.1(@types/react@19.0.7)(react@19.0.0)
+      '@radix-ui/react-context': 1.1.1(@types/react@19.0.7)(react@19.0.0)
+      '@radix-ui/react-direction': 1.1.0(@types/react@19.0.7)(react@19.0.0)
+      '@radix-ui/react-primitive': 2.0.2(@types/react-dom@19.0.4(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-use-controllable-state': 1.1.0(@types/react@19.0.7)(react@19.0.0)
+      '@radix-ui/react-use-layout-effect': 1.1.0(@types/react@19.0.7)(react@19.0.0)
+      '@radix-ui/react-use-previous': 1.1.0(@types/react@19.0.7)(react@19.0.0)
+      '@radix-ui/react-use-size': 1.1.0(@types/react@19.0.7)(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    optionalDependencies:
+      '@types/react': 19.0.7
+      '@types/react-dom': 19.0.4(@types/react@19.0.7)
 
   '@radix-ui/react-slot@1.1.1(@types/react@19.0.10)(react@19.0.0)':
     dependencies:
@@ -9654,17 +9649,17 @@ snapshots:
       pg-protocol: 1.7.0
       pg-types: 2.2.0
 
-  '@types/react-dom@19.0.3(@types/react@19.0.7)':
-    dependencies:
-      '@types/react': 19.0.7
-
-  '@types/react-dom@19.0.3(@types/react@19.0.8)':
-    dependencies:
-      '@types/react': 19.0.8
-
   '@types/react-dom@19.0.4(@types/react@19.0.10)':
     dependencies:
       '@types/react': 19.0.10
+
+  '@types/react-dom@19.0.4(@types/react@19.0.7)':
+    dependencies:
+      '@types/react': 19.0.7
+
+  '@types/react-dom@19.0.4(@types/react@19.0.8)':
+    dependencies:
+      '@types/react': 19.0.8
 
   '@types/react@19.0.10':
     dependencies:
