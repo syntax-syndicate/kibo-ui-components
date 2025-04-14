@@ -8,11 +8,11 @@
     "@repo/shadcn-ui": "workspace:*",
     "@uidotdev/usehooks": "^2.4.1",
     "date-fns": "^4.1.0",
-    "jotai": "^2.12.1",
+    "jotai": "^2.12.3",
     "lodash.throttle": "^4.1.1",
-    "lucide-react": "^0.477.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "lucide-react": "^0.488.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
