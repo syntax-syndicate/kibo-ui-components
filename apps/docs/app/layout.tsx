@@ -1,3 +1,4 @@
+import './shadcn.css';
 import './global.css';
 import { ThemeProvider } from '@/providers/theme';
 import { GoogleAnalytics } from '@next/third-parties/google';
