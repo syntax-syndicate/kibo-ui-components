@@ -19,6 +19,7 @@ import type {
   ButtonHTMLAttributes,
   ComponentProps,
   HTMLAttributes,
+  ReactNode,
 } from 'react';
 import {
   createContext,
@@ -33,7 +34,7 @@ export type SandboxProviderProps = SandpackProviderProps;
 export const SandboxProvider = ({
   className,
   ...props
-}: SandpackProviderProps) => (
+}: SandpackProviderProps): ReactNode => (
   <div className={cn('size-full', className)}>
     <SandpackProvider className="!size-full !max-h-none" {...props} />
   </div>
@@ -41,7 +42,10 @@ export const SandboxProvider = ({
 
 export type SandboxLayoutProps = SandpackLayoutProps;
 
-export const SandboxLayout = ({ className, ...props }: SandpackLayoutProps) => (
+export const SandboxLayout = ({
+  className,
+  ...props
+}: SandpackLayoutProps): ReactNode => (
   <SandpackLayout
     className={cn(
       '!rounded-none !border-none !bg-transparent !h-full',
@@ -84,7 +88,7 @@ export const SandboxTabs = ({
   value,
   onValueChange,
   ...props
-}: SandboxTabsProps) => {
+}: SandboxTabsProps): ReactNode => {
   const [selectedTab, setSelectedTabState] = useState(value || defaultValue);
 
   useEffect(() => {
@@ -124,7 +128,7 @@ export type SandboxTabsListProps = HTMLAttributes<HTMLDivElement>;
 export const SandboxTabsList = ({
   className,
   ...props
-}: SandboxTabsListProps) => (
+}: SandboxTabsListProps): ReactNode => (
   <div
     className={cn(
       'inline-flex w-full shrink-0 items-center justify-start border-b bg-secondary p-2 text-muted-foreground',
@@ -146,7 +150,7 @@ export const SandboxTabsTrigger = ({
   className,
   value,
   ...props
-}: SandboxTabsTriggerProps) => {
+}: SandboxTabsTriggerProps): ReactNode => {
   const { selectedTab, setSelectedTab } = useSandboxTabsContext();
 
   return (
@@ -173,7 +177,7 @@ export const SandboxTabsContent = ({
   className,
   value,
   ...props
-}: SandboxTabsContentProps) => {
+}: SandboxTabsContentProps): ReactNode => {
   const { selectedTab } = useSandboxTabsContext();
 
   return (
@@ -198,16 +202,16 @@ export type SandboxCodeEditorProps = CodeEditorProps;
 export const SandboxCodeEditor = ({
   showTabs = false,
   ...props
-}: SandboxCodeEditorProps) => (
+}: SandboxCodeEditorProps): ReactNode => (
   <SandpackCodeEditor showTabs={showTabs} {...props} />
 );
 
-export type SandboxConsoleProps = ComponentProps<typeof SandpackConsole>;
+export type SandboxConsoleProps = Parameters<typeof SandpackConsole>[0];
 
 export const SandboxConsole = ({
   className,
   ...props
-}: SandboxConsoleProps) => (
+}: SandboxConsoleProps): ReactNode => (
   <SandpackConsole className={cn('h-full', className)} {...props} />
 );
 
@@ -219,7 +223,7 @@ export const SandboxPreview = ({
   className,
   showOpenInCodeSandbox = false,
   ...props
-}: SandboxPreviewProps) => (
+}: SandboxPreviewProps): ReactNode => (
   <SandpackPreview
     className={cn('h-full', className)}
     showOpenInCodeSandbox={showOpenInCodeSandbox}
@@ -235,7 +239,7 @@ export const SandboxFileExplorer = ({
   autoHiddenFiles = true,
   className,
   ...props
-}: SandboxFileExplorerProps) => (
+}: SandboxFileExplorerProps): ReactNode => (
   <SandpackFileExplorer
     className={cn('h-full', className)}
     autoHiddenFiles={autoHiddenFiles}
