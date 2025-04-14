@@ -14,7 +14,7 @@ export const V0Button = ({ name }: { name: string }) => {
   v0Url.searchParams.set('url', registryUrl.toString());
 
   return (
-    <div className="dark absolute top-0 right-0 p-2">
+    <div className="absolute top-0 right-0 p-2">
       <Button
         size="sm"
         variant="outline"
