@@ -171,14 +171,19 @@
   --color-fd-ring: var(--ring);
 }
 
-  #nd-sidebar > div {
-    @apply pt-0;
-  }
+#nd-sidebar > div {
+  @apply pt-0;
+}
 
-  #nd-toc {
-    @apply pt-6;
-  }
+#nd-toc {
+  @apply pt-6;
+}
 
-  h1, h2, h3 {
-    @apply tracking-tight;
-  }
+h1, h2, h3 {
+  @apply tracking-tight;
+}
+
+/* Fix Fumadocs theme toggle icons */
+[data-theme-toggle] svg {
+  @apply fill-none;
+}
