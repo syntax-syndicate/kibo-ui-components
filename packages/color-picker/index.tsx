@@ -12,7 +12,6 @@ import { Range, Root, Thumb, Track } from '@radix-ui/react-slider';
 import Color from 'color';
 import { PipetteIcon } from 'lucide-react';
 import {
-  type ChangeEventHandler,
   type ComponentProps,
   type HTMLAttributes,
   useCallback,
@@ -148,9 +147,9 @@ export const ColorPickerSelection = ({
       );
       setPosition({ x, y });
       setSaturation(x * 100);
-      const topLightness = x < 0.01 ? 100 : 50 + (50 * (1 - x));
+      const topLightness = x < 0.01 ? 100 : 50 + 50 * (1 - x);
       const lightness = topLightness * (1 - y);
-      
+
       setLightness(lightness);
     },
     [isDragging, setSaturation, setLightness]
@@ -158,12 +157,12 @@ export const ColorPickerSelection = ({
 
   useEffect(() => {
     const handlePointerUp = () => setIsDragging(false);
-    
+
     if (isDragging) {
       window.addEventListener('pointermove', handlePointerMove);
       window.addEventListener('pointerup', handlePointerUp);
     }
-    
+
     return () => {
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerup', handlePointerUp);
@@ -180,7 +179,7 @@ export const ColorPickerSelection = ({
       style={{
         background: `linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0)),
                      linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0)),
-                     hsl(${hue}, 100%, 50%)`
+                     hsl(${hue}, 100%, 50%)`,
       }}
       onPointerDown={(e) => {
         e.preventDefault();
@@ -190,7 +189,7 @@ export const ColorPickerSelection = ({
       {...props}
     >
       <div
-        className="pointer-events-none absolute h-4 w-4 rounded-full border-2 border-white -translate-x-1/2 -translate-y-1/2"
+        className="-translate-x-1/2 -translate-y-1/2 pointer-events-none absolute h-4 w-4 rounded-full border-2 border-white"
         style={{
           left: `${position.x * 100}%`,
           top: `${position.y * 100}%`,
@@ -201,7 +200,7 @@ export const ColorPickerSelection = ({
   );
 };
 
-export type ColorPickerHueProps = HTMLAttributes<HTMLDivElement>;
+export type ColorPickerHueProps = ComponentProps<typeof Root>;
 
 export const ColorPickerHue = ({
   className,
@@ -226,7 +225,7 @@ export const ColorPickerHue = ({
   );
 };
 
-export type ColorPickerAlphaProps = HTMLAttributes<HTMLDivElement>;
+export type ColorPickerAlphaProps = ComponentProps<typeof Root>;
 
 export const ColorPickerAlpha = ({
   className,
@@ -348,34 +347,11 @@ export const ColorPickerFormat = ({
   className,
   ...props
 }: ColorPickerFormatProps) => {
-  const {
-    hue,
-    saturation,
-    lightness,
-    alpha,
-    mode,
-    setHue,
-    setSaturation,
-    setLightness,
-    setAlpha,
-  } = useColorPicker();
+  const { hue, saturation, lightness, alpha, mode } = useColorPicker();
   const color = Color.hsl(hue, saturation, lightness, alpha / 100);
 
   if (mode === 'hex') {
     const hex = color.hex();
-
-    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-      try {
-        const newColor = Color(event.target.value);
-
-        setHue(newColor.hue());
-        setSaturation(newColor.saturationl());
-        setLightness(newColor.lightness());
-        setAlpha(newColor.alpha() * 100);
-      } catch (error) {
-        console.error('Invalid hex color:', error);
-      }
-    };
 
     return (
       <div
@@ -385,7 +361,6 @@ export const ColorPickerFormat = ({
         )}
         {...props}
       >
-       
         <Input
           type="text"
           value={hex}
