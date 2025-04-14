@@ -15,6 +15,7 @@ import type {
   ButtonHTMLAttributes,
   Dispatch,
   HTMLAttributes,
+  MouseEvent,
   MouseEventHandler,
   ReactElement,
   SetStateAction,
@@ -54,7 +55,7 @@ export type DialogStackProps = HTMLAttributes<HTMLDivElement> & {
 export const DialogStack = ({
   children,
   className,
-  open = false,
+  open,
   defaultOpen = false,
   onOpenChange,
   clickable = false,
@@ -68,7 +69,9 @@ export const DialogStack = ({
   });
 
   useEffect(() => {
-    onOpenChange?.(isOpen ?? false);
+    if (onOpenChange && isOpen !== undefined) {
+      onOpenChange(isOpen);
+    }
   }, [isOpen, onOpenChange]);
 
   return (
@@ -114,9 +117,16 @@ export const DialogStackTrigger = ({
   };
 
   if (asChild && children) {
-    return cloneElement(children as ReactElement, {
-      onClick: handleClick,
-      className: cn(className, (children as ReactElement).props.className),
+    const child = children as ReactElement<{
+      onClick: MouseEventHandler<HTMLButtonElement>;
+      className?: string;
+    }>;
+    return cloneElement(child, {
+      onClick: (e: MouseEvent<HTMLButtonElement>) => {
+        handleClick(e);
+        child.props.onClick?.(e);
+      },
+      className: cn(className, child.props.className),
       ...props,
     });
   }
@@ -209,9 +219,18 @@ export const DialogStackBody = ({
           {...props}
         >
           <div className="pointer-events-auto relative flex w-full flex-col items-center justify-center">
-            {Children.map(children, (child, index) =>
-              cloneElement(child as ReactElement, { index })
-            )}
+            {Children.map(children, (child, index) => {
+              const childElement = child as ReactElement<{
+                index: number;
+                onClick: MouseEventHandler<HTMLButtonElement>;
+                className?: string;
+              }>;
+
+              return cloneElement(childElement, {
+                ...childElement.props,
+                index,
+              });
+            })}
           </div>
         </div>
       </Portal.Root>
@@ -372,9 +391,17 @@ export const DialogStackNext = ({
   };
 
   if (asChild && children) {
-    return cloneElement(children as ReactElement, {
-      onClick: handleNext,
-      className: cn(className, (children as ReactElement).props.className),
+    const child = children as ReactElement<{
+      onClick: MouseEventHandler<HTMLButtonElement>;
+      className?: string;
+    }>;
+
+    return cloneElement(child, {
+      onClick: (e: MouseEvent<HTMLButtonElement>) => {
+        handleNext();
+        child.props.onClick?.(e);
+      },
+      className: cn(className, child.props.className),
       ...props,
     });
   }
@@ -419,9 +446,17 @@ export const DialogStackPrevious = ({
   };
 
   if (asChild && children) {
-    return cloneElement(children as ReactElement, {
-      onClick: handlePrevious,
-      className: cn(className, (children as ReactElement).props.className),
+    const child = children as ReactElement<{
+      onClick: MouseEventHandler<HTMLButtonElement>;
+      className?: string;
+    }>;
+
+    return cloneElement(child, {
+      onClick: (e: MouseEvent<HTMLButtonElement>) => {
+        handlePrevious();
+        child.props.onClick?.(e);
+      },
+      className: cn(className, child.props.className),
       ...props,
     });
   }
