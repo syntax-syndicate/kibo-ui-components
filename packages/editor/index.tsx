@@ -1256,8 +1256,8 @@ export const EditorFormatUnderline = ({
 };
 
 export type EditorLinkSelectorProps = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 export const EditorLinkSelector = ({
