@@ -26,6 +26,7 @@
     "@tiptap/extension-table-row",
     "@tiptap/extension-task-item",
     "@tiptap/extension-task-list",
+    "@tiptap/extension-text-style",
     "@tiptap/extension-typography",
     "@tiptap/pm",
     "@tiptap/react",
