@@ -39,8 +39,6 @@ import {
   EditorNodeQuote,
   EditorNodeCode,
   EditorNodeTable,
-  EditorTextColor,
-  EditorBackgroundColor,
   EditorTableMenu,
   EditorTableGlobalMenu,
   EditorTableColumnMenu,
@@ -119,14 +117,6 @@ const Example = () => {
             <EditorFormatCode />
             <EditorFormatSuperscript />
             <EditorFormatSubscript />
-          </EditorSelector>
-          <EditorSelector title="Color">
-            {textColors.map((color) => (
-              <EditorTextColor key={color.name} color={color.color} name={color.name} />
-            ))}
-            {backgroundColors.map((color) => (
-              <EditorBackgroundColor key={color.name} color={color.color} name={color.name} />
-            ))}
           </EditorSelector>
           <EditorLinkSelector />
           <EditorClearFormatting />
@@ -267,14 +257,6 @@ The editor component is made up of the following subcomponents:
 ### EditorFormatSubscript
 
 <AutoTypeTable path="node_modules/@repo/editor/index.tsx" name="EditorFormatSubscriptProps" />
-
-### EditorTextColor
-
-<AutoTypeTable path="node_modules/@repo/editor/index.tsx" name="EditorTextColorProps" />
-
-### EditorBackgroundColor
-
-<AutoTypeTable path="node_modules/@repo/editor/index.tsx" name="EditorBackgroundColorProps" />
 
 ### EditorLinkSelector
 
