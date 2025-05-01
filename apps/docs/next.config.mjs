@@ -70,7 +70,12 @@ const config = {
       { source: '/ai', destination: '/components/ai', permanent: true },
       {
         source: '/ai/:slug*',
-        destination: '/components/ai/:slug*',
+        destination: '/components/ai-:slug*',
+        permanent: true,
+      },
+      {
+        source: '/components/ai/:slug*',
+        destination: '/components/ai-:slug*',
         permanent: true,
       },
       {

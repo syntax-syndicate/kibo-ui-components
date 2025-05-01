@@ -1,4 +1,5 @@
 {
   "root": true,
-  "description": "Components"
+  "title": "Components",
+  "pages": ["---AI Components---", "ai-input", "---Core Components---", "..."]
 }
