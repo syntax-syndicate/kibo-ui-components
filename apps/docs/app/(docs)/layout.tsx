@@ -12,6 +12,7 @@ const Layout = ({ children }: LayoutProps) => (
     tree={source.pageTree}
     tabMode="navbar"
     sidebar={{ collapsible: false }}
+    githubUrl="https://github.com/haydenbleasel/kibo"
     nav={{
       title: (
         <Image
