@@ -14,6 +14,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@repo/shadcn-ui/components/ui/resizable';
+import { cn } from '@repo/shadcn-ui/lib/utils';
 import { AppWindowIcon, CodeIcon, TerminalIcon } from 'lucide-react';
 import { content } from './content';
 import { PreviewProvider } from './provider';
@@ -39,6 +40,7 @@ type PreviewProps = {
   name: string;
   code: string;
   dependencies?: Record<string, string>;
+  className?: string;
 };
 
 // Caches to avoid repeated imports
@@ -139,6 +141,7 @@ export const Preview = async ({
   name,
   code,
   dependencies: demoDependencies,
+  className,
 }: PreviewProps) => {
   const [packageName, componentName] = name.split('/');
 
@@ -240,7 +243,7 @@ export const Preview = async ({
         },
       }}
       files={files}
-      className="not-prose h-[30rem]"
+      className={cn('not-prose h-[30rem]', className)}
     >
       <SandboxLayout>
         <SandboxTabs defaultValue="preview">

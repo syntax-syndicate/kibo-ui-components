@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "homepage": "https://www.kibo-ui.com/video-player",
+  "name": "video-player",
+  "type": "registry:ui",
+  "author": "Hayden Bleasel <hello@haydenbleasel.com>",
+  "registryDependencies": [],
+  "dependencies": [
+    "media-chrome"
+  ],
+  "devDependencies": [],
+  "files": [
+    {
+      "type": "registry:ui",
+      "path": "index.tsx",
+      "content": "'use client';\n\nimport {\n  MediaControlBar,\n  MediaController,\n  MediaMuteButton,\n  MediaPlayButton,\n  MediaSeekBackwardButton,\n  MediaSeekForwardButton,\n  MediaTimeDisplay,\n  MediaTimeRange,\n  MediaVolumeRange,\n} from 'media-chrome/react';\nimport type { CSSProperties, ComponentProps } from 'react';\n\nexport type VideoPlayerProps = ComponentProps<typeof MediaController>;\n\nconst variables = {\n  '--media-primary-color': 'hsl(var(--primary))',\n  '--media-secondary-color': 'hsl(var(--background))',\n  '--media-text-color': 'hsl(var(--foreground))',\n  '--media-background-color': 'hsl(var(--background))',\n  '--media-control-hover-background': 'hsl(var(--accent))',\n  '--media-font-family': 'var(--font-sans)',\n  '--media-live-button-icon-color': 'hsl(var(--muted-foreground))',\n  '--media-live-button-indicator-color': 'hsl(var(--destructive))',\n  '--media-range-track-background': 'hsl(var(--border))',\n} as CSSProperties;\n\nexport const VideoPlayer = ({ style, ...props }: VideoPlayerProps) => (\n  <MediaController\n    style={{\n      ...variables,\n      ...style,\n    }}\n    {...props}\n  />\n);\n\nexport type VideoPlayerControlBarProps = ComponentProps<typeof MediaControlBar>;\n\nexport const VideoPlayerControlBar = (props: VideoPlayerControlBarProps) => (\n  <MediaControlBar {...props} />\n);\n\nexport type VideoPlayerTimeRangeProps = ComponentProps<typeof MediaTimeRange>;\n\nexport const VideoPlayerTimeRange = (props: VideoPlayerTimeRangeProps) => (\n  <MediaTimeRange {...props} />\n);\n\nexport type VideoPlayerTimeDisplayProps = ComponentProps<\n  typeof MediaTimeDisplay\n>;\n\nexport const VideoPlayerTimeDisplay = (props: VideoPlayerTimeDisplayProps) => (\n  <MediaTimeDisplay {...props} />\n);\n\nexport type VideoPlayerVolumeRangeProps = ComponentProps<\n  typeof MediaVolumeRange\n>;\n\nexport const VideoPlayerVolumeRange = (props: VideoPlayerVolumeRangeProps) => (\n  <MediaVolumeRange {...props} />\n);\n\nexport type VideoPlayerPlayButtonProps = ComponentProps<typeof MediaPlayButton>;\n\nexport const VideoPlayerPlayButton = (props: VideoPlayerPlayButtonProps) => (\n  <MediaPlayButton {...props} />\n);\n\nexport type VideoPlayerSeekBackwardButtonProps = ComponentProps<\n  typeof MediaSeekBackwardButton\n>;\n\nexport const VideoPlayerSeekBackwardButton = (\n  props: VideoPlayerSeekBackwardButtonProps\n) => <MediaSeekBackwardButton {...props} />;\n\nexport type VideoPlayerSeekForwardButtonProps = ComponentProps<\n  typeof MediaSeekForwardButton\n>;\n\nexport const VideoPlayerSeekForwardButton = (\n  props: VideoPlayerSeekForwardButtonProps\n) => <MediaSeekForwardButton {...props} />;\n\nexport type VideoPlayerMuteButtonProps = ComponentProps<typeof MediaMuteButton>;\n\nexport const VideoPlayerMuteButton = (props: VideoPlayerMuteButtonProps) => (\n  <MediaMuteButton {...props} />\n);\n\nexport type VideoPlayerContentProps = ComponentProps<'video'>;\n\nexport const VideoPlayerContent = (props: VideoPlayerContentProps) => (\n  <video {...props} />\n);\n",
+      "target": "components/ui/kibo-ui/video-player/index.tsx"
+    }
+  ]
+}
