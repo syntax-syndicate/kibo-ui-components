@@ -160,7 +160,13 @@ const components: Options['components'] = {
 
 export const AIResponse = memo(
   ({ className, options, children, ...props }: AIResponseProps) => (
-    <div className={cn('size-full', className)} {...props}>
+    <div
+      className={cn(
+        'size-full [&_*:first-child]:mt-0 [&_*:last-child]:mb-0',
+        className
+      )}
+      {...props}
+    >
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={components}
