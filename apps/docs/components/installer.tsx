@@ -58,7 +58,7 @@ export const Installer = ({ packageName }: InstallerProps) => {
           value={commands[value as keyof typeof commands].code}
           onCopy={() => {
             toast.success('Copied to clipboard');
-            track('copy_installer_code', {
+            track('Copy installer code', {
               cli: value,
               package: packageName,
             });
