@@ -25,7 +25,7 @@ const parseCode = (code: string) =>
     .replace(/@repo\//g, '@/components/ui/kibo-ui/');
 
 export const PreviewSource = ({ source }: PreviewSourceProps) => (
-  <Accordion type="single" collapsible defaultValue={source[0].name}>
+  <Accordion type="single" collapsible defaultValue={source.at(0)?.name}>
     {source.map(({ name, source }) => (
       <AccordionItem value={name} key={name}>
         <AccordionTrigger className="rounded-none bg-secondary px-4">
