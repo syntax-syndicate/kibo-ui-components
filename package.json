@@ -6,9 +6,7 @@
   },
   "files": ["dist/index.js"],
   "scripts": {
-    "prebuild": "bun scripts/build-registry.ts",
     "build": "turbo build",
-    "predev": "pnpm run prebuild",
     "dev": "turbo dev",
     "lint": "ultracite lint",
     "format": "ultracite format",
