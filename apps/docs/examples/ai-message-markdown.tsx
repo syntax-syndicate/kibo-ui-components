@@ -1,6 +1,6 @@
 'use client';
 
-import { AIMessage } from '@repo/ai/message';
+import { AIMessage, AIMessageAvatar, AIMessageContent } from '@repo/ai/message';
 import { AIResponse } from '@repo/ai/response';
 import { useEffect, useState } from 'react';
 
@@ -100,19 +100,20 @@ const Example = () => {
 
   return (
     <>
-      <AIMessage
-        from="user"
-        avatar="https://github.com/haydenbleasel.png"
-        name="Hayden Bleasel"
-      >
-        <AIResponse>What is the weather in Tokyo?</AIResponse>
+      <AIMessage from="user">
+        <AIMessageContent>
+          <AIResponse>What is the weather in Tokyo?</AIResponse>
+        </AIMessageContent>
+        <AIMessageAvatar
+          name="Hayden Bleasel"
+          src="https://github.com/haydenbleasel.png"
+        />
       </AIMessage>
-      <AIMessage
-        from="assistant"
-        avatar="https://github.com/openai.png"
-        name="OpenAI"
-      >
-        <AIResponse>{content}</AIResponse>
+      <AIMessage from="assistant">
+        <AIMessageContent>
+          <AIResponse>{content}</AIResponse>
+        </AIMessageContent>
+        <AIMessageAvatar name="OpenAI" src="https://github.com/openai.png" />
       </AIMessage>
     </>
   );

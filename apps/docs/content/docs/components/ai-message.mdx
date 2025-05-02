@@ -19,6 +19,10 @@ icon: MessageSquareCode
 - Uses different background colors for user and assistant messages.
 - Accepts any React node as message content.
 
+## Notes
+
+Always render the `AIMessageContent` first, then the `AIMessageAvatar`. The `AIMessage` component is a wrapper that determines the alignment of the message.
+
 ## Examples
 
 ### Render Markdown

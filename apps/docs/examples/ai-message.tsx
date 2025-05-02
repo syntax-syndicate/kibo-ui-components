@@ -1,6 +1,6 @@
 'use client';
 
-import { AIMessage } from '@repo/ai/message';
+import { AIMessage, AIMessageAvatar, AIMessageContent } from '@repo/ai/message';
 
 const messages: {
   from: 'user' | 'assistant';
@@ -37,8 +37,9 @@ const messages: {
 const Example = () => (
   <>
     {messages.map(({ content, ...message }, index) => (
-      <AIMessage key={index} {...message}>
-        {content}
+      <AIMessage key={index} from={message.from}>
+        <AIMessageContent>{content}</AIMessageContent>
+        <AIMessageAvatar src={message.avatar} name={message.name} />
       </AIMessage>
     ))}
   </>
