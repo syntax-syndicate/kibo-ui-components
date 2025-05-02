@@ -18,6 +18,7 @@ import {
   CodeBlockSelectTrigger,
   CodeBlockSelectValue,
 } from '@repo/code-block';
+import { memo } from 'react';
 import type { HTMLAttributes } from 'react';
 import ReactMarkdown, { type Options } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -157,19 +158,17 @@ const components: Options['components'] = {
   },
 };
 
-export const AIResponse = ({
-  className,
-  options,
-  children,
-  ...props
-}: AIResponseProps) => (
-  <div className={cn('size-full', className)} {...props}>
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      components={components}
-      {...options}
-    >
-      {children}
-    </ReactMarkdown>
-  </div>
+export const AIResponse = memo(
+  ({ className, options, children, ...props }: AIResponseProps) => (
+    <div className={cn('size-full', className)} {...props}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={components}
+        {...options}
+      >
+        {children}
+      </ReactMarkdown>
+    </div>
+  ),
+  (prevProps, nextProps) => prevProps.children === nextProps.children
 );
