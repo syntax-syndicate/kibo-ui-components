@@ -4,6 +4,7 @@
   "pages": [
     "---AI Chatbot---",
     "ai-input",
+    "ai-response",
     "---Collaboration---",
     "avatar-stack",
     "cursor",

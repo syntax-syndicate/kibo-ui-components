@@ -4,7 +4,7 @@ import { AIResponse } from '@repo/ai/response';
 import { useEffect, useState } from 'react';
 
 const tokens = [
-  'Hello',
+  '### Hello',
   ' World',
   '\n\n',
   'This',
