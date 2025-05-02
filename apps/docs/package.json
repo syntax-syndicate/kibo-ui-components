@@ -9,6 +9,7 @@
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
+    "@icons-pack/react-simple-icons": "^12.7.0",
     "@logtail/next": "^0.2.0",
     "@next/bundle-analyzer": "^15.3.1",
     "@next/third-parties": "^15.3.1",
