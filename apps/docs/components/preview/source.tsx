@@ -19,6 +19,11 @@ type PreviewSourceProps = {
   source: { name: string; source: string }[];
 };
 
+const parseCode = (code: string) =>
+  code
+    .replace(/@repo\/shadcn-ui\//g, '@/')
+    .replace(/@repo\//g, '@/components/ui/kibo-ui/');
+
 export const PreviewSource = ({ source }: PreviewSourceProps) => (
   <Accordion type="single" collapsible>
     {source.map(({ name, source }) => (
@@ -35,7 +40,7 @@ export const PreviewSource = ({ source }: PreviewSourceProps) => (
               {
                 language: 'tsx',
                 filename: name,
-                code: source,
+                code: parseCode(source),
               },
             ]}
             defaultValue="tsx"
