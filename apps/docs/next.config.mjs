@@ -57,6 +57,26 @@ const config = {
     ],
   },
 
+  // biome-ignore lint/suspicious/useAwait: "headers is async"
+  async headers() {
+    return [
+      {
+        source: '/registry/(.*)',
+        headers: [
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization',
+          },
+        ],
+      },
+    ];
+  },
+
   // biome-ignore lint/suspicious/useAwait: "redirects is async"
   async redirects() {
     return [
