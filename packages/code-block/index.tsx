@@ -264,10 +264,8 @@ const highlight = (
   html: string,
   language?: BundledLanguage,
   themes?: CodeOptionsMultipleThemes['themes']
-) => {
-  console.log('Transforming', html);
-
-  return codeToHtml(html, {
+) =>
+  codeToHtml(html, {
     lang: language ?? 'typescript',
     themes: themes ?? {
       light: 'github-light',
@@ -291,7 +289,6 @@ const highlight = (
       }),
     ],
   });
-};
 
 type CodeBlockData = {
   language: string;
