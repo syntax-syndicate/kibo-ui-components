@@ -107,6 +107,7 @@ import {
   type CodeOptionsMultipleThemes,
   codeToHtml,
 } from 'shiki';
+export type { BundledLanguage } from 'shiki';
 
 const filenameIconMap = {
   '.env': SiDotenv,
@@ -263,8 +264,10 @@ const highlight = (
   html: string,
   language?: BundledLanguage,
   themes?: CodeOptionsMultipleThemes['themes']
-) =>
-  codeToHtml(html, {
+) => {
+  console.log('Transforming', html);
+
+  return codeToHtml(html, {
     lang: language ?? 'typescript',
     themes: themes ?? {
       light: 'github-light',
@@ -288,6 +291,7 @@ const highlight = (
       }),
     ],
   });
+};
 
 type CodeBlockData = {
   language: string;
@@ -331,7 +335,7 @@ export const CodeBlock = ({
   return (
     <CodeBlockContext.Provider value={{ value, onValueChange, data }}>
       <div
-        className={cn('overflow-hidden rounded-md border', className)}
+        className={cn('size-full overflow-hidden rounded-md border', className)}
         {...props}
       />
     </CodeBlockContext.Provider>
@@ -551,79 +555,84 @@ export type CodeBlockBodyProps = Omit<
   children: (item: CodeBlockData) => ReactNode;
 };
 
-export const CodeBlockBody = ({
-  children,
-  className,
-  ...props
-}: CodeBlockBodyProps) => {
+export const CodeBlockBody = ({ children, ...props }: CodeBlockBodyProps) => {
   const { data } = useContext(CodeBlockContext);
 
+  return <div {...props}>{data.map(children)}</div>;
+};
+
+export type CodeBlockItemProps = HTMLAttributes<HTMLDivElement> & {
+  value: string;
+  lineNumbers?: boolean;
+};
+
+export const CodeBlockItem = ({
+  children,
+  lineNumbers = true,
+  className,
+  value,
+  ...props
+}: CodeBlockItemProps) => {
+  const { value: activeValue } = useContext(CodeBlockContext);
+
+  if (value !== activeValue) {
+    return null;
+  }
+
   return (
-    <div className="" {...props}>
-      {data.map(children)}
+    <div
+      className={cn(
+        codeBlockClassName,
+        lineHighlightClassNames,
+        lineDiffClassNames,
+        lineFocusedClassNames,
+        wordHighlightClassNames,
+        darkModeClassNames,
+        lineNumbers && lineNumberClassNames,
+        className
+      )}
+      {...props}
+    >
+      {children}
     </div>
   );
 };
 
-export type CodeBlockContentProps = {
+export type CodeBlockContentProps = HTMLAttributes<HTMLDivElement> & {
   themes?: CodeOptionsMultipleThemes['themes'];
   language?: BundledLanguage;
-  lineNumbers?: boolean;
   syntaxHighlighting?: boolean;
-  value?: string;
   children: string;
-  className?: string;
 };
 
 export const CodeBlockContent = ({
   children,
   themes,
   language,
-  lineNumbers = true,
   syntaxHighlighting = true,
-  value,
-  className,
+  ...props
 }: CodeBlockContentProps) => {
   const [html, setHtml] = useState<string | null>(null);
-  const { value: activeValue } = useContext(CodeBlockContext);
-  const compiledClassName = cn(
-    codeBlockClassName,
-    lineHighlightClassNames,
-    lineDiffClassNames,
-    lineFocusedClassNames,
-    wordHighlightClassNames,
-    darkModeClassNames,
-    lineNumbers && lineNumberClassNames,
-    className
-  );
 
   useEffect(() => {
-    if (value !== activeValue || !syntaxHighlighting) {
+    if (!syntaxHighlighting) {
       return;
     }
 
     highlight(children as string, language, themes)
       .then(setHtml)
       .catch(console.error);
-  }, [children, themes, activeValue, syntaxHighlighting, value, language]);
-
-  if (value !== activeValue) {
-    return null;
-  }
+  }, [children, themes, syntaxHighlighting, language]);
 
   if (!syntaxHighlighting || !html) {
-    return (
-      <CodeBlockFallback className={compiledClassName}>
-        {children}
-      </CodeBlockFallback>
-    );
+    return <CodeBlockFallback>{children}</CodeBlockFallback>;
   }
 
   return (
     <div
       // biome-ignore lint/security/noDangerouslySetInnerHtml: "Kinda how Shiki works"
       dangerouslySetInnerHTML={{ __html: html }}
-      className={compiledClassName}
+      {...props}
     />
   );
 };

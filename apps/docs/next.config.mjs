@@ -56,7 +56,6 @@ const config = {
       },
     ],
   },
-  staticPageGenerationTimeout: 180,
 
   // biome-ignore lint/suspicious/useAwait: "redirects is async"
   async redirects() {
