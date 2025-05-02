@@ -6,8 +6,7 @@
     "@radix-ui/react-use-controllable-state": "^1.2.2",
     "@repo/shadcn-ui": "workspace:*",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-fast-marquee": "^1.6.5"
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
