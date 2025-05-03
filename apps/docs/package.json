@@ -30,6 +30,7 @@
     "@repo/list": "workspace:*",
     "@repo/marquee": "workspace:*",
     "@repo/pill": "workspace:*",
+    "@repo/qr-code": "workspace:*",
     "@repo/rating": "workspace:*",
     "@repo/relative-time": "workspace:*",
     "@repo/sandbox": "workspace:*",
