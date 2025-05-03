@@ -8,6 +8,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from '@/components/ui/command';
 import {
   Popover,
@@ -213,3 +214,9 @@ export const ComboboxItem = (props: ComboboxItemProps) => {
     />
   );
 };
+
+export type ComboboxSeparatorProps = ComponentProps<typeof CommandSeparator>;
+
+export const ComboboxSeparator = (props: ComboboxSeparatorProps) => (
+  <CommandSeparator {...props} />
+);
