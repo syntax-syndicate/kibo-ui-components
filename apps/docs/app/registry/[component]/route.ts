@@ -9,40 +9,10 @@ type RegistryParams = {
   params: Promise<{ component: string }>;
 };
 
-export const GET = async (request: NextRequest, { params }: RegistryParams) => {
-  const { component } = await params;
-
-  if (!component.endsWith('.json')) {
-    return NextResponse.json(
-      { error: 'Component must end with .json' },
-      { status: 400 }
-    );
-  }
-
-  const packageName = component.replace('.json', '');
+const getPackage = async (packageName: string) => {
   const packageDir = join(process.cwd(), '..', '..', 'packages', packageName);
   const packagePath = join(packageDir, 'package.json');
-
-  let packageJson: Record<string, unknown>;
-
-  if (process.env.NODE_ENV === 'production') {
-    try {
-      await track('Registry download', {
-        component: packageName,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  try {
-    packageJson = JSON.parse(await readFile(packagePath, 'utf-8'));
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to parse package.json', details: error },
-      { status: 500 }
-    );
-  }
+  const packageJson = JSON.parse(await readFile(packagePath, 'utf-8'));
 
   const kiboDependencies = Object.keys(packageJson.dependencies || {}).filter(
     (dep) => dep.startsWith('@repo') && dep !== '@repo/shadcn-ui'
@@ -77,17 +47,21 @@ export const GET = async (request: NextRequest, { params }: RegistryParams) => {
     target: string;
   }[] = [];
 
-  for (const file of tsxFiles) {
-    const filePath = join(packageDir, file.name);
-    const content = await fs.readFile(filePath, 'utf-8');
+  const fileContents = await Promise.all(
+    tsxFiles.map(async (file) => {
+      const filePath = join(packageDir, file.name);
+      const content = await fs.readFile(filePath, 'utf-8');
 
-    files.push({
-      type: 'registry:ui',
-      path: file.name,
-      content,
-      target: `components/ui/kibo-ui/${packageName}/${file.name}`,
-    });
-  }
+      return {
+        type: 'registry:ui',
+        path: file.name,
+        content,
+        target: `components/ui/kibo-ui/${packageName}/${file.name}`,
+      };
+    })
+  );
+
+  files.push(...fileContents);
 
   const registryDependencies =
     files
@@ -105,17 +79,57 @@ export const GET = async (request: NextRequest, { params }: RegistryParams) => {
     );
   }
 
-  const response = {
-    $schema: 'https://ui.shadcn.com/schema/registry.json',
-    homepage: `https://www.kibo-ui.com/components/${packageName}`,
+  return {
     name: packageName,
-    type: 'registry:ui',
-    author: 'Hayden Bleasel <hello@haydenbleasel.com>',
     dependencies,
     devDependencies,
     registryDependencies,
     files,
   };
+};
 
-  return NextResponse.json(response);
+export const GET = async (_: NextRequest, { params }: RegistryParams) => {
+  const { component } = await params;
+
+  if (!component.endsWith('.json')) {
+    return NextResponse.json(
+      { error: 'Component must end with .json' },
+      { status: 400 }
+    );
+  }
+
+  const packageName = component.replace('.json', '');
+
+  if (process.env.NODE_ENV === 'production') {
+    try {
+      await track('Registry download', {
+        component: packageName,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  try {
+    const pkg = await getPackage(packageName);
+
+    const response = {
+      $schema: 'https://ui.shadcn.com/schema/registry.json',
+      homepage: `https://www.kibo-ui.com/components/${pkg.name}`,
+      name: pkg.name,
+      type: 'registry:ui',
+      author: 'Hayden Bleasel <hello@haydenbleasel.com>',
+      dependencies: pkg.dependencies,
+      devDependencies: pkg.devDependencies,
+      registryDependencies: pkg.registryDependencies,
+      files: pkg.files,
+    };
+
+    return NextResponse.json(response);
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Failed to get package', details: error },
+      { status: 500 }
+    );
+  }
 };
