@@ -8,12 +8,17 @@ import {
   useDraggable,
   useDroppable,
 } from '@dnd-kit/core';
-import type { DragEndEvent } from '@dnd-kit/core';
+import type {
+  DndContextProps,
+  DragEndEvent,
+  DragStartEvent,
+} from '@dnd-kit/core';
 import {
   type HTMLAttributes,
   type ReactNode,
   createContext,
   useContext,
+  useState,
 } from 'react';
 
 export type { DragEndEvent } from '@dnd-kit/core';
@@ -137,9 +142,8 @@ export const KanbanHeader = ({ className, ...props }: KanbanHeaderProps) => (
 export type KanbanProviderProps<
   T extends KanbanItemProps = KanbanItemProps,
   C extends KanbanColumnProps = KanbanColumnProps,
-> = {
+> = Omit<DndContextProps, 'children'> & {
   children: (column: C) => ReactNode;
-  onDragEnd: (event: DragEndEvent) => void;
   className?: string;
   columns: C[];
   data: T[];
@@ -154,17 +158,39 @@ export const KanbanProvider = <
   className,
   columns,
   data,
-}: KanbanProviderProps<T, C>) => (
-  <KanbanContext.Provider value={{ columns, data }}>
-    <DndContext collisionDetection={rectIntersection} onDragEnd={onDragEnd}>
-      <div
-        className={cn(
-          'grid size-full auto-cols-fr grid-flow-col gap-4',
-          className
-        )}
+  ...props
+}: KanbanProviderProps<T, C>) => {
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const activeItem = data.find((item) => item.id === activeId);
+
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id as string);
+
+    props.onDragStart?.(event);
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    setActiveId(null);
+
+    onDragEnd?.(event);
+  };
+
+  return (
+    <KanbanContext.Provider value={{ columns, data }}>
+      <DndContext
+        collisionDetection={rectIntersection}
+        onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart}
       >
-        {columns.map((column) => children(column))}
-      </div>
-    </DndContext>
-  </KanbanContext.Provider>
-);
+        <div
+          className={cn(
+            'grid size-full auto-cols-fr grid-flow-col gap-4',
+            className
+          )}
+        >
+          {columns.map((column) => children(column))}
+        </div>
+      </DndContext>
+    </KanbanContext.Provider>
+  );
+};
