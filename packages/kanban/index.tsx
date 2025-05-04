@@ -9,26 +9,41 @@ import {
   useDroppable,
 } from '@dnd-kit/core';
 import type { DragEndEvent } from '@dnd-kit/core';
-import type { ReactNode } from 'react';
+import {
+  type HTMLAttributes,
+  type ReactNode,
+  createContext,
+  useContext,
+} from 'react';
 
 export type { DragEndEvent } from '@dnd-kit/core';
 
-export type Status = {
+type KanbanItemProps = {
   id: string;
   name: string;
-  color: string;
+  column: string;
+} & Record<string, unknown>;
+
+type KanbanColumnProps = {
+  id: string;
+  name: string;
+} & Record<string, unknown>;
+
+type KanbanContextProps<
+  T extends KanbanItemProps = KanbanItemProps,
+  C extends KanbanColumnProps = KanbanColumnProps,
+> = {
+  columns: C[];
+  data: T[];
 };
 
-export type Feature = {
-  id: string;
-  name: string;
-  startAt: Date;
-  endAt: Date;
-  status: Status;
-};
+const KanbanContext = createContext<KanbanContextProps>({
+  columns: [],
+  data: [],
+});
 
 export type KanbanBoardProps = {
-  id: Status['id'];
+  id: string;
   children: ReactNode;
   className?: string;
 };
@@ -50,25 +65,25 @@ export const KanbanBoard = ({ id, children, className }: KanbanBoardProps) => {
   );
 };
 
-export type KanbanCardProps = Pick<Feature, 'id' | 'name'> & {
+export type KanbanCardProps<T extends KanbanItemProps = KanbanItemProps> = T & {
   index: number;
-  parent: string;
   children?: ReactNode;
   className?: string;
 };
 
-export const KanbanCard = ({
+export const KanbanCard = <T extends KanbanItemProps = KanbanItemProps>({
   id,
   name,
   index,
-  parent,
   children,
   className,
-}: KanbanCardProps) => {
+  column,
+  ...rest
+}: KanbanCardProps<T>) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
       id,
-      data: { index, parent },
+      data: { index, parent: column, ...rest },
     });
 
   return (
@@ -92,57 +107,64 @@ export const KanbanCard = ({
   );
 };
 
-export type KanbanCardsProps = {
-  children: ReactNode;
-  className?: string;
-};
+export type KanbanCardsProps<T extends KanbanItemProps = KanbanItemProps> =
+  Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'id'> & {
+    children: (item: T, index: number) => ReactNode;
+    id: string;
+  };
 
-export const KanbanCards = ({ children, className }: KanbanCardsProps) => (
-  <div className={cn('flex flex-1 flex-col gap-2', className)}>{children}</div>
-);
+export const KanbanCards = <T extends KanbanItemProps = KanbanItemProps>({
+  children,
+  className,
+  ...props
+}: KanbanCardsProps<T>) => {
+  const { data } = useContext(KanbanContext) as KanbanContextProps<T>;
+  const filteredData = data.filter((item) => item.column === props.id);
 
-export type KanbanHeaderProps =
-  | {
-      children: ReactNode;
-    }
-  | {
-      name: Status['name'];
-      color: Status['color'];
-      className?: string;
-    };
-
-export const KanbanHeader = (props: KanbanHeaderProps) =>
-  'children' in props ? (
-    props.children
-  ) : (
-    <div className={cn('flex shrink-0 items-center gap-2', props.className)}>
-      <div
-        className="h-2 w-2 rounded-full"
-        style={{ backgroundColor: props.color }}
-      />
-      <p className="m-0 font-semibold text-sm">{props.name}</p>
+  return (
+    <div className={cn('flex flex-1 flex-col gap-2', className)} {...props}>
+      {filteredData.map((item, index) => children(item, index))}
     </div>
   );
-
-export type KanbanProviderProps = {
-  children: ReactNode;
-  onDragEnd: (event: DragEndEvent) => void;
-  className?: string;
 };
 
-export const KanbanProvider = ({
+export type KanbanHeaderProps = HTMLAttributes<HTMLDivElement>;
+
+export const KanbanHeader = ({ className, ...props }: KanbanHeaderProps) => (
+  <p className={cn('m-0 font-semibold text-sm', className)} {...props} />
+);
+
+export type KanbanProviderProps<
+  T extends KanbanItemProps = KanbanItemProps,
+  C extends KanbanColumnProps = KanbanColumnProps,
+> = {
+  children: (column: C) => ReactNode;
+  onDragEnd: (event: DragEndEvent) => void;
+  className?: string;
+  columns: C[];
+  data: T[];
+};
+
+export const KanbanProvider = <
+  T extends KanbanItemProps = KanbanItemProps,
+  C extends KanbanColumnProps = KanbanColumnProps,
+>({
   children,
   onDragEnd,
   className,
-}: KanbanProviderProps) => (
-  <DndContext collisionDetection={rectIntersection} onDragEnd={onDragEnd}>
-    <div
-      className={cn(
-        'grid size-full auto-cols-fr grid-flow-col gap-4',
-        className
-      )}
-    >
-      {children}
-    </div>
-  </DndContext>
+  columns,
+  data,
+}: KanbanProviderProps<T, C>) => (
+  <KanbanContext.Provider value={{ columns, data }}>
+    <DndContext collisionDetection={rectIntersection} onDragEnd={onDragEnd}>
+      <div
+        className={cn(
+          'grid size-full auto-cols-fr grid-flow-col gap-4',
+          className
+        )}
+      >
+        {columns.map((column) => children(column))}
+      </div>
+    </DndContext>
+  </KanbanContext.Provider>
 );
