@@ -367,7 +367,7 @@ const Example = () => {
     setFeatures(
       features.map((feature) => {
         if (feature.id === active.id) {
-          return { ...feature, status: status.id };
+          return { ...feature, column: status.id };
         }
 
         return feature;
@@ -382,9 +382,9 @@ const Example = () => {
       data={features}
     >
       {(column) => (
-        <KanbanBoard key={column.name} id={column.name}>
+        <KanbanBoard key={column.id} id={column.id}>
           <KanbanHeader>{column.name}</KanbanHeader>
-          <KanbanCards id={column.name}>
+          <KanbanCards id={column.id}>
             {(feature, index) => (
               <KanbanCard
                 key={feature.id}
