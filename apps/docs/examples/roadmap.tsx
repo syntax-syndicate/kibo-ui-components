@@ -696,7 +696,7 @@ const KanbanView = () => {
   const [features, setFeatures] = useState(
     exampleFeatures.map((feature) => ({
       ...feature,
-      column: feature.status.name,
+      column: feature.status.id,
     }))
   );
 
