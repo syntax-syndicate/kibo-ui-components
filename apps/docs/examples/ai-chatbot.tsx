@@ -155,7 +155,7 @@ const Example = () => {
 
   return (
     <div className="relative size-full">
-      <div className="size-full overflow-y-auto p-8 pb-36">
+      <div className="size-full overflow-y-auto p-4 pb-36 sm:p-8">
         {messages.map(({ content, ...message }, index) => (
           <AIMessage key={index} from={message.from}>
             <AIMessageAvatar src={message.avatar} name={message.name} />
