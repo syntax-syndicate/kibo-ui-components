@@ -735,13 +735,12 @@ const KanbanView = () => {
         <KanbanBoard key={column.id} id={column.id}>
           <KanbanHeader>{column.name}</KanbanHeader>
           <KanbanCards id={column.id}>
-            {(feature: (typeof features)[number], index: number) => (
+            {(feature: (typeof features)[number]) => (
               <KanbanCard
                 key={feature.id}
                 id={feature.id}
                 name={feature.name}
                 column={column.id}
-                index={index}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex flex-col gap-1">
