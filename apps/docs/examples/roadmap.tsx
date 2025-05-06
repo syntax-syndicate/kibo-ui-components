@@ -131,19 +131,21 @@ const exampleFeatures = Array.from({ length: 20 })
     release: faker.helpers.arrayElement(exampleReleases),
   }));
 
-const exampleMarkers = new Array(6).map(() => ({
-  id: faker.string.uuid(),
-  date: faker.date.past({ years: 0.5, refDate: new Date() }),
-  label: capitalize(faker.company.buzzPhrase()),
-  className: faker.helpers.arrayElement([
-    'bg-blue-100 text-blue-900',
-    'bg-green-100 text-green-900',
-    'bg-purple-100 text-purple-900',
-    'bg-red-100 text-red-900',
-    'bg-orange-100 text-orange-900',
-    'bg-teal-100 text-teal-900',
-  ]),
-}));
+const exampleMarkers = Array.from({ length: 6 })
+  .fill(null)
+  .map(() => ({
+    id: faker.string.uuid(),
+    date: faker.date.past({ years: 0.5, refDate: new Date() }),
+    label: capitalize(faker.company.buzzPhrase()),
+    className: faker.helpers.arrayElement([
+      'bg-blue-100 text-blue-900',
+      'bg-green-100 text-green-900',
+      'bg-purple-100 text-purple-900',
+      'bg-red-100 text-red-900',
+      'bg-orange-100 text-orange-900',
+      'bg-teal-100 text-teal-900',
+    ]),
+  }));
 
 const GanttView = () => {
   const [features, setFeatures] = useState(exampleFeatures);
