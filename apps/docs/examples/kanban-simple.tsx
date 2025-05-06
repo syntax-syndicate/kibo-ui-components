@@ -25,12 +25,12 @@ const users = new Array(4).map(() => ({
   image: faker.image.avatar(),
 }));
 
-const exampleFeatures = new Array(20).fill(null).map((_, index) => ({
+const exampleFeatures = new Array(20).fill(null).map(() => ({
   id: faker.string.uuid(),
   name: capitalize(faker.company.buzzPhrase()),
   startAt: faker.date.past({ years: 0.5, refDate: new Date() }),
   endAt: faker.date.future({ years: 0.5, refDate: new Date() }),
-  column: columns[index % columns.length].id,
+  column: faker.helpers.arrayElement(columns).id,
   owner: faker.helpers.arrayElement(users),
 }));
 

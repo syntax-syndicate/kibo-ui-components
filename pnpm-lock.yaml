@@ -180,6 +180,9 @@ importers:
       import-in-the-middle:
         specifier: ^1.13.1
         version: 1.13.1
+      lodash.groupby:
+        specifier: ^4.6.0
+        version: 4.6.0
       lucide-react:
         specifier: ^0.503.0
         version: 0.503.0(react@19.1.0)
@@ -220,6 +223,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
+      '@types/lodash.groupby':
+        specifier: ^4.6.9
+        version: 4.6.9
       '@types/node':
         specifier: 22.15.3
         version: 22.15.3
@@ -4098,6 +4104,9 @@ packages:
   '@types/linkify-it@5.0.0':
     resolution: {integrity: sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==}
 
+  '@types/lodash.groupby@4.6.9':
+    resolution: {integrity: sha512-z2xtCX2ko7GrqORnnYea4+ksT7jZNAvaOcLd6mP9M7J09RHvJs06W8BGdQQAX8ARef09VQLdeRilSOcfHlDQJQ==}
+
   '@types/lodash.throttle@4.1.9':
     resolution: {integrity: sha512-PCPVfpfueguWZQB7pJQK890F2scYKoDUL3iM522AptHWn7d5NQmeS/LTEHIcLr5PaTzl3dK2Z0xSUHHTHwaL5g==}
 
@@ -5625,6 +5634,9 @@ packages:
   lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
     deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
+
+  lodash.groupby@4.6.0:
+    resolution: {integrity: sha512-5dcWxm23+VAoz+awKmBaiBvzox8+RqMgFhi7UvX9DHZr2HdxHXM/Wrf8cfKpsW37RNrvtPn6hSwNqurSILbmJw==}
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -10145,6 +10157,10 @@ snapshots:
 
   '@types/linkify-it@5.0.0': {}
 
+  '@types/lodash.groupby@4.6.9':
+    dependencies:
+      '@types/lodash': 4.17.4
+
   '@types/lodash.throttle@4.1.9':
     dependencies:
       '@types/lodash': 4.17.4
@@ -11793,6 +11809,8 @@ snapshots:
   lodash.chunk@4.2.0: {}
 
   lodash.get@4.4.2: {}
+
+  lodash.groupby@4.6.0: {}
 
   lodash.merge@4.6.2: {}
 
