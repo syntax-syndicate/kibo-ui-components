@@ -49,12 +49,6 @@ const sentryConfig = {
 const config = {
   images: {
     formats: ['image/avif', 'image/webp'],
-    remotePatterns: [
-      {
-        hostname: 'img.logo.dev',
-        protocol: 'https',
-      },
-    ],
   },
 
   // biome-ignore lint/suspicious/useAwait: "headers is async"
