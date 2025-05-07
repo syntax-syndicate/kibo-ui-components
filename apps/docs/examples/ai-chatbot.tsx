@@ -195,6 +195,7 @@ const Example = () => {
                       className="inline-flex size-4"
                       width={16}
                       height={16}
+                      unoptimized
                     />
                     {model.name}
                   </AIInputModelSelectItem>
