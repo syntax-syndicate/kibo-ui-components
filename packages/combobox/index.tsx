@@ -209,12 +209,12 @@ export const ComboboxGroup = (props: ComboboxGroupProps) => (
 export type ComboboxItemProps = ComponentProps<typeof CommandItem>;
 
 export const ComboboxItem = (props: ComboboxItemProps) => {
-  const { value, onValueChange, onOpenChange } = useContext(ComboboxContext);
+  const { onValueChange, onOpenChange } = useContext(ComboboxContext);
 
   return (
     <CommandItem
       onSelect={(currentValue) => {
-        onValueChange(currentValue === value ? '' : currentValue);
+        onValueChange(currentValue);
         onOpenChange(false);
       }}
       {...props}
