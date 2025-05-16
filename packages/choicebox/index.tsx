@@ -40,7 +40,7 @@ export const ChoiceboxItem = ({
     asChild
     {...props}
   >
-    <Card className="cursor-pointer flex-row items-start justify-between rounded-md p-4 shadow-none transition-all">
+    <Card className="flex cursor-pointer flex-row items-start justify-between rounded-md p-4 shadow-none transition-all">
       {children}
     </Card>
   </RadioGroupItem>
