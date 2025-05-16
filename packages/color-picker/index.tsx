@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -175,7 +177,10 @@ export const ColorPickerSelection = ({
   return (
     <div
       ref={containerRef}
-      className={cn('relative size-full cursor-crosshair rounded', className)}
+      className={cn(
+        'relative aspect-square w-full cursor-crosshair rounded',
+        className
+      )}
       style={{
         background: `linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0)),
                      linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0)),
@@ -328,6 +333,7 @@ const PercentageInput = ({ className, ...props }: PercentageInputProps) => {
     <div className="relative">
       <Input
         type="text"
+        readOnly
         {...props}
         className={cn(
           'h-8 w-[3.25rem] rounded-l-none bg-secondary px-2 text-xs shadow-none',
@@ -364,6 +370,7 @@ export const ColorPickerFormat = ({
         <Input
           type="text"
           value={hex}
+          readOnly
           className="h-8 rounded-r-none bg-secondary px-2 text-xs shadow-none"
         />
         <PercentageInput value={alpha} />
