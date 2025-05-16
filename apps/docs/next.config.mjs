@@ -68,6 +68,21 @@ const config = {
   async redirects() {
     return [
       {
+        source: '/overview',
+        destination: '/docs',
+        permanent: true,
+      },
+      {
+        source: '/setup',
+        destination: '/docs/setup',
+        permanent: true,
+      },
+      {
+        source: '/sponsors',
+        destination: '/docs/sponsors',
+        permanent: true,
+      },
+      {
         source: '/components',
         destination: '/components/announcement',
         permanent: false,
