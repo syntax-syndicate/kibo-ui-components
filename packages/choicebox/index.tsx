@@ -34,13 +34,17 @@ export const ChoiceboxItem = ({
     className={cn(
       'text-left',
       '[&[data-state="checked"]]:border-primary',
-      '[&[data-state="checked"]]:bg-primary-foreground',
-      className
+      '[&[data-state="checked"]]:bg-primary-foreground'
     )}
     asChild
     {...props}
   >
-    <Card className="flex cursor-pointer flex-row items-start justify-between rounded-md p-4 shadow-none transition-all">
+    <Card
+      className={cn(
+        'flex cursor-pointer flex-row items-start justify-between rounded-md p-4 shadow-none transition-all',
+        className
+      )}
+    >
       {children}
     </Card>
   </RadioGroupItem>
