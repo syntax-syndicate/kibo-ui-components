@@ -43,6 +43,7 @@
     "@repo/shadcn-ui": "workspace:*",
     "@repo/snippet": "workspace:*",
     "@repo/spinner": "workspace:*",
+    "@repo/status": "workspace:*",
     "@repo/table": "workspace:*",
     "@repo/tags": "workspace:*",
     "@repo/theme-switcher": "workspace:*",
