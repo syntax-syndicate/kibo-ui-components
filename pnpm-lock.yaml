@@ -102,6 +102,9 @@ importers:
       '@repo/gantt':
         specifier: workspace:*
         version: link:../../packages/gantt
+      '@repo/glimpse':
+        specifier: workspace:*
+        version: link:../../packages/glimpse
       '@repo/image-zoom':
         specifier: workspace:*
         version: link:../../packages/image-zoom
@@ -799,6 +802,31 @@ importers:
       '@types/lodash.throttle':
         specifier: ^4.1.9
         version: 4.1.9
+      '@types/react':
+        specifier: ^19
+        version: 19.1.4
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.1.5(@types/react@19.1.4)
+      typescript:
+        specifier: ^5
+        version: 5.8.3
+
+  packages/glimpse:
+    dependencies:
+      '@repo/shadcn-ui':
+        specifier: workspace:*
+        version: link:../shadcn-ui
+      react:
+        specifier: ^19.1.0
+        version: 19.1.0
+      react-dom:
+        specifier: ^19.1.0
+        version: 19.1.0(react@19.1.0)
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
       '@types/react':
         specifier: ^19
         version: 19.1.4

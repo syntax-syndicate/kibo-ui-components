@@ -31,6 +31,7 @@
     "@repo/dropzone": "workspace:*",
     "@repo/editor": "workspace:*",
     "@repo/gantt": "workspace:*",
+    "@repo/glimpse": "workspace:*",
     "@repo/image-zoom": "workspace:*",
     "@repo/kanban": "workspace:*",
     "@repo/kbd": "workspace:*",
