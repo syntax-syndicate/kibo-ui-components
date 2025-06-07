@@ -1,6 +1,14 @@
 'use client';
 
 import {
+  AIBranch,
+  AIBranchMessages,
+  AIBranchNext,
+  AIBranchPage,
+  AIBranchPrevious,
+  AIBranchSelector,
+} from '@repo/ai/branch';
+import {
   AIInput,
   AIInputButton,
   AIInputModelSelect,
@@ -22,19 +30,30 @@ import { type FormEventHandler, useState } from 'react';
 
 const messages: {
   from: 'user' | 'assistant';
-  content: string;
+  versions: {
+    id: string;
+    content: string;
+  }[];
   avatar: string;
   name: string;
 }[] = [
   {
     from: 'user',
-    content: 'Can you explain how to use React hooks effectively?',
+    versions: [
+      {
+        id: '1',
+        content: 'Can you explain how to use React hooks effectively?',
+      },
+    ],
     avatar: 'https://github.com/haydenbleasel.png',
     name: 'Hayden Bleasel',
   },
   {
     from: 'assistant',
-    content: `# React Hooks Best Practices
+    versions: [
+      {
+        id: '1',
+        content: `# React Hooks Best Practices
 
 React hooks are a powerful feature that let you use state and other React features without writing classes. Here are some tips for using them effectively:
 
@@ -70,19 +89,39 @@ function ProfilePage({ userId }) {
 \`\`\`
 
 Would you like me to explain any specific hook in more detail?`,
+      },
+    ],
     avatar: 'https://github.com/openai.png',
     name: 'OpenAI',
   },
   {
     from: 'user',
-    content:
-      'Yes, could you explain useCallback and useMemo in more detail? When should I use one over the other?',
+    versions: [
+      {
+        id: '1',
+        content:
+          'Yes, could you explain useCallback and useMemo in more detail? When should I use one over the other?',
+      },
+      {
+        id: '2',
+        content:
+          "I'm particularly interested in understanding the performance implications of useCallback and useMemo. Could you break down when each is most appropriate?",
+      },
+      {
+        id: '3',
+        content:
+          'Thanks for the overview! Could you dive deeper into the specific use cases where useCallback and useMemo make the biggest difference in React applications?',
+      },
+    ],
     avatar: 'https://github.com/haydenbleasel.png',
     name: 'Hayden Bleasel',
   },
   {
     from: 'assistant',
-    content: `## useCallback vs useMemo
+    versions: [
+      {
+        id: '1',
+        content: `## useCallback vs useMemo
 
 Both hooks help with performance optimization, but they serve different purposes:
 
@@ -127,6 +166,8 @@ const sortedList = useMemo(() => expensiveSort(items), [items]);
 ### Performance Note
 
 Don't overuse these hooks! They come with their own overhead. Only use them when you have identified a genuine performance issue.`,
+      },
+    ],
     avatar: 'https://github.com/openai.png',
     name: 'OpenAI',
   },
@@ -169,14 +210,32 @@ const Example = () => {
   return (
     <div className="relative size-full">
       <div className="size-full overflow-y-auto p-4 pb-36 sm:p-8">
-        {messages.map(({ content, ...message }, index) => (
-          <AIMessage key={index} from={message.from}>
-            <AIMessageContent>
-              <AIResponse>{content}</AIResponse>
-            </AIMessageContent>
-            <AIMessageAvatar src={message.avatar} name={message.name} />
-          </AIMessage>
-        ))}
+        {messages.map(({ versions, ...message }, index) =>
+          versions.length > 1 ? (
+            <AIBranch key={index} defaultBranch={0}>
+              <AIBranchMessages>
+                {versions.map((version) => (
+                  <AIMessage key={version.id} from={message.from}>
+                    <AIMessageContent>{version.content}</AIMessageContent>
+                    <AIMessageAvatar src={message.avatar} name={message.name} />
+                  </AIMessage>
+                ))}
+              </AIBranchMessages>
+              <AIBranchSelector from={message.from}>
+                <AIBranchPrevious />
+                <AIBranchPage />
+                <AIBranchNext />
+              </AIBranchSelector>
+            </AIBranch>
+          ) : (
+            <AIMessage key={index} from={message.from}>
+              <AIMessageContent>
+                <AIResponse>{versions[0].content}</AIResponse>
+              </AIMessageContent>
+              <AIMessageAvatar src={message.avatar} name={message.name} />
+            </AIMessage>
+          )
+        )}
       </div>
       <div className="absolute right-0 bottom-8 left-0 grid w-auto gap-4">
         <AISuggestions className="px-8">

@@ -3,6 +3,7 @@
   "title": "Components",
   "pages": [
     "---AI Chatbot---",
+    "ai-branch",
     "ai-input",
     "ai-message",
     "ai-response",
