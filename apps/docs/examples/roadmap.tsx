@@ -189,7 +189,12 @@ const GanttView = () => {
     console.log(`Add feature: ${date.toISOString()}`);
 
   return (
-    <GanttProvider onAddItem={handleAddFeature} range="monthly" zoom={100}>
+    <GanttProvider
+      onAddItem={handleAddFeature}
+      range="monthly"
+      zoom={100}
+      className="rounded-none"
+    >
       <GanttSidebar>
         {Object.entries(sortedGroupedFeatures).map(([group, features]) => (
           <GanttSidebarGroup key={group} name={group}>
