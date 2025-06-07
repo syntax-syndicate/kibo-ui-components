@@ -6,6 +6,7 @@
     "ai-input",
     "ai-message",
     "ai-response",
+    "ai-suggestion",
     "---Collaboration---",
     "avatar-stack",
     "cursor",
