@@ -53,6 +53,10 @@ export const Preview = async ({
       'utf-8'
     );
 
+    if (sourceComponents.some((s) => s.name === component)) {
+      continue;
+    }
+
     sourceComponents.push({ name: component, source });
   }
 
