@@ -1,12 +1,12 @@
 'use client';
 
 import {
-  SiAmazon,
   SiApple,
   SiFacebook,
   SiGithub,
   SiGoogle,
   SiInstagram,
+  SiX,
   SiYoutube,
 } from '@icons-pack/react-simple-icons';
 import {
@@ -52,9 +52,9 @@ const logos = [
     url: 'https://google.com',
   },
   {
-    name: 'Amazon',
-    icon: SiAmazon,
-    url: 'https://amazon.com',
+    name: 'X',
+    icon: SiX,
+    url: 'https://x.com',
   },
   {
     name: 'Apple',
