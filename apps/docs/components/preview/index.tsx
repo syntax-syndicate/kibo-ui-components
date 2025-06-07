@@ -60,9 +60,8 @@ export const Preview = async ({
     <div
       className={cn(
         'size-full overflow-hidden rounded-lg border bg-background',
-        type === 'block' &&
-          'max-h-[40rem] prose-code:border-none prose-code:p-0',
-        type === 'component' && 'not-prose max-h-[32rem]',
+        type === 'block' && 'h-[48rem] prose-code:border-none prose-code:p-0',
+        type === 'component' && 'not-prose h-[32rem]',
         className
       )}
     >
