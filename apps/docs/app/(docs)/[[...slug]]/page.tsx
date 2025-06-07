@@ -1,5 +1,3 @@
-import { createGenerator } from 'fumadocs-typescript';
-import { AutoTypeTable } from 'fumadocs-typescript/ui';
 // import { Banner } from 'fumadocs-ui/components/banner';
 import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
@@ -22,8 +20,6 @@ import Home from './(home)';
 type PageProps = {
   params: Promise<{ slug?: string[] }>;
 };
-
-const generator = createGenerator();
 
 const Page = async (props: PageProps) => {
   const params = await props.params;
@@ -91,9 +87,6 @@ const Page = async (props: PageProps) => {
               Installer,
               Preview,
               PoweredBy,
-              AutoTypeTable: (props) => (
-                <AutoTypeTable {...props} generator={generator} />
-              ),
             }}
           />
         </DocsBody>
