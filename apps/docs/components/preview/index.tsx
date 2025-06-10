@@ -86,7 +86,7 @@ export const Preview = async ({
         </TabsList>
         <TabsContent
           value="source"
-          className="size-full overflow-y-auto bg-background"
+          className="not-prose size-full overflow-y-auto bg-background"
         >
           <PreviewSource source={sourceComponents} />
         </TabsContent>
