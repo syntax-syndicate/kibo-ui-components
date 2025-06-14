@@ -71,7 +71,10 @@ export const AIToolHeader = ({
   ...props
 }: AIToolHeaderProps) => (
   <CollapsibleTrigger
-    className={cn('flex items-center justify-between gap-4 p-3', className)}
+    className={cn(
+      'flex w-full items-center justify-between gap-4 p-3',
+      className
+    )}
     {...props}
   >
     <div className="flex items-center gap-2">
