@@ -1,6 +1,12 @@
 'use client';
 
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
   AIBranch,
   AIBranchMessages,
   AIBranchNext,
@@ -30,9 +36,19 @@ import {
   AISourcesTrigger,
 } from '@repo/ai/source';
 import { AISuggestion, AISuggestions } from '@repo/ai/suggestion';
-import { GlobeIcon, MicIcon, PlusIcon, SendIcon } from 'lucide-react';
+import {
+  CameraIcon,
+  FileIcon,
+  GlobeIcon,
+  ImageIcon,
+  MicIcon,
+  PlusIcon,
+  ScreenShareIcon,
+  SendIcon,
+} from 'lucide-react';
 import Image from 'next/image';
 import { type FormEventHandler, useState } from 'react';
+import { toast } from 'sonner';
 
 const messages: {
   from: 'user' | 'assistant';
@@ -216,12 +232,33 @@ const suggestions = [
 const Example = () => {
   const [model, setModel] = useState<string>(models[0].id);
   const [text, setText] = useState<string>('');
+  const [useWebSearch, setUseWebSearch] = useState<boolean>(false);
+  const [useMicrophone, setUseMicrophone] = useState<boolean>(false);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const message = formData.get('message');
-    console.log('Submitted message:', message);
+
+    if (!message || typeof message !== 'string') {
+      return;
+    }
+
+    toast.success('Message submitted', {
+      description: message,
+    });
+  };
+
+  const handleFileAction = (action: string) => {
+    toast.success('File action', {
+      description: action,
+    });
+  };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    toast.success('Suggestion clicked', {
+      description: suggestion,
+    });
   };
 
   return (
@@ -271,7 +308,7 @@ const Example = () => {
             <AISuggestion
               key={suggestion}
               suggestion={suggestion}
-              onClick={() => setText(suggestion)}
+              onClick={() => handleSuggestionClick(suggestion)}
             />
           ))}
         </AISuggestions>
@@ -283,13 +320,51 @@ const Example = () => {
             />
             <AIInputToolbar>
               <AIInputTools>
-                <AIInputButton>
-                  <PlusIcon size={16} />
-                </AIInputButton>
-                <AIInputButton>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <AIInputButton>
+                      <PlusIcon size={16} />
+                      <span className="sr-only">Add attachment</span>
+                    </AIInputButton>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem
+                      onClick={() => handleFileAction('upload-file')}
+                    >
+                      <FileIcon size={16} className="mr-2" />
+                      Upload file
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleFileAction('upload-photo')}
+                    >
+                      <ImageIcon size={16} className="mr-2" />
+                      Upload photo
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleFileAction('take-screenshot')}
+                    >
+                      <ScreenShareIcon size={16} className="mr-2" />
+                      Take screenshot
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleFileAction('take-photo')}
+                    >
+                      <CameraIcon size={16} className="mr-2" />
+                      Take photo
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <AIInputButton
+                  onClick={() => setUseMicrophone(!useMicrophone)}
+                  variant={useMicrophone ? 'default' : 'ghost'}
+                >
                   <MicIcon size={16} />
+                  <span className="sr-only">Microphone</span>
                 </AIInputButton>
-                <AIInputButton>
+                <AIInputButton
+                  onClick={() => setUseWebSearch(!useWebSearch)}
+                  variant={useWebSearch ? 'default' : 'ghost'}
+                >
                   <GlobeIcon size={16} />
                   <span>Search</span>
                 </AIInputButton>

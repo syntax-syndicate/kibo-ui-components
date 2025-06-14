@@ -175,7 +175,8 @@ export const AIInputButton = ({
       variant={variant}
       size={newSize}
       className={cn(
-        'shrink-0 gap-1.5 rounded-lg text-muted-foreground',
+        'shrink-0 gap-1.5 rounded-lg',
+        variant === 'ghost' && 'text-muted-foreground',
         newSize === 'default' && 'px-3',
         className
       )}
