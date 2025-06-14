@@ -42,6 +42,14 @@ import {
 } from '@repo/ai/source';
 import { AISuggestion, AISuggestions } from '@repo/ai/suggestion';
 import {
+  AITool,
+  AIToolContent,
+  AIToolHeader,
+  AIToolParameters,
+  AIToolResult,
+  type AIToolStatus,
+} from '@repo/ai/tool';
+import {
   CameraIcon,
   FileIcon,
   GlobeIcon,
@@ -60,6 +68,14 @@ const messages: {
   versions: {
     id: string;
     content: string;
+  }[];
+  tools?: {
+    name: string;
+    description: string;
+    status: AIToolStatus;
+    parameters: Record<string, unknown>;
+    result: string | undefined;
+    error: string | undefined;
   }[];
   avatar: string;
   name: string;
@@ -85,6 +101,38 @@ const messages: {
       {
         href: 'https://react.dev/reference/react-dom',
         title: 'React DOM Documentation',
+      },
+    ],
+    tools: [
+      {
+        name: 'mcp',
+        description: 'Searching React documentation',
+        status: 'completed',
+        parameters: {
+          query: 'React hooks best practices',
+          source: 'react.dev',
+        },
+        result: `{
+  "query": "React hooks best practices",
+  "results": [
+    {
+      "title": "Rules of Hooks",
+      "url": "https://react.dev/warnings/invalid-hook-call-warning",
+      "snippet": "Hooks must be called at the top level of your React function components or custom hooks. Don't call hooks inside loops, conditions, or nested functions."
+    },
+    {
+      "title": "useState Hook",
+      "url": "https://react.dev/reference/react/useState",
+      "snippet": "useState is a React Hook that lets you add state to your function components. It returns an array with two values: the current state and a function to update it."
+    },
+    {
+      "title": "useEffect Hook",
+      "url": "https://react.dev/reference/react/useEffect",
+      "snippet": "useEffect lets you synchronize a component with external systems. It runs after render and can be used to perform side effects like data fetching."
+    }
+  ]
+}`,
+        error: undefined,
       },
     ],
     versions: [
@@ -310,6 +358,26 @@ const Example = () => {
                           </AISourcesContent>
                         </AISources>
                       )}
+                      {message.tools?.map((toolCall) => (
+                        <AITool key={toolCall.name}>
+                          <AIToolHeader
+                            name={`Called MCP tool: ${toolCall.name}`}
+                            description={toolCall.description}
+                            status={toolCall.status}
+                          />
+                          <AIToolContent>
+                            <AIToolParameters
+                              parameters={toolCall.parameters}
+                            />
+                            {(toolCall.result || toolCall.error) && (
+                              <AIToolResult
+                                result={toolCall.result}
+                                error={toolCall.error}
+                              />
+                            )}
+                          </AIToolContent>
+                        </AITool>
+                      ))}
                       <AIMessageContent>
                         <AIResponse>{version.content}</AIResponse>
                       </AIMessageContent>

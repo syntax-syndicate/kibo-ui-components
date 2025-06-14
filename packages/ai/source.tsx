@@ -13,7 +13,7 @@ export type AISourcesProps = ComponentProps<'div'>;
 
 export const AISources = ({ className, ...props }: AISourcesProps) => (
   <Collapsible
-    className={cn('not-prose mb-8 text-primary text-xs', className)}
+    className={cn('not-prose mb-4 text-primary text-xs', className)}
     {...props}
   />
 );

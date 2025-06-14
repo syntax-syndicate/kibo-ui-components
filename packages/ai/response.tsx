@@ -125,7 +125,7 @@ const components: Options['components'] = {
 
     return (
       <CodeBlock
-        className={cn('my-4', className)}
+        className={cn('my-4 h-auto', className)}
         data={data}
         defaultValue={data[0].language}
       >
