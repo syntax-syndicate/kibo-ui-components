@@ -232,7 +232,7 @@ const Example = () => {
             <AIBranchMessages>
               {versions.map((version) => (
                 <AIMessage key={version.id} from={message.from}>
-                  <AIMessageContent>
+                  <div>
                     {message.sources?.length && (
                       <AISources>
                         <AISourcesTrigger count={message.sources.length} />
@@ -247,8 +247,10 @@ const Example = () => {
                         </AISourcesContent>
                       </AISources>
                     )}
-                    <AIResponse>{version.content}</AIResponse>
-                  </AIMessageContent>
+                    <AIMessageContent>
+                      <AIResponse>{version.content}</AIResponse>
+                    </AIMessageContent>
+                  </div>
                   <AIMessageAvatar src={message.avatar} name={message.name} />
                 </AIMessage>
               ))}
