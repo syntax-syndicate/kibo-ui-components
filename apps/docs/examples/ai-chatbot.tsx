@@ -227,62 +227,41 @@ const Example = () => {
   return (
     <div className="relative flex size-full flex-col divide-y overflow-hidden">
       <div className="flex-1 overflow-y-auto p-4">
-        {messages.map(({ versions, ...message }, index) =>
-          versions.length > 1 ? (
-            <AIBranch key={index} defaultBranch={0}>
-              <AIBranchMessages>
-                {versions.map((version) => (
-                  <AIMessage key={version.id} from={message.from}>
-                    <AIMessageContent>
-                      {message.sources?.length && (
-                        <AISources>
-                          <AISourcesTrigger count={message.sources.length} />
-                          <AISourcesContent>
-                            {message.sources.map((source) => (
-                              <AISource
-                                key={source.href}
-                                href={source.href}
-                                title={source.title}
-                              />
-                            ))}
-                          </AISourcesContent>
-                        </AISources>
-                      )}
-                      <div>{version.content}</div>
-                    </AIMessageContent>
-                    <AIMessageAvatar src={message.avatar} name={message.name} />
-                  </AIMessage>
-                ))}
-              </AIBranchMessages>
+        {messages.map(({ versions, ...message }, index) => (
+          <AIBranch key={index} defaultBranch={0}>
+            <AIBranchMessages>
+              {versions.map((version) => (
+                <AIMessage key={version.id} from={message.from}>
+                  <AIMessageContent>
+                    {message.sources?.length && (
+                      <AISources>
+                        <AISourcesTrigger count={message.sources.length} />
+                        <AISourcesContent>
+                          {message.sources.map((source) => (
+                            <AISource
+                              key={source.href}
+                              href={source.href}
+                              title={source.title}
+                            />
+                          ))}
+                        </AISourcesContent>
+                      </AISources>
+                    )}
+                    <AIResponse>{version.content}</AIResponse>
+                  </AIMessageContent>
+                  <AIMessageAvatar src={message.avatar} name={message.name} />
+                </AIMessage>
+              ))}
+            </AIBranchMessages>
+            {versions.length > 1 && (
               <AIBranchSelector from={message.from}>
                 <AIBranchPrevious />
                 <AIBranchPage />
                 <AIBranchNext />
               </AIBranchSelector>
-            </AIBranch>
-          ) : (
-            <AIMessage key={index} from={message.from}>
-              <AIMessageContent>
-                {message.sources?.length && (
-                  <AISources>
-                    <AISourcesTrigger count={message.sources.length} />
-                    <AISourcesContent>
-                      {message.sources.map((source) => (
-                        <AISource
-                          key={source.href}
-                          href={source.href}
-                          title={source.title}
-                        />
-                      ))}
-                    </AISourcesContent>
-                  </AISources>
-                )}
-                <AIResponse>{versions[0].content}</AIResponse>
-              </AIMessageContent>
-              <AIMessageAvatar src={message.avatar} name={message.name} />
-            </AIMessage>
-          )
-        )}
+            )}
+          </AIBranch>
+        ))}
       </div>
       <div className="grid shrink-0 gap-4 pt-4">
         <AISuggestions className="px-4">
