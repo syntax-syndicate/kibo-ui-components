@@ -1,5 +1,6 @@
 'use client';
 
+import { AIResponse } from '@repo/ai/response';
 import {
   AITool,
   AIToolContent,
@@ -45,7 +46,10 @@ const Example = () => (
     <AIToolContent>
       <AIToolParameters parameters={toolCall.parameters} />
       {(toolCall.result || toolCall.error) && (
-        <AIToolResult result={toolCall.result} error={toolCall.error} />
+        <AIToolResult
+          result={<AIResponse>{toolCall.result}</AIResponse>}
+          error={toolCall.error}
+        />
       )}
     </AIToolContent>
   </AITool>
