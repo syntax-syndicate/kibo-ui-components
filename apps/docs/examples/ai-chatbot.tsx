@@ -23,6 +23,12 @@ import {
 } from '@repo/ai/input';
 import { AIMessage, AIMessageAvatar, AIMessageContent } from '@repo/ai/message';
 import { AIResponse } from '@repo/ai/response';
+import {
+  AISource,
+  AISources,
+  AISourcesContent,
+  AISourcesTrigger,
+} from '@repo/ai/source';
 import { AISuggestion, AISuggestions } from '@repo/ai/suggestion';
 import { GlobeIcon, MicIcon, PlusIcon, SendIcon } from 'lucide-react';
 import Image from 'next/image';
@@ -30,6 +36,7 @@ import { type FormEventHandler, useState } from 'react';
 
 const messages: {
   from: 'user' | 'assistant';
+  sources?: { href: string; title: string }[];
   versions: {
     id: string;
     content: string;
@@ -50,6 +57,16 @@ const messages: {
   },
   {
     from: 'assistant',
+    sources: [
+      {
+        href: 'https://react.dev/reference/react',
+        title: 'React Documentation',
+      },
+      {
+        href: 'https://react.dev/reference/react-dom',
+        title: 'React DOM Documentation',
+      },
+    ],
     versions: [
       {
         id: '1',
@@ -216,7 +233,23 @@ const Example = () => {
               <AIBranchMessages>
                 {versions.map((version) => (
                   <AIMessage key={version.id} from={message.from}>
-                    <AIMessageContent>{version.content}</AIMessageContent>
+                    <AIMessageContent>
+                      {message.sources?.length && (
+                        <AISources>
+                          <AISourcesTrigger count={message.sources.length} />
+                          <AISourcesContent>
+                            {message.sources.map((source) => (
+                              <AISource
+                                key={source.href}
+                                href={source.href}
+                                title={source.title}
+                              />
+                            ))}
+                          </AISourcesContent>
+                        </AISources>
+                      )}
+                      <div>{version.content}</div>
+                    </AIMessageContent>
                     <AIMessageAvatar src={message.avatar} name={message.name} />
                   </AIMessage>
                 ))}
@@ -230,6 +263,20 @@ const Example = () => {
           ) : (
             <AIMessage key={index} from={message.from}>
               <AIMessageContent>
+                {message.sources?.length && (
+                  <AISources>
+                    <AISourcesTrigger count={message.sources.length} />
+                    <AISourcesContent>
+                      {message.sources.map((source) => (
+                        <AISource
+                          key={source.href}
+                          href={source.href}
+                          title={source.title}
+                        />
+                      ))}
+                    </AISourcesContent>
+                  </AISources>
+                )}
                 <AIResponse>{versions[0].content}</AIResponse>
               </AIMessageContent>
               <AIMessageAvatar src={message.avatar} name={message.name} />
