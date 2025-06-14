@@ -7,6 +7,10 @@ type PoweredByProps = {
 };
 
 const getHostname = (url: string) => {
+  if (url.startsWith('/')) {
+    return new URL(url, 'https://www.kibo-ui.com').hostname.replace('www.', '');
+  }
+
   const parsedUrl = new URL(url);
 
   return parsedUrl.hostname.replace('www.', '');
