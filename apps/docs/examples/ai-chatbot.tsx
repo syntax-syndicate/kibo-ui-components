@@ -209,7 +209,7 @@ const Example = () => {
 
   return (
     <div className="relative flex size-full flex-col divide-y overflow-hidden">
-      <div className="flex-1 overflow-y-auto p-4 sm:p-8">
+      <div className="flex-1 overflow-y-auto p-4">
         {messages.map(({ versions, ...message }, index) =>
           versions.length > 1 ? (
             <AIBranch key={index} defaultBranch={0}>
@@ -237,8 +237,8 @@ const Example = () => {
           )
         )}
       </div>
-      <div className="grid shrink-0 gap-4 pt-4 sm:pt-8">
-        <AISuggestions className="px-4 sm:px-8">
+      <div className="grid shrink-0 gap-4 pt-4">
+        <AISuggestions className="px-4">
           {suggestions.map((suggestion) => (
             <AISuggestion
               key={suggestion}
@@ -247,7 +247,7 @@ const Example = () => {
             />
           ))}
         </AISuggestions>
-        <div className="w-full px-4 pb-4 sm:px-8 sm:pb-8">
+        <div className="w-full px-4 pb-4">
           <AIInput onSubmit={handleSubmit}>
             <AIInputTextarea
               value={text}
