@@ -208,8 +208,8 @@ const Example = () => {
   };
 
   return (
-    <div className="relative size-full">
-      <div className="size-full overflow-y-auto p-4 pb-36 sm:p-8">
+    <div className="relative flex size-full flex-col divide-y overflow-hidden">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-8">
         {messages.map(({ versions, ...message }, index) =>
           versions.length > 1 ? (
             <AIBranch key={index} defaultBranch={0}>
@@ -237,8 +237,8 @@ const Example = () => {
           )
         )}
       </div>
-      <div className="absolute right-0 bottom-8 left-0 grid w-auto gap-4">
-        <AISuggestions className="px-8">
+      <div className="grid shrink-0 gap-4 pt-4 sm:pt-8">
+        <AISuggestions className="px-4 sm:px-8">
           {suggestions.map((suggestion) => (
             <AISuggestion
               key={suggestion}
@@ -247,49 +247,51 @@ const Example = () => {
             />
           ))}
         </AISuggestions>
-        <AIInput onSubmit={handleSubmit} className="mx-8 w-auto">
-          <AIInputTextarea
-            value={text}
-            onChange={(event) => setText(event.target.value)}
-          />
-          <AIInputToolbar>
-            <AIInputTools>
-              <AIInputButton>
-                <PlusIcon size={16} />
-              </AIInputButton>
-              <AIInputButton>
-                <MicIcon size={16} />
-              </AIInputButton>
-              <AIInputButton>
-                <GlobeIcon size={16} />
-                <span>Search</span>
-              </AIInputButton>
-              <AIInputModelSelect value={model} onValueChange={setModel}>
-                <AIInputModelSelectTrigger>
-                  <AIInputModelSelectValue />
-                </AIInputModelSelectTrigger>
-                <AIInputModelSelectContent>
-                  {models.map((model) => (
-                    <AIInputModelSelectItem key={model.id} value={model.id}>
-                      <Image
-                        src={`https://img.logo.dev/${model.provider}?token=${process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN}`}
-                        alt={model.provider}
-                        className="inline-flex size-4"
-                        width={16}
-                        height={16}
-                        unoptimized
-                      />
-                      {model.name}
-                    </AIInputModelSelectItem>
-                  ))}
-                </AIInputModelSelectContent>
-              </AIInputModelSelect>
-            </AIInputTools>
-            <AIInputSubmit>
-              <SendIcon size={16} />
-            </AIInputSubmit>
-          </AIInputToolbar>
-        </AIInput>
+        <div className="w-full px-4 pb-4 sm:px-8 sm:pb-8">
+          <AIInput onSubmit={handleSubmit}>
+            <AIInputTextarea
+              value={text}
+              onChange={(event) => setText(event.target.value)}
+            />
+            <AIInputToolbar>
+              <AIInputTools>
+                <AIInputButton>
+                  <PlusIcon size={16} />
+                </AIInputButton>
+                <AIInputButton>
+                  <MicIcon size={16} />
+                </AIInputButton>
+                <AIInputButton>
+                  <GlobeIcon size={16} />
+                  <span>Search</span>
+                </AIInputButton>
+                <AIInputModelSelect value={model} onValueChange={setModel}>
+                  <AIInputModelSelectTrigger>
+                    <AIInputModelSelectValue />
+                  </AIInputModelSelectTrigger>
+                  <AIInputModelSelectContent>
+                    {models.map((model) => (
+                      <AIInputModelSelectItem key={model.id} value={model.id}>
+                        <Image
+                          src={`https://img.logo.dev/${model.provider}?token=${process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN}`}
+                          alt={model.provider}
+                          className="inline-flex size-4"
+                          width={16}
+                          height={16}
+                          unoptimized
+                        />
+                        {model.name}
+                      </AIInputModelSelectItem>
+                    ))}
+                  </AIInputModelSelectContent>
+                </AIInputModelSelect>
+              </AIInputTools>
+              <AIInputSubmit>
+                <SendIcon size={16} />
+              </AIInputSubmit>
+            </AIInputToolbar>
+          </AIInput>
+        </div>
       </div>
     </div>
   );
