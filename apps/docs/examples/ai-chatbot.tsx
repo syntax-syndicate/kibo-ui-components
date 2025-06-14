@@ -14,6 +14,7 @@ import {
   AIBranchPrevious,
   AIBranchSelector,
 } from '@repo/ai/branch';
+import { AIConversation } from '@repo/ai/conversation';
 import {
   AIInput,
   AIInputButton,
@@ -283,7 +284,7 @@ const Example = () => {
 
   return (
     <div className="relative flex size-full flex-col divide-y overflow-hidden">
-      <div className="flex-1 overflow-y-auto p-4">
+      <AIConversation>
         {messages.map(({ versions, ...message }, index) => (
           <AIBranch key={index} defaultBranch={0}>
             <AIBranchMessages>
@@ -321,7 +322,7 @@ const Example = () => {
             )}
           </AIBranch>
         ))}
-      </div>
+      </AIConversation>
       <div className="grid shrink-0 gap-4 pt-4">
         <AISuggestions className="px-4">
           {suggestions.map((suggestion) => (

@@ -4,6 +4,7 @@
   "pages": [
     "---AI Chatbot---",
     "ai-branch",
+    "ai-conversation",
     "ai-input",
     "ai-message",
     "ai-response",
