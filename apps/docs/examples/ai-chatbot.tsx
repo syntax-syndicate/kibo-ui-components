@@ -44,7 +44,6 @@ import {
   MicIcon,
   PlusIcon,
   ScreenShareIcon,
-  SendIcon,
 } from 'lucide-react';
 import Image from 'next/image';
 import { type FormEventHandler, useState } from 'react';
@@ -234,19 +233,30 @@ const Example = () => {
   const [text, setText] = useState<string>('');
   const [useWebSearch, setUseWebSearch] = useState<boolean>(false);
   const [useMicrophone, setUseMicrophone] = useState<boolean>(false);
+  const [status, setStatus] = useState<
+    'submitted' | 'streaming' | 'ready' | 'error'
+  >('ready');
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const message = formData.get('message');
 
-    if (!message || typeof message !== 'string') {
+    if (!text) {
       return;
     }
 
     toast.success('Message submitted', {
-      description: message,
+      description: text,
     });
+
+    setStatus('submitted');
+
+    setTimeout(() => {
+      setStatus('streaming');
+    }, 200);
+
+    setTimeout(() => {
+      setStatus('ready');
+    }, 2000);
   };
 
   const handleFileAction = (action: string) => {
@@ -259,6 +269,16 @@ const Example = () => {
     toast.success('Suggestion clicked', {
       description: suggestion,
     });
+
+    setStatus('submitted');
+
+    setTimeout(() => {
+      setStatus('streaming');
+    }, 200);
+
+    setTimeout(() => {
+      setStatus('ready');
+    }, 2000);
   };
 
   return (
@@ -389,9 +409,7 @@ const Example = () => {
                   </AIInputModelSelectContent>
                 </AIInputModelSelect>
               </AIInputTools>
-              <AIInputSubmit>
-                <SendIcon size={16} />
-              </AIInputSubmit>
+              <AIInputSubmit status={status} disabled={!text} />
             </AIInputToolbar>
           </AIInput>
         </div>
