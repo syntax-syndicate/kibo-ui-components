@@ -24,6 +24,15 @@
     "---Code---",
     "code-block",
     "snippet",
+    "---Forms---",
+    "choicebox",
+    "combobox",
+    "dropzone",
+    "mini-calendar",
+    "tags",
+    "---Images---",
+    "image-crop",
+    "image-zoom",
     "---Other---",
     "..."
   ]
