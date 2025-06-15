@@ -34,6 +34,7 @@ export type AIReasoningProps = ComponentProps<typeof Collapsible> & {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  duration?: number;
 };
 
 export const AIReasoning = memo(
@@ -43,6 +44,7 @@ export const AIReasoning = memo(
     open,
     defaultOpen = false,
     onOpenChange,
+    duration: durationProp,
     children,
     ...props
   }: AIReasoningProps) => {
@@ -51,10 +53,13 @@ export const AIReasoning = memo(
       defaultProp: defaultOpen,
       onChange: onOpenChange,
     });
+    const [duration, setDuration] = useControllableState({
+      prop: durationProp,
+      defaultProp: 0,
+    });
 
     const [hasAutoClosedRef, setHasAutoClosedRef] = useState(false);
     const [startTime, setStartTime] = useState<number | null>(null);
-    const [duration, setDuration] = useState(0);
 
     // Track duration when streaming starts and ends
     useEffect(() => {
@@ -66,7 +71,7 @@ export const AIReasoning = memo(
         setDuration(Math.round((Date.now() - startTime) / 1000));
         setStartTime(null);
       }
-    }, [isStreaming, startTime]);
+    }, [isStreaming, startTime, setDuration]);
 
     // Auto-open when streaming starts, auto-close when streaming ends (once only)
     useEffect(() => {
@@ -93,7 +98,7 @@ export const AIReasoning = memo(
         <Collapsible
           open={isOpen}
           onOpenChange={handleOpenChange}
-          className={cn(className)}
+          className={cn('not-prose mb-4', className)}
           {...props}
         >
           {children}
@@ -155,14 +160,10 @@ export type AIReasoningContentProps = ComponentProps<
 export const AIReasoningContent = memo(
   ({ className, children, ...props }: AIReasoningContentProps) => (
     <CollapsibleContent
-      className={cn(
-        'mt-4 text-muted-foreground text-sm',
-        'data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down',
-        className
-      )}
+      className={cn('mt-4 text-muted-foreground text-sm', className)}
       {...props}
     >
-      <AIResponse>{children}</AIResponse>
+      <AIResponse className="grid gap-2">{children}</AIResponse>
     </CollapsibleContent>
   )
 );

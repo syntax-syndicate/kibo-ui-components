@@ -33,6 +33,11 @@ import {
   AIInputTools,
 } from '@repo/ai/input';
 import { AIMessage, AIMessageAvatar, AIMessageContent } from '@repo/ai/message';
+import {
+  AIReasoning,
+  AIReasoningContent,
+  AIReasoningTrigger,
+} from '@repo/ai/reasoning';
 import { AIResponse } from '@repo/ai/response';
 import {
   AISource,
@@ -69,6 +74,10 @@ const messages: {
     id: string;
     content: string;
   }[];
+  reasoning?: {
+    content: string;
+    duration: number;
+  };
   tools?: {
     name: string;
     description: string;
@@ -203,6 +212,16 @@ Would you like me to explain any specific hook in more detail?`,
   },
   {
     from: 'assistant',
+    reasoning: {
+      content: `The user is asking for a detailed explanation of useCallback and useMemo. I should provide a clear and concise explanation of each hook's purpose and how they differ.
+      
+The useCallback hook is used to memoize functions to prevent unnecessary re-renders of child components that receive functions as props.
+
+The useMemo hook is used to memoize values to avoid expensive recalculations on every render.
+
+Both hooks help with performance optimization, but they serve different purposes.`,
+      duration: 10,
+    },
     versions: [
       {
         id: '1',
@@ -378,6 +397,14 @@ const Example = () => {
                           </AIToolContent>
                         </AITool>
                       ))}
+                      {message.reasoning && (
+                        <AIReasoning duration={message.reasoning.duration}>
+                          <AIReasoningTrigger />
+                          <AIReasoningContent>
+                            {message.reasoning.content}
+                          </AIReasoningContent>
+                        </AIReasoning>
+                      )}
                       <AIMessageContent>
                         <AIResponse>{version.content}</AIResponse>
                       </AIMessageContent>
