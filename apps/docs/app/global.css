@@ -182,26 +182,6 @@ h3 {
   @apply fill-none;
 }
 
-#nd-subnav [data-active="true"] {
-  @apply font-medium text-primary;
-}
-
-#nd-subnav > div {
-  @apply container border-x border-dotted;
-}
-
-#nd-docs-layout {
-  @apply container mx-auto p-0 border-x border-dotted;
-}
-
-#nd-sidebar > div {
-  @apply border-dotted;
-}
-
-#nd-tocnav {
-  @apply translate-y-px border-dotted;
-}
-
 /* Hide tabs on desktop */
 #nd-sidebar [data-hide-if-empty] {
   @apply hidden;
@@ -219,7 +199,8 @@ h3 {
   @apply hidden!;
 }
 
-/* Hide hamburger menu button in home page on mobile */
-.home #nd-subnav button[data-search] + button {
-  @apply hidden!;
+/* Remove borders from sidebar and nav */
+#nd-sidebar > div,
+#nd-subnav > div {
+  @apply border-none!;
 }

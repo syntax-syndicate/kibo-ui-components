@@ -1,4 +1,3 @@
-// import { Banner } from 'fumadocs-ui/components/banner';
 import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import {
@@ -9,7 +8,6 @@ import {
 } from 'fumadocs-ui/page';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Header } from '../../../components/header';
 import { Installer } from '../../../components/installer';
 import { PoweredBy } from '../../../components/powered-by';
 import { Preview } from '../../../components/preview';
@@ -27,33 +25,15 @@ const Page = async (props: PageProps) => {
 
   if (!params.slug) {
     return (
-      <>
-        {/* <Banner
-          variant="rainbow"
-          className="container mx-auto border-x border-b border-dotted"
-        >
-          <p>
-            We're live on Product Hunt!{' '}
-            <a
-              className="underline"
-              href="https://www.producthunt.com/posts/kibo-ui"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Come say hello 😻
-            </a>
-          </p>
-        </Banner> */}
-        <DocsLayout
-          {...baseOptions}
-          tree={source.pageTree}
-          sidebar={{ hidden: true, collapsible: false }}
-          nav={{ ...baseOptions.nav, mode: 'top' }}
-          containerProps={{ className: 'home' }}
-        >
-          <Home />
-        </DocsLayout>
-      </>
+      <DocsLayout
+        {...baseOptions}
+        tree={source.pageTree}
+        sidebar={{ hidden: true, collapsible: false }}
+        nav={{ ...baseOptions.nav, mode: 'top' }}
+        containerProps={{ className: 'home' }}
+      >
+        <Home />
+      </DocsLayout>
     );
   }
 
@@ -89,7 +69,6 @@ const Page = async (props: PageProps) => {
         mode: 'top',
       }}
     >
-      <Header />
       <DocsPage
         toc={page.data.toc}
         full={page.data.full}
