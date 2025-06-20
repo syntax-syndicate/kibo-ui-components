@@ -166,6 +166,10 @@ export const DialogStackOverlay = ({
     context.setIsOpen(false);
   }, [context.setIsOpen]);
 
+  if (!context.isOpen) {
+    return null;
+  }
+
   return (
     // biome-ignore lint/nursery/noStaticElementInteractions: "This is a clickable overlay"
     <div
