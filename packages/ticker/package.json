@@ -1,15 +1,10 @@
 {
   "name": "@repo/ticker",
-  "description": "A scrolling ticker for displaying financial symbols, prices and changes.",
+  "description": "A composable finance ticker for displaying symbols, prices and changes.",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "test": "vitest"
-  },
   "dependencies": {
-    "@repo/marquee": "workspace:*",
     "@repo/shadcn-ui": "workspace:*",
-    "lucide-react": "^0.515.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

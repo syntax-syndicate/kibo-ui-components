@@ -5,9 +5,9 @@ import { cn } from '@/lib/utils';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { createContext, memo, useContext, useMemo } from 'react';
 
-interface TickerContextValue {
+type TickerContextValue = {
   formatter: Intl.NumberFormat;
-}
+};
 
 const DEFAULT_CURRENCY = 'USD';
 const DEFAULT_LOCALE = 'en-US';
@@ -22,6 +22,7 @@ const defaultFormatter = new Intl.NumberFormat(DEFAULT_LOCALE, {
 const TickerContext = createContext<TickerContextValue>({
   formatter: defaultFormatter,
 });
+
 export const useTickerContext = () => useContext(TickerContext);
 
 export type TickerProps = HTMLAttributes<HTMLButtonElement> & {
