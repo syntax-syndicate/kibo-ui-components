@@ -1,8 +1,8 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import {
+  ComponentProps,
   type HTMLAttributes,
   type ReactNode,
   createContext,
@@ -10,17 +10,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import {
-  Amex,
-  type CardNetworkIcon,
-  type CardNetworkIconType,
-  Diners,
-  Discover,
-  JCB,
-  Mastercard,
-  UnionPay,
-  Visa,
-} from 'react-card-network-icons';
+import { PaymentIcon } from 'react-svg-credit-card-payment-icons';
 
 const useSupportsHover = () => {
   const [supportsHover, setSupportsHover] = useState(false);
@@ -202,31 +192,14 @@ export const CreditCardFront = ({
   </div>
 );
 
-export type CreditCardServiceProviderProps = HTMLAttributes<HTMLDivElement> & {
-  type?: CardNetworkIconType;
-};
-
-const icons: Record<
-  NonNullable<CreditCardServiceProviderProps['type']>,
-  CardNetworkIcon
-> = {
-  visa: Visa,
-  mastercard: Mastercard,
-  amex: Amex,
-  discover: Discover,
-  diners: Diners,
-  jcb: JCB,
-  'union-pay': UnionPay,
-};
+export type CreditCardServiceProviderProps = ComponentProps<typeof PaymentIcon>;
 
 export const CreditCardServiceProvider = ({
   className,
   children,
-  type = 'visa',
+  type = 'Visa',
   ...props
 }: CreditCardServiceProviderProps) => {
-  const Icon = icons[type];
-
   if (children) {
     return (
       <div
@@ -240,8 +213,10 @@ export const CreditCardServiceProvider = ({
       </div>
     );
   }
+
   return (
-    <Icon
+    <PaymentIcon
+      type={type}
       className={cn(
         'absolute right-0 bottom-0',
         'max-h-1/3 max-w-1/3',

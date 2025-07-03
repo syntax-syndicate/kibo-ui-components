@@ -75,7 +75,7 @@ const Example = () => (
           <ScenePlusMark className="text-[#0e72d1]" />
         </CreditCardLogo>
         <CreditCardChip />
-        <CreditCardServiceProvider type="amex" className="fill-white" />
+        <CreditCardServiceProvider type="Amex" className="fill-white" />
         <CreditCardName className="absolute bottom-0 left-0">
           John R. Doe
         </CreditCardName>

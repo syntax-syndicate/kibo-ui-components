@@ -614,12 +614,12 @@ importers:
       react:
         specifier: ^19.1.0
         version: 19.1.0
-      react-card-network-icons:
-        specifier: ^1.0.3
-        version: 1.0.3
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
+      react-svg-credit-card-payment-icons:
+        specifier: ^4.0.0
+        version: 4.0.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@repo/typescript-config':
         specifier: workspace:*
@@ -6941,9 +6941,6 @@ packages:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
     hasBin: true
 
-  react-card-network-icons@1.0.3:
-    resolution: {integrity: sha512-m6aH8nv8pPWAVHQnCky80BoC0yXvS9SJPYKy3+Hp8S/Pjo6Aoy8mC8KR0r0mi0wSkqweDFsE3FZPHE+DUSmISQ==}
-
   react-day-picker@9.7.0:
     resolution: {integrity: sha512-urlK4C9XJZVpQ81tmVgd2O7lZ0VQldZeHzNejbwLWZSkzHH498KnArT0EHNfKBOWwKc935iMLGZdxXPRISzUxQ==}
     engines: {node: '>=18'}
@@ -7052,6 +7049,12 @@ packages:
       '@types/react':
         optional: true
 
+  react-svg-credit-card-payment-icons@4.0.0:
+    resolution: {integrity: sha512-pwJD/Aii+MLdH+UnTWZAJrF4NTy0mmzjyaN6QVgt+a/gJNrsG7S3YLY1lT3hpOf98OR6NuKbDdeOKrkHR3U7Mg==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+
   react-transition-group@4.4.5:
     resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
     peerDependencies:
@@ -7063,10 +7066,6 @@ packages:
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
-
-  react@18.3.1:
-    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
-    engines: {node: '>=0.10.0'}
 
   react@19.1.0:
     resolution: {integrity: sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==}
@@ -14138,10 +14137,6 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
 
-  react-card-network-icons@1.0.3:
-    dependencies:
-      react: 18.3.1
-
   react-day-picker@9.7.0(react@19.1.0):
     dependencies:
       '@date-fns/tz': 1.2.0
@@ -14258,6 +14253,11 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.1.8
 
+  react-svg-credit-card-payment-icons@4.0.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+
   react-transition-group@4.4.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@babel/runtime': 7.26.7
@@ -14274,10 +14274,6 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       swr: 2.3.3(react@19.1.0)
-
-  react@18.3.1:
-    dependencies:
-      loose-envify: 1.4.0
 
   react@19.1.0: {}
 

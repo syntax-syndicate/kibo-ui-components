@@ -152,7 +152,7 @@ const Example = () => (
         safeArea={0}
         className="bg-[#F2F2F2] text-[#909090]"
       >
-        <CreditCardServiceProvider className="top-6 right-6 max-h-1/4 max-w-1/4">
+        <CreditCardServiceProvider type="Mastercard" className="top-6 right-6 max-h-1/4 max-w-1/4">
           <MastercardLogo className="w-full" />
         </CreditCardServiceProvider>
         <CreditCardMagStripe className="top-auto bottom-0 bg-[#BEBEC0]" />

@@ -6,8 +6,8 @@
   "dependencies": {
     "@repo/shadcn-ui": "workspace:*",
     "react": "^19.1.0",
-    "react-card-network-icons": "^1.0.3",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-svg-credit-card-payment-icons": "^4.0.0"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
