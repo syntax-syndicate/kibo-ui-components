@@ -24,13 +24,17 @@ import {
 
 const useSupportsHover = () => {
   const [supportsHover, setSupportsHover] = useState(false);
+
   useEffect(() => {
     const mql = window.matchMedia('(hover: hover)');
     const handler = (e: MediaQueryListEvent) => setSupportsHover(e.matches);
+
     setSupportsHover(mql.matches);
     mql.addEventListener('change', handler);
+
     return () => mql.removeEventListener('change', handler);
   }, []);
+
   return supportsHover;
 };
 
@@ -46,7 +50,6 @@ export const CreditCard = ({ className, ...props }: CreditCardProps) => (
     {...props}
   />
 );
-CreditCard.displayName = 'CreditCard';
 
 const CreditCardFlipContext = createContext(false);
 
@@ -77,7 +80,7 @@ export const CreditCardFlipper = ({
           '@xs:rounded-2xl rounded-lg',
           'transform-3d transition duration-700 ease-in-out',
           supportsHover &&
-            'group-hover/kibo-credit-card:-rotate-y-180 group-hover/kibo-credit-card:shadow-lg',
+          'group-hover/kibo-credit-card:-rotate-y-180 group-hover/kibo-credit-card:shadow-lg',
           !supportsHover && isFlipped && '-rotate-y-180 shadow-lg',
           className
         )}
@@ -88,7 +91,6 @@ export const CreditCardFlipper = ({
     </CreditCardFlipContext.Provider>
   );
 };
-CreditCardFlipper.displayName = 'CreditCardFlipper';
 
 export type CreditCardNameProps = HTMLAttributes<HTMLParagraphElement>;
 
@@ -106,7 +108,6 @@ export const CreditCardName = ({
     {...props}
   />
 );
-CreditCardName.displayName = 'CreditCardName';
 
 export type CreditCardChipProps = HTMLAttributes<SVGSVGElement>;
 
@@ -159,7 +160,6 @@ export const CreditCardChip = ({
       </defs>
     </svg>
   );
-CreditCardChip.displayName = 'CreditCardChip';
 
 export type CreditCardLogoProps = HTMLAttributes<HTMLDivElement>;
 
@@ -172,7 +172,6 @@ export const CreditCardLogo = ({
     {...props}
   />
 );
-CreditCardLogo.displayName = 'CreditCardLogo';
 
 export type CreditCardFrontProps = HTMLAttributes<HTMLDivElement> & {
   safeArea?: number;
@@ -202,7 +201,6 @@ export const CreditCardFront = ({
     </div>
   </div>
 );
-CreditCardFront.displayName = 'CreditCardFront';
 
 export type CreditCardServiceProviderProps = HTMLAttributes<HTMLDivElement> & {
   type?: CardNetworkIconType;
@@ -257,47 +255,27 @@ export const CreditCardServiceProvider = ({
 export type CreditCardMagStripeProps = HTMLAttributes<HTMLDivElement>;
 
 export type CreditCardBackContextValue = {
-  hideInformation: boolean;
-  setHideInformation: (value: boolean) => void;
   safeArea: number;
 };
 
 const CreditCardBackContext = createContext<CreditCardBackContextValue>({
-  hideInformation: true,
-  setHideInformation: () => {
-    throw new Error('CreditCardBackContext must be used within CreditCardBack');
-  },
   safeArea: 20,
 });
 
 export type CreditCardBackProps = HTMLAttributes<HTMLDivElement> & {
-  hideInformation?: boolean;
   safeArea?: number;
 };
 
 export const CreditCardBack = ({
-  hideInformation: hideInformationProp,
   safeArea = 16,
   children,
   className,
   ...props
 }: CreditCardBackProps) => {
-  const [hideInformation, setHideInformation] = useState(
-    hideInformationProp ?? true
-  );
-
   const isInsideFlipper = useContext(CreditCardFlipContext);
 
-  useEffect(() => {
-    if (hideInformationProp !== undefined) {
-      setHideInformation(hideInformationProp);
-    }
-  }, [hideInformationProp]);
-
   return (
-    <CreditCardBackContext.Provider
-      value={{ hideInformation, setHideInformation, safeArea }}
-    >
+    <CreditCardBackContext.Provider value={{ safeArea }}>
       <div
         className={cn(
           'backface-hidden absolute inset-0 flex overflow-hidden bg-foreground/90',
@@ -319,7 +297,6 @@ export const CreditCardBack = ({
     </CreditCardBackContext.Provider>
   );
 };
-CreditCardBack.displayName = 'CreditCardBack';
 
 export const CreditCardMagStripe = ({
   className,
@@ -327,9 +304,6 @@ export const CreditCardMagStripe = ({
 }: CreditCardMagStripeProps) => {
   const context = useContext(CreditCardBackContext);
 
-  if (context.hideInformation) {
-    return null;
-  }
   return (
     <div
       className={cn(
@@ -343,7 +317,6 @@ export const CreditCardMagStripe = ({
     />
   );
 };
-CreditCardMagStripe.displayName = 'CreditCardMagStripe';
 
 export type CreditCardNumberProps = HTMLAttributes<HTMLParagraphElement>;
 
@@ -352,26 +325,18 @@ export const CreditCardNumber = ({
   children,
   style,
   ...props
-}: CreditCardNumberProps) => {
-  const context = useContext(CreditCardBackContext);
-
-  if (context.hideInformation) {
-    return null;
-  }
-  return (
-    <p
-      className={cn('font-mono', '@xs:text-2xl', className)}
-      style={{
-        lineHeight: '100%',
-        ...style,
-      }}
-      {...props}
-    >
-      {children}
-    </p>
-  );
-};
-CreditCardNumber.displayName = 'CreditCardNumber';
+}: CreditCardNumberProps) => (
+  <p
+    className={cn('font-mono', '@xs:text-2xl', className)}
+    style={{
+      lineHeight: '100%',
+      ...style,
+    }}
+    {...props}
+  >
+    {children}
+  </p>
+);
 
 export type CreditCardExpiryProps = HTMLAttributes<HTMLParagraphElement>;
 
@@ -379,24 +344,16 @@ export const CreditCardExpiry = ({
   className,
   style,
   ...props
-}: CreditCardExpiryProps) => {
-  const context = useContext(CreditCardBackContext);
-
-  if (context.hideInformation) {
-    return null;
-  }
-  return (
-    <p
-      className={cn('font-mono', className)}
-      style={{
-        lineHeight: '100%',
-        ...style,
-      }}
-      {...props}
-    />
-  );
-};
-CreditCardExpiry.displayName = 'CreditCardExpiry';
+}: CreditCardExpiryProps) => (
+  <p
+    className={cn('font-mono', className)}
+    style={{
+      lineHeight: '100%',
+      ...style,
+    }}
+    {...props}
+  />
+);
 
 export type CreditCardCvvProps = HTMLAttributes<HTMLParagraphElement>;
 
@@ -404,56 +361,13 @@ export const CreditCardCvv = ({
   className,
   style,
   ...props
-}: CreditCardCvvProps) => {
-  const context = useContext(CreditCardBackContext);
-
-  if (context.hideInformation) {
-    return null;
-  }
-  return (
-    <p
-      className={cn('font-mono', className)}
-      style={{
-        lineHeight: '100%',
-        ...style,
-      }}
-      {...props}
-    />
-  );
-};
-CreditCardCvv.displayName = 'CreditCardCvv';
-
-export type CreditCardRevealButtonProps = HTMLAttributes<HTMLButtonElement> & {
-  variant?: 'default' | 'secondary';
-};
-
-export const CreditCardRevealButton = ({
-  children,
-  className,
-  variant = 'secondary',
-  ...props
-}: CreditCardRevealButtonProps) => {
-  const context = useContext(CreditCardBackContext);
-
-  const defaultChildren = context.hideInformation ? 'Reveal' : 'Hide';
-
-  return (
-    <Button
-      variant={variant}
-      className={cn(
-        'absolute transition-all ease-in-out',
-        context.hideInformation
-          ? '-translate-y-1/2 top-1/2 right-1/2 translate-x-1/2'
-          : 'top-0 right-0',
-        className
-      )}
-      onClick={(e) => {
-        e.stopPropagation();
-        context.setHideInformation(!context.hideInformation);
-      }}
-      {...props}
-    >
-      {children ?? defaultChildren}
-    </Button>
-  );
-};
+}: CreditCardCvvProps) => (
+  <p
+    className={cn('font-mono', className)}
+    style={{
+      lineHeight: '100%',
+      ...style,
+    }}
+    {...props}
+  />
+);

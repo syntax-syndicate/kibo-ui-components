@@ -10,7 +10,6 @@ import {
   CreditCardMagStripe,
   CreditCardName,
   CreditCardNumber,
-  CreditCardRevealButton,
   CreditCardServiceProvider,
 } from '@repo/credit-card';
 import type { HTMLAttributes } from 'react';
@@ -84,7 +83,6 @@ const Example = () => (
         </CreditCardFront>
         <CreditCardBack className="bg-[#321419]">
           <CreditCardMagStripe className="bg-white/20" />
-          <CreditCardRevealButton />
           <CreditCardNumber className="absolute bottom-0 left-0">
             0123 4567 8901 2345
           </CreditCardNumber>
