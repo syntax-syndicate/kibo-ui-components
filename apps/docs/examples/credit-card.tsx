@@ -48,33 +48,31 @@ const ChaseMark = (props: HTMLAttributes<SVGElement>) => (
 );
 
 const Example = () => (
-  <>
-    <CreditCard>
-      <CreditCardFlipper>
-        <CreditCardFront className="bg-[#063573]">
-          <ChaseLogo className="absolute top-0 left-0 h-1/12" />
-          <CreditCardLogo>
-            <ChaseMark className="text-[#0e72d1]" />
-          </CreditCardLogo>
-          <CreditCardChip />
-          <CreditCardServiceProvider className="fill-white" />
-          <CreditCardName className="absolute bottom-0 left-0">
-            John R. Doe
-          </CreditCardName>
-        </CreditCardFront>
-        <CreditCardBack className="bg-[#063573]">
-          <CreditCardMagStripe />
-          <CreditCardNumber className="absolute bottom-0 left-0">
-            0123 4567 8901 2345
-          </CreditCardNumber>
-          <div className="-translate-y-1/2 absolute top-1/2 flex gap-4">
-            <CreditCardExpiry>01/24</CreditCardExpiry>
-            <CreditCardCvv>123</CreditCardCvv>
-          </div>
-        </CreditCardBack>
-      </CreditCardFlipper>
-    </CreditCard>
-  </>
+  <CreditCard>
+    <CreditCardFlipper>
+      <CreditCardFront className="bg-[#063573]">
+        <ChaseLogo className="absolute top-0 left-0 h-1/12" />
+        <CreditCardLogo>
+          <ChaseMark className="text-[#0e72d1]" />
+        </CreditCardLogo>
+        <CreditCardChip />
+        <CreditCardServiceProvider className="fill-white" />
+        <CreditCardName className="absolute bottom-0 left-0">
+          John R. Doe
+        </CreditCardName>
+      </CreditCardFront>
+      <CreditCardBack className="bg-[#063573]">
+        <CreditCardMagStripe />
+        <CreditCardNumber className="absolute bottom-0 left-0">
+          0123 4567 8901 2345
+        </CreditCardNumber>
+        <div className="-translate-y-1/2 absolute top-1/2 flex gap-4">
+          <CreditCardExpiry>01/24</CreditCardExpiry>
+          <CreditCardCvv>123</CreditCardCvv>
+        </div>
+      </CreditCardBack>
+    </CreditCardFlipper>
+  </CreditCard>
 );
 
 export default Example;

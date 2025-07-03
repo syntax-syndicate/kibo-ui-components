@@ -67,33 +67,31 @@ const ScenePlusMark = (props: HTMLAttributes<SVGElement>) => (
 );
 
 const Example = () => (
-  <>
-    <CreditCard>
-      <CreditCardFlipper>
-        <CreditCardFront className="bg-[#321419]">
-          <ScotiabankLogo className="absolute top-0 left-0 h-1/10" />
-          <CreditCardLogo className="size-1/4">
-            <ScenePlusMark className="text-[#0e72d1]" />
-          </CreditCardLogo>
-          <CreditCardChip />
-          <CreditCardServiceProvider type="amex" className="fill-white" />
-          <CreditCardName className="absolute bottom-0 left-0">
-            John R. Doe
-          </CreditCardName>
-        </CreditCardFront>
-        <CreditCardBack className="bg-[#321419]">
-          <CreditCardMagStripe className="bg-white/20" />
-          <CreditCardNumber className="absolute bottom-0 left-0">
-            0123 4567 8901 2345
-          </CreditCardNumber>
-          <div className="-translate-y-1/2 absolute top-1/2 flex gap-4">
-            <CreditCardExpiry>01/24</CreditCardExpiry>
-            <CreditCardCvv>123</CreditCardCvv>
-          </div>
-        </CreditCardBack>
-      </CreditCardFlipper>
-    </CreditCard>
-  </>
+  <CreditCard>
+    <CreditCardFlipper>
+      <CreditCardFront className="bg-[#321419]">
+        <ScotiabankLogo className="absolute top-0 left-0 h-1/10" />
+        <CreditCardLogo className="size-1/4">
+          <ScenePlusMark className="text-[#0e72d1]" />
+        </CreditCardLogo>
+        <CreditCardChip />
+        <CreditCardServiceProvider type="amex" className="fill-white" />
+        <CreditCardName className="absolute bottom-0 left-0">
+          John R. Doe
+        </CreditCardName>
+      </CreditCardFront>
+      <CreditCardBack className="bg-[#321419]">
+        <CreditCardMagStripe className="bg-white/20" />
+        <CreditCardNumber className="absolute bottom-0 left-0">
+          0123 4567 8901 2345
+        </CreditCardNumber>
+        <div className="-translate-y-1/2 absolute top-1/2 flex gap-4">
+          <CreditCardExpiry>01/24</CreditCardExpiry>
+          <CreditCardCvv>123</CreditCardCvv>
+        </div>
+      </CreditCardBack>
+    </CreditCardFlipper>
+  </CreditCard>
 );
 
 export default Example;
