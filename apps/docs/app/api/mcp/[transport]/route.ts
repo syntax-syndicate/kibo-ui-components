@@ -1,9 +1,8 @@
 import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { track } from '@vercel/analytics/server';
-import { createMcpHandler } from '@vercel/mcp-adapter';
+import { createMcpHandler } from "mcp-handler";
 import { z } from 'zod';
-import { env } from '../../../../env';
 import { getPackage } from '../../../../lib/package';
 
 const internalPackages = ['shadcn-ui', 'typescript-config'];
@@ -72,14 +71,9 @@ const handler = createMcpHandler(
       }
     );
   },
+  {},
   {
-    // Optional server options
-  },
-  {
-    redisUrl: env.REDIS_URL,
-    streamableHttpEndpoint: '/api/mcp/http',
-    sseEndpoint: '/api/mcp/sse',
-    sseMessageEndpoint: '/api/mcp/message',
+    basePath: "/api",
     maxDuration: 60,
     verboseLogs: true,
   }
