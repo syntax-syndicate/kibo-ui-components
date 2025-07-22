@@ -9,8 +9,8 @@ import {
 import { cn } from '@repo/shadcn-ui/lib/utils';
 import { BoxIcon, CodeIcon, EyeIcon } from 'lucide-react';
 import { PreviewCode } from './code';
-import { PreviewRender } from './render';
 import { PreviewSource } from './source';
+import { PreviewContent } from './content';
 
 type PreviewProps = {
   path: string;
@@ -103,13 +103,7 @@ export const Preview = async ({
           )}
           value="preview"
         >
-          {type === 'block' ? (
-            <Component />
-          ) : (
-            <PreviewRender>
-              <Component />
-            </PreviewRender>
-          )}
+          <PreviewContent Component={Component} type={type} />
         </TabsContent>
       </Tabs>
     </div>
