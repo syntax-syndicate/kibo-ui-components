@@ -20,8 +20,11 @@ import {
 import type { HTMLAttributes } from 'react';
 import { memo } from 'react';
 import ReactMarkdown, { type Options } from 'react-markdown';
+import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import { cn } from '@/lib/utils';
+import 'katex/dist/katex.min.css';
 
 export type AIResponseProps = HTMLAttributes<HTMLDivElement> & {
   options?: Options;
@@ -179,7 +182,8 @@ export const AIResponse = memo(
     >
       <ReactMarkdown
         components={components}
-        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeKatex]}
+        remarkPlugins={[remarkGfm, remarkMath]}
         {...options}
       >
         {children}
