@@ -7,12 +7,12 @@ import type { ComponentType } from 'react';
 import { createElement } from 'react';
 import AIInputExample from '../../../../../examples/ai-chatbot';
 import CollaborativeCanvasExample from '../../../../../examples/collaborative-canvas';
-import PricingPageExample from '../../../../../examples/pricing';
+import FormExample from '../../../../../examples/form';
 import { source } from '../../../../../lib/source';
 
 const aiChatbot = source.getPage(['blocks', 'ai-chatbot']);
 const collaborativeCanvas = source.getPage(['blocks', 'collaborative-canvas']);
-const pricing = source.getPage(['blocks', 'pricing']);
+const form = source.getPage(['blocks', 'form']);
 
 const examples = [
   {
@@ -36,10 +36,14 @@ const examples = [
     ),
   },
   {
-    icon: pricing?.data.icon,
-    name: pricing?.data.title,
-    description: pricing?.data.description,
-    component: PricingPageExample,
+    icon: form?.data.icon,
+    name: form?.data.title,
+    description: form?.data.description,
+    component: () => (
+      <div className="max-h-[40rem] overflow-y-auto">
+        <FormExample />
+      </div>
+    ),
     className: 'lg:col-span-2',
   },
 ];
@@ -60,9 +64,9 @@ const ExampleCard = ({
   const Icon =
     icon && icon in icons
       ? (props: LucideProps) =>
-          createElement(icons[icon as keyof typeof icons], {
-            ...props,
-          })
+        createElement(icons[icon as keyof typeof icons], {
+          ...props,
+        })
       : null;
 
   return (
@@ -90,7 +94,7 @@ const ExampleCard = ({
 };
 
 export const Blocks = () => (
-  <>
+  <div className="container mx-auto">
     <div className="flex w-full flex-col items-start justify-between gap-4 py-16 md:flex-row">
       <div className="grid gap-4">
         <h2 className="max-w-lg font-semibold text-3xl">
@@ -113,5 +117,5 @@ export const Blocks = () => (
         <ExampleCard key={example.name} {...example} />
       ))}
     </div>
-  </>
+  </div>
 );
