@@ -89,39 +89,39 @@ const messages: {
   avatar: string;
   name: string;
 }[] = [
-  {
-    from: 'user',
-    versions: [
-      {
-        id: '1',
-        content: 'Can you explain how to use React hooks effectively?',
-      },
-    ],
-    avatar: 'https://github.com/haydenbleasel.png',
-    name: 'Hayden Bleasel',
-  },
-  {
-    from: 'assistant',
-    sources: [
-      {
-        href: 'https://react.dev/reference/react',
-        title: 'React Documentation',
-      },
-      {
-        href: 'https://react.dev/reference/react-dom',
-        title: 'React DOM Documentation',
-      },
-    ],
-    tools: [
-      {
-        name: 'mcp',
-        description: 'Searching React documentation',
-        status: 'completed',
-        parameters: {
-          query: 'React hooks best practices',
-          source: 'react.dev',
+    {
+      from: 'user',
+      versions: [
+        {
+          id: '1',
+          content: 'Can you explain how to use React hooks effectively?',
         },
-        result: `{
+      ],
+      avatar: 'https://github.com/haydenbleasel.png',
+      name: 'Hayden Bleasel',
+    },
+    {
+      from: 'assistant',
+      sources: [
+        {
+          href: 'https://react.dev/reference/react',
+          title: 'React Documentation',
+        },
+        {
+          href: 'https://react.dev/reference/react-dom',
+          title: 'React DOM Documentation',
+        },
+      ],
+      tools: [
+        {
+          name: 'mcp',
+          description: 'Searching React documentation',
+          status: 'completed',
+          parameters: {
+            query: 'React hooks best practices',
+            source: 'react.dev',
+          },
+          result: `{
   "query": "React hooks best practices",
   "results": [
     {
@@ -141,13 +141,13 @@ const messages: {
     }
   ]
 }`,
-        error: undefined,
-      },
-    ],
-    versions: [
-      {
-        id: '1',
-        content: `# React Hooks Best Practices
+          error: undefined,
+        },
+      ],
+      versions: [
+        {
+          id: '1',
+          content: `# React Hooks Best Practices
 
 React hooks are a powerful feature that let you use state and other React features without writing classes. Here are some tips for using them effectively:
 
@@ -183,49 +183,49 @@ function ProfilePage({ userId }) {
 \`\`\`
 
 Would you like me to explain any specific hook in more detail?`,
-      },
-    ],
-    avatar: 'https://github.com/openai.png',
-    name: 'OpenAI',
-  },
-  {
-    from: 'user',
-    versions: [
-      {
-        id: '1',
-        content:
-          'Yes, could you explain useCallback and useMemo in more detail? When should I use one over the other?',
-      },
-      {
-        id: '2',
-        content:
-          "I'm particularly interested in understanding the performance implications of useCallback and useMemo. Could you break down when each is most appropriate?",
-      },
-      {
-        id: '3',
-        content:
-          'Thanks for the overview! Could you dive deeper into the specific use cases where useCallback and useMemo make the biggest difference in React applications?',
-      },
-    ],
-    avatar: 'https://github.com/haydenbleasel.png',
-    name: 'Hayden Bleasel',
-  },
-  {
-    from: 'assistant',
-    reasoning: {
-      content: `The user is asking for a detailed explanation of useCallback and useMemo. I should provide a clear and concise explanation of each hook's purpose and how they differ.
+        },
+      ],
+      avatar: 'https://github.com/openai.png',
+      name: 'OpenAI',
+    },
+    {
+      from: 'user',
+      versions: [
+        {
+          id: '1',
+          content:
+            'Yes, could you explain useCallback and useMemo in more detail? When should I use one over the other?',
+        },
+        {
+          id: '2',
+          content:
+            "I'm particularly interested in understanding the performance implications of useCallback and useMemo. Could you break down when each is most appropriate?",
+        },
+        {
+          id: '3',
+          content:
+            'Thanks for the overview! Could you dive deeper into the specific use cases where useCallback and useMemo make the biggest difference in React applications?',
+        },
+      ],
+      avatar: 'https://github.com/haydenbleasel.png',
+      name: 'Hayden Bleasel',
+    },
+    {
+      from: 'assistant',
+      reasoning: {
+        content: `The user is asking for a detailed explanation of useCallback and useMemo. I should provide a clear and concise explanation of each hook's purpose and how they differ.
       
 The useCallback hook is used to memoize functions to prevent unnecessary re-renders of child components that receive functions as props.
 
 The useMemo hook is used to memoize values to avoid expensive recalculations on every render.
 
 Both hooks help with performance optimization, but they serve different purposes.`,
-      duration: 10,
-    },
-    versions: [
-      {
-        id: '1',
-        content: `## useCallback vs useMemo
+        duration: 10,
+      },
+      versions: [
+        {
+          id: '1',
+          content: `## useCallback vs useMemo
 
 Both hooks help with performance optimization, but they serve different purposes:
 
@@ -270,12 +270,12 @@ const sortedList = useMemo(() => expensiveSort(items), [items]);
 ### Performance Note
 
 Don't overuse these hooks! They come with their own overhead. Only use them when you have identified a genuine performance issue.`,
-      },
-    ],
-    avatar: 'https://github.com/openai.png',
-    name: 'OpenAI',
-  },
-];
+        },
+      ],
+      avatar: 'https://github.com/openai.png',
+      name: 'OpenAI',
+    },
+  ];
 
 const models = [
   { id: 'gpt-4', name: 'GPT-4', provider: 'openai.com' },
@@ -496,17 +496,16 @@ const Example = () => {
                     <AIInputModelSelectValue />
                   </AIInputModelSelectTrigger>
                   <AIInputModelSelectContent>
-                    {models.map((model) => (
-                      <AIInputModelSelectItem key={model.id} value={model.id}>
+                    {models.map((currentModel) => (
+                      <AIInputModelSelectItem key={currentModel.id} value={currentModel.id}>
                         <Image
-                          alt={model.provider}
+                          alt={currentModel.provider}
                           className="inline-flex size-4"
                           height={16}
-                          src={`https://img.logo.dev/${model.provider}?token=${process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN}`}
-                          unoptimized
+                          src={`https://img.logo.dev/${currentModel.provider}?token=${process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN}&size=16&retina=true`}
                           width={16}
                         />
-                        {model.name}
+                        {currentModel.name}
                       </AIInputModelSelectItem>
                     ))}
                   </AIInputModelSelectContent>

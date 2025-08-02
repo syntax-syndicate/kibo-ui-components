@@ -14,6 +14,7 @@ import {
   AIInputTools,
 } from '@repo/ai/input';
 import { GlobeIcon, MicIcon, PlusIcon } from 'lucide-react';
+import Image from 'next/image';
 import { type FormEventHandler, useState } from 'react';
 
 const models = [
@@ -73,16 +74,16 @@ const Example = () => {
               <AIInputModelSelectValue />
             </AIInputModelSelectTrigger>
             <AIInputModelSelectContent>
-              {models.map((model) => (
-                <AIInputModelSelectItem key={model.id} value={model.id}>
-                  <img
-                    alt={model.provider}
+              {models.map((currentModel) => (
+                <AIInputModelSelectItem key={currentModel.id} value={currentModel.id}>
+                  <Image
+                    alt={currentModel.provider}
                     className="inline-flex size-4"
                     height={16}
-                    src={`https://img.logo.dev/${model.provider}?token=${process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN}`}
+                    src={`https://img.logo.dev/${currentModel.provider}?token=${process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN}&size=16&retina=true`}
                     width={16}
                   />
-                  {model.name}
+                  {currentModel.name}
                 </AIInputModelSelectItem>
               ))}
             </AIInputModelSelectContent>
