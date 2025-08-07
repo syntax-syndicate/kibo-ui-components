@@ -7,10 +7,12 @@ import type { ComponentType } from 'react';
 import { createElement } from 'react';
 import CollaborativeCanvasExample from '../../../../../examples/collaborative-canvas';
 import FormExample from '../../../../../examples/form';
+import RoadmapExample from '../../../../../examples/roadmap';
 import { source } from '../../../../../lib/source';
 
 const collaborativeCanvas = source.getPage(['blocks', 'collaborative-canvas']);
 const form = source.getPage(['blocks', 'form']);
+const roadmap = source.getPage(['blocks', 'roadmap']);
 
 const examples = [
   {
@@ -20,6 +22,16 @@ const examples = [
     component: () => (
       <div className="aspect-square overflow-hidden">
         <CollaborativeCanvasExample />
+      </div>
+    ),
+  },
+  {
+    icon: roadmap?.data.icon,
+    name: roadmap?.data.title,
+    description: roadmap?.data.description,
+    component: () => (
+      <div className="aspect-square overflow-hidden">
+        <RoadmapExample />
       </div>
     ),
   },
