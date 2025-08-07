@@ -91,23 +91,19 @@ const config = {
       },
       {
         source: '/components',
-        destination: '/components/announcement',
+        destination: '/components/avatar-stack',
         permanent: false,
       },
       {
         source: '/blocks',
-        destination: '/blocks/ai-chatbot',
+        destination: '/blocks/collaborative-canvas',
         permanent: false,
       },
-      { source: '/ai', destination: '/components/ai', permanent: true },
-      {
-        source: '/ai/:slug*',
-        destination: '/components/ai-:slug*',
-        permanent: true,
-      },
+      { source: '/ai', destination: 'https://ai-sdk.dev/elements?ref=kibo', permanent: true },
+      { source: '/ai/:slug*', destination: 'https://ai-sdk.dev/elements?ref=kibo', permanent: true },
       {
         source: '/components/ai/:slug*',
-        destination: '/components/ai-:slug*',
+        destination: 'https://ai-sdk.dev/elements?ref=kibo',
         permanent: true,
       },
       {
