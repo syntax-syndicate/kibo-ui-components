@@ -51,6 +51,7 @@
     "@repo/status": "workspace:*",
     "@repo/table": "workspace:*",
     "@repo/tags": "workspace:*",
+    "@repo/tree": "workspace:*",
     "@repo/theme-switcher": "workspace:*",
     "@repo/video-player": "workspace:*",
     "@sentry/nextjs": "^9.29.0",
