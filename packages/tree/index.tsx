@@ -3,6 +3,7 @@
 import { ChevronRight, File, Folder, FolderOpen } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
+  type ComponentProps,
   createContext,
   type HTMLAttributes,
   type ReactNode,
@@ -107,7 +108,9 @@ export const TreeProvider = ({
 
   const handleSelection = useCallback(
     (nodeId: string, ctrlKey = false) => {
-      if (!selectable) return;
+      if (!selectable) {
+        return;
+      }
 
       let newSelection: string[];
 
@@ -218,9 +221,7 @@ export const TreeNode = ({
   );
 };
 
-export type TreeNodeTriggerProps = HTMLAttributes<HTMLDivElement> & {
-  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
-};
+export type TreeNodeTriggerProps = ComponentProps<typeof motion.div>;
 
 export const TreeNodeTrigger = ({
   children,
@@ -228,10 +229,8 @@ export const TreeNodeTrigger = ({
   onClick,
   ...props
 }: TreeNodeTriggerProps) => {
-  const { expandedIds, selectedIds, toggleExpanded, handleSelection, indent } =
-    useTree();
+  const { selectedIds, toggleExpanded, handleSelection, indent } = useTree();
   const { nodeId, level } = useTreeNode();
-  const isExpanded = expandedIds.has(nodeId);
   const isSelected = selectedIds.includes(nodeId);
 
   return (
@@ -247,12 +246,12 @@ export const TreeNodeTrigger = ({
         handleSelection(nodeId, e.ctrlKey || e.metaKey);
         onClick?.(e);
       }}
-      style={{ paddingLeft: level * indent + 8 }}
+      style={{ paddingLeft: level * (indent ?? 0) + 8 }}
       whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
       {...props}
     >
       <TreeLines />
-      {children}
+      {children as ReactNode}
     </motion.div>
   );
 };
@@ -261,21 +260,25 @@ export const TreeLines = () => {
   const { showLines, indent } = useTree();
   const { level, isLast, parentPath } = useTreeNode();
 
-  if (!showLines || level === 0) return null;
+  if (!showLines || level === 0) {
+    return null;
+  }
 
   return (
     <div className="pointer-events-none absolute top-0 bottom-0 left-0">
       {/* Render vertical lines for all parent levels */}
       {Array.from({ length: level }, (_, index) => {
         const shouldHideLine = parentPath[index] === true;
-        if (shouldHideLine && index === level - 1) return null;
+        if (shouldHideLine && index === level - 1) {
+          return null;
+        }
 
         return (
           <div
             className="absolute top-0 bottom-0 border-border/40 border-l"
-            key={index}
+            key={index.toString()}
             style={{
-              left: index * indent + 12,
+              left: index * (indent ?? 0) + 12,
               display: shouldHideLine ? 'none' : 'block',
             }}
           />
@@ -286,8 +289,8 @@ export const TreeLines = () => {
       <div
         className="absolute top-1/2 border-border/40 border-t"
         style={{
-          left: (level - 1) * indent + 12,
-          width: indent - 4,
+          left: (level - 1) * (indent ?? 0) + 12,
+          width: (indent ?? 0) - 4,
           transform: 'translateY(-1px)',
         }}
       />
@@ -297,7 +300,7 @@ export const TreeLines = () => {
         <div
           className="absolute top-0 border-border/40 border-l"
           style={{
-            left: (level - 1) * indent + 12,
+            left: (level - 1) * (indent ?? 0) + 12,
             height: '50%',
           }}
         />
@@ -306,7 +309,7 @@ export const TreeLines = () => {
   );
 };
 
-export type TreeNodeContentProps = HTMLAttributes<HTMLDivElement> & {
+export type TreeNodeContentProps = ComponentProps<typeof motion.div> & {
   hasChildren?: boolean;
 };
 
@@ -317,7 +320,7 @@ export const TreeNodeContent = ({
   ...props
 }: TreeNodeContentProps) => {
   const { animateExpand, expandedIds } = useTree();
-  const { nodeId, level, parentPath, isLast } = useTreeNode();
+  const { nodeId } = useTreeNode();
   const isExpanded = expandedIds.has(nodeId);
 
   return (
@@ -352,7 +355,7 @@ export const TreeNodeContent = ({
   );
 };
 
-export type TreeExpanderProps = HTMLAttributes<HTMLDivElement> & {
+export type TreeExpanderProps = ComponentProps<typeof motion.div> & {
   hasChildren?: boolean;
 };
 
@@ -390,7 +393,7 @@ export const TreeExpander = ({
   );
 };
 
-export type TreeIconProps = HTMLAttributes<HTMLDivElement> & {
+export type TreeIconProps = ComponentProps<typeof motion.div> & {
   icon?: ReactNode;
   hasChildren?: boolean;
 };
@@ -405,7 +408,9 @@ export const TreeIcon = ({
   const { nodeId } = useTreeNode();
   const isExpanded = expandedIds.has(nodeId);
 
-  if (!showIcons) return null;
+  if (!showIcons) {
+    return null;
+  }
 
   const getDefaultIcon = () =>
     hasChildren ? (
