@@ -99,16 +99,18 @@ const config = {
         destination: '/blocks/collaborative-canvas',
         permanent: false,
       },
-      { source: '/ai', destination: 'https://ai-sdk.dev/elements?ref=kibo', permanent: true },
-      { source: '/ai/:slug*', destination: 'https://ai-sdk.dev/elements/:slug*?ref=kibo', permanent: true },
+      { source: '/ai', destination: 'https://ai-sdk.dev/elements/components?ref=kibo', permanent: true },
+      { source: '/components/ai-input', destination: 'https://ai-sdk.dev/elements/components/prompt-input?ref=kibo', permanent: true },
+      { source: '/components/ai/input', destination: 'https://ai-sdk.dev/elements/components/prompt-input?ref=kibo', permanent: true },
+      { source: '/ai/:slug*', destination: 'https://ai-sdk.dev/elements/components/:slug*?ref=kibo', permanent: true },
       {
         source: '/components/ai/:slug*',
-        destination: 'https://ai-sdk.dev/elements/:slug*?ref=kibo',
+        destination: 'https://ai-sdk.dev/elements/components/:slug*?ref=kibo',
         permanent: true,
       },
       {
         source: '/components/ai-:slug*',
-        destination: 'https://ai-sdk.dev/elements/:slug*?ref=kibo',
+        destination: 'https://ai-sdk.dev/elements/components/:slug*?ref=kibo',
         permanent: true,
       },
       {
