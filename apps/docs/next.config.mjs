@@ -100,10 +100,15 @@ const config = {
         permanent: false,
       },
       { source: '/ai', destination: 'https://ai-sdk.dev/elements?ref=kibo', permanent: true },
-      { source: '/ai/:slug*', destination: 'https://ai-sdk.dev/elements?ref=kibo', permanent: true },
+      { source: '/ai/:slug*', destination: 'https://ai-sdk.dev/elements/:slug*?ref=kibo', permanent: true },
       {
         source: '/components/ai/:slug*',
-        destination: 'https://ai-sdk.dev/elements?ref=kibo',
+        destination: 'https://ai-sdk.dev/elements/:slug*?ref=kibo',
+        permanent: true,
+      },
+      {
+        source: '/components/ai-:slug*',
+        destination: 'https://ai-sdk.dev/elements/:slug*?ref=kibo',
         permanent: true,
       },
       {
