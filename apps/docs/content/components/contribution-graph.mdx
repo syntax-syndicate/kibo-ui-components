@@ -1,0 +1,69 @@
+---
+title: Contribution Graph
+description: A GitHub-style contribution graph component that displays activity levels over time.
+icon: LayoutGrid
+---
+
+<Preview path="contribution-graph" />
+
+## Installation
+
+<Installer packageName="contribution-graph" />
+
+## Features
+
+- GitHub-style activity calendar visualization
+- Fully composable architecture with render props
+- CSS-based theming with data attributes
+- Configurable block size, margin, and radius
+- Tooltip support with render prop
+- Month and week labels
+- Activity count and legend
+- Responsive design with horizontal scrolling
+- Server-side data fetching support
+- TypeScript support
+
+## Examples
+
+### Custom GitHub theme
+
+Use GitHub's color scheme with data attributes:
+
+<Preview path="contribution-graph-custom-theme" />
+
+### Minimal view
+
+Hide labels and footer for a compact display:
+
+<Preview path="contribution-graph-minimal" />
+
+### With tooltips
+
+Add interactive tooltips to show detailed information:
+
+<Preview path="contribution-graph-tooltip" />
+
+### Custom size
+
+Adjust block size and spacing:
+
+<Preview path="contribution-graph-size" />
+
+### Custom block styling
+
+Customize individual blocks with className and style props:
+
+<Preview path="contribution-graph-custom-blocks" />
+
+### Custom footer
+
+Create a custom footer with composable components:
+
+<Preview path="contribution-graph-custom-footer" />
+
+## Usage Tips
+
+- For missing dates in the data array, no activity is assumed
+- The calendar will automatically fill gaps between dates with zero activity
+- You can control the calendar's date range by including empty entries as the first and last items
+- The component automatically handles dark mode when using the system color scheme
