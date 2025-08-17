@@ -23,6 +23,31 @@ icon: LayoutGrid
 - Server-side data fetching support
 - TypeScript support
 
+## Data Fetching
+
+This component is the visualization layer only, it doesn't handle data fetching or state management.
+
+I highly recommend using Jonathan Gruber's [GitHub Contributions API](https://github.com/grubersjoe/github-contributions-api) to fetch your data.
+
+Here's an example of how to fetch and cache your data:
+
+```ts
+const username = 'haydenbleasel';
+
+const getCachedContributions = unstable_cache(
+  async () => {
+    const url = new URL(`/v4/${username}`, 'https://github-contributions-api.jogruber.de');
+    const response = await fetch(url);
+    const data = (await response.json()) as Response;
+    const total = data.total[new Date().getFullYear()];
+
+    return { contributions: data.contributions, total };
+  },
+  ['github-contributions'],
+  { revalidate: 60 * 60 * 24 },
+);
+```
+
 ## Examples
 
 ### Custom GitHub theme
