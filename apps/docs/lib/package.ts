@@ -121,7 +121,7 @@ export const getPackage = async (packageName: string) => {
     const pkg = dep.replace('@repo/', '');
 
     registryDependencies.push(
-      `https://www.kibo-ui.com/registry/${pkg}.json`
+      `https://www.kibo-ui.com/r/${pkg}.json`
     );
   }
 

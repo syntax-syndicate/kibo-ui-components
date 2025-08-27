@@ -38,7 +38,7 @@ export const Installer = ({ packageName }: InstallerProps) => {
     shadcn: {
       label: 'shadcn CLI',
       image: shadcn,
-      code: `npx shadcn@latest add https://www.kibo-ui.com/registry/${packageName}.json`,
+      code: `npx shadcn@latest add https://www.kibo-ui.com/r/${packageName}.json`,
     },
   };
 
