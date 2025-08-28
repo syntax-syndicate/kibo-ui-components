@@ -1,3 +1,16 @@
+# v1.1.1 (Thu Aug 28 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Improve registry command ([@haydenbleasel](https://github.com/haydenbleasel))
+- Misc fixes ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.1.0 (Wed Aug 27 2025)
 
 :tada: This release contains work from new contributors! :tada:
