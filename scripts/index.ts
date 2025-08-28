@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { execSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 
 const args = process.argv.slice(2);
 
@@ -28,5 +28,15 @@ for (const packageName of packageNames) {
       'https://www.kibo-ui.com'
     );
 
-  execSync(`npx -y shadcn@latest add ${url.toString()}`);
+  const args = ['-y', 'shadcn@latest', 'add', url.toString()];
+
+  const result = spawnSync('npx', args, {
+    stdio: 'inherit',
+    shell: false
+  });
+
+  if (result.error) {
+    console.error(`Failed to add ${packageName}:`, result.error.message);
+    process.exit(1);
+  }
 }
