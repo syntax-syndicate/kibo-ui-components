@@ -38,5 +38,8 @@ for (const packageName of packageNames) {
   if (result.error) {
     console.error(`Failed to add ${packageName}:`, result.error.message);
     process.exit(1);
+  } else if (result.status !== 0) {
+    console.error(`Command failed with exit code ${result.status}`);
+    process.exit(1);
   }
 }
