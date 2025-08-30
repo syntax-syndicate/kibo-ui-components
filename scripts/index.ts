@@ -28,11 +28,11 @@ for (const packageName of packageNames) {
       'https://www.kibo-ui.com'
     );
 
-  const args = ['-y', 'shadcn@latest', 'add', url.toString()];
+  const command = `npx -y shadcn@latest add ${url.toString()}`;
 
-  const result = spawnSync('npx', args, {
+  const result = spawnSync(command, {
     stdio: 'inherit',
-    shell: false
+    shell: true
   });
 
   if (result.error) {
