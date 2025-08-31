@@ -1,15 +1,15 @@
-import { track } from '@vercel/analytics/server';
-import { readdir } from 'fs/promises';
-import { type NextRequest, NextResponse } from 'next/server';
-import { join } from 'path';
-import { getPackage, type RegistryItemSchema } from '../../../lib/package';
+import { track } from "@vercel/analytics/server";
+import { readdir } from "fs/promises";
+import { type NextRequest, NextResponse } from "next/server";
+import { join } from "path";
+import { getPackage, type RegistryItemSchema } from "../../../lib/package";
 
 type RegistryParams = {
   params: Promise<{ component: string }>;
 };
 
 type RegistrySchema = {
-  $schema: 'https://ui.shadcn.com/schema/registry.json';
+  $schema: "https://ui.shadcn.com/schema/registry.json";
   name: string;
   homepage: string;
   items: Partial<RegistryItemSchema>[];
@@ -18,18 +18,18 @@ type RegistrySchema = {
 export const GET = async (_: NextRequest, { params }: RegistryParams) => {
   const { component } = await params;
 
-  if (!component.endsWith('.json')) {
+  if (!component.endsWith(".json")) {
     return NextResponse.json(
-      { error: 'Component must end with .json' },
+      { error: "Component must end with .json" },
       { status: 400 }
     );
   }
 
-  const packageName = component.replace('.json', '');
+  const packageName = component.replace(".json", "");
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     try {
-      await track('Registry download', {
+      await track("Registry download", {
         component: packageName,
       });
     } catch (error) {
@@ -37,15 +37,15 @@ export const GET = async (_: NextRequest, { params }: RegistryParams) => {
     }
   }
 
-  if (packageName === 'registry') {
+  if (packageName === "registry") {
     const response: RegistrySchema = {
-      $schema: 'https://ui.shadcn.com/schema/registry.json',
-      name: 'registry',
-      homepage: 'https://ui.shadcn.com',
+      $schema: "https://ui.shadcn.com/schema/registry.json",
+      name: "registry",
+      homepage: "https://ui.shadcn.com",
       items: [],
     };
 
-    const packagesDir = join(process.cwd(), '..', '..', 'packages');
+    const packagesDir = join(process.cwd(), "..", "..", "packages");
     const packageDirectories = await readdir(packagesDir, {
       withFileTypes: true,
     });
@@ -53,7 +53,7 @@ export const GET = async (_: NextRequest, { params }: RegistryParams) => {
     const packageNames = packageDirectories
       .filter((dirent) => dirent.isDirectory())
       .map((dirent) => dirent.name)
-      .filter((name) => name !== 'shadcn-ui' && name !== 'typescript-config');
+      .filter((name) => name !== "shadcn-ui" && name !== "typescript-config");
 
     for (const name of packageNames) {
       try {
@@ -83,7 +83,7 @@ export const GET = async (_: NextRequest, { params }: RegistryParams) => {
     return NextResponse.json(pkg);
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to get package', details: error },
+      { error: "Failed to get package", details: error },
       { status: 500 }
     );
   }

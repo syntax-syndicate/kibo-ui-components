@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { SiReact } from '@icons-pack/react-simple-icons';
+import { SiReact } from "@icons-pack/react-simple-icons";
 import {
   type BundledLanguage,
   CodeBlock,
   CodeBlockBody,
   CodeBlockContent,
   CodeBlockItem,
-} from '@repo/code-block';
+} from "@repo/code-block";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
+} from "@/components/ui/accordion";
 
 type PreviewSourceProps = {
   source: { name: string; source: string }[];
@@ -21,8 +21,8 @@ type PreviewSourceProps = {
 
 const parseCode = (code: string) =>
   code
-    .replace(/@repo\/shadcn-ui\//g, '@/')
-    .replace(/@repo\//g, '@/components/ui/kibo-ui/');
+    .replace(/@repo\/shadcn-ui\//g, "@/")
+    .replace(/@repo\//g, "@/components/ui/kibo-ui/");
 
 export const PreviewSource = ({ source }: PreviewSourceProps) => (
   <Accordion collapsible defaultValue={source.at(0)?.name} type="single">
@@ -39,7 +39,7 @@ export const PreviewSource = ({ source }: PreviewSourceProps) => (
             className="overflow-auto rounded-none border-none"
             data={[
               {
-                language: 'tsx',
+                language: "tsx",
                 filename: name,
                 code: parseCode(source),
               },

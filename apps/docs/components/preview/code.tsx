@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   type BundledLanguage,
@@ -7,7 +7,7 @@ import {
   CodeBlockContent,
   CodeBlockItem,
   type CodeBlockProps,
-} from '@repo/code-block';
+} from "@repo/code-block";
 
 type PreviewCodeProps = {
   code: string;
@@ -16,7 +16,7 @@ type PreviewCodeProps = {
 };
 
 export const PreviewCode = ({ code, language, filename }: PreviewCodeProps) => {
-  const data: CodeBlockProps['data'] = [
+  const data: CodeBlockProps["data"] = [
     {
       language,
       filename,

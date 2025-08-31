@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Reel,
@@ -7,32 +7,32 @@ import {
   ReelNavigation,
   ReelProgress,
   ReelVideo,
-} from '@repo/reel';
+} from "@repo/reel";
 
 const reels: ReelItem[] = [
   {
     id: 1,
-    type: 'video',
-    src: 'https://wajxiz6qhqyqkm0o.public.blob.vercel-storage.com/grok-imagine-1.mp4',
+    type: "video",
+    src: "https://wajxiz6qhqyqkm0o.public.blob.vercel-storage.com/grok-imagine-1.mp4",
     duration: 6,
-    title: 'Grok Imagine Demo 1',
-    description: 'First demo video',
+    title: "Grok Imagine Demo 1",
+    description: "First demo video",
   },
   {
     id: 2,
-    type: 'video',
-    src: 'https://wajxiz6qhqyqkm0o.public.blob.vercel-storage.com/grok-imagine-2.mp4',
+    type: "video",
+    src: "https://wajxiz6qhqyqkm0o.public.blob.vercel-storage.com/grok-imagine-2.mp4",
     duration: 6,
-    title: 'Grok Imagine Demo 2',
-    description: 'Second demo video',
+    title: "Grok Imagine Demo 2",
+    description: "Second demo video",
   },
   {
     id: 3,
-    type: 'video',
-    src: 'https://wajxiz6qhqyqkm0o.public.blob.vercel-storage.com/grok-imagine-3.mp4',
+    type: "video",
+    src: "https://wajxiz6qhqyqkm0o.public.blob.vercel-storage.com/grok-imagine-3.mp4",
     duration: 6,
-    title: 'Grok Imagine Demo 3',
-    description: 'Third demo video',
+    title: "Grok Imagine Demo 3",
+    description: "Third demo video",
   },
 ];
 
