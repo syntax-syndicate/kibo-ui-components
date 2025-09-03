@@ -646,8 +646,8 @@ export const GanttColumn: FC<GanttColumnProps> = ({
 
   const top = useThrottle(
     mousePosition.y -
-      (mouseRef.current?.getBoundingClientRect().y ?? 0) -
-      (windowScroll.y ?? 0),
+    (mouseRef.current?.getBoundingClientRect().y ?? 0) -
+    (windowScroll.y ?? 0),
     10
   );
 
@@ -713,8 +713,8 @@ export const GanttCreateMarkerTrigger: FC<GanttCreateMarkerTriggerProps> = ({
   const [windowScroll] = useWindowScroll();
   const x = useThrottle(
     mousePosition.x -
-      (mouseRef.current?.getBoundingClientRect().x ?? 0) -
-      (windowScroll.x ?? 0),
+    (mouseRef.current?.getBoundingClientRect().x ?? 0) -
+    (windowScroll.x ?? 0),
     10
   );
 
@@ -1386,7 +1386,7 @@ export const GanttProvider: FC<GanttProviderProps> = ({
     >
       <div
         className={cn(
-          "gantt relative grid h-full w-full flex-none select-none overflow-auto rounded-sm bg-secondary",
+          "gantt relative isolate grid h-full w-full flex-none select-none overflow-auto rounded-sm bg-secondary",
           range,
           className
         )}
