@@ -2,31 +2,33 @@
 
 import type { Editor, Range } from "@tiptap/core";
 import { mergeAttributes, Node } from "@tiptap/core";
-import CharacterCount from "@tiptap/extension-character-count";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import Placeholder from "@tiptap/extension-placeholder";
+import { TaskItem, TaskList } from "@tiptap/extension-list";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
-import Table from "@tiptap/extension-table";
-import TableCell from "@tiptap/extension-table-cell";
-import TableHeader from "@tiptap/extension-table-header";
-import TableRow from "@tiptap/extension-table-row";
-import { TaskItem } from "@tiptap/extension-task-item";
-import { TaskList } from "@tiptap/extension-task-list";
-import TextStyle from "@tiptap/extension-text-style";
+import {
+  Table,
+  TableCell,
+  TableHeader,
+  TableRow,
+} from "@tiptap/extension-table";
+import { TextStyleKit } from "@tiptap/extension-text-style";
 import Typography from "@tiptap/extension-typography";
+import { CharacterCount, Placeholder } from "@tiptap/extensions";
 import type { DOMOutputSpec, Node as ProseMirrorNode } from "@tiptap/pm/model";
 import { PluginKey } from "@tiptap/pm/state";
 import {
-  BubbleMenu,
-  type BubbleMenuProps,
-  FloatingMenu,
-  type FloatingMenuProps,
   ReactRenderer,
   EditorProvider as TiptapEditorProvider,
   type EditorProviderProps as TiptapEditorProviderProps,
   useCurrentEditor,
 } from "@tiptap/react";
+import {
+  BubbleMenu,
+  type BubbleMenuProps,
+  FloatingMenu,
+  type FloatingMenuProps,
+} from "@tiptap/react/menus";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -157,7 +159,12 @@ export const defaultSlashSuggestions: SuggestionOptions<SuggestionItem>["items"]
       searchTerms: ["todo", "task", "list", "check", "checkbox"],
       icon: CheckSquareIcon,
       command: ({ editor, range }) => {
-        editor.chain().focus().deleteRange(range).toggleTaskList().run();
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .toggleList("taskList", "taskItem")
+          .run();
       },
     },
     {
@@ -701,9 +708,7 @@ export const EditorProvider = ({
       HTMLAttributes: {
         class: "flex items-start gap-1",
       },
-      nested: true,
     }),
-    TextStyle.configure({ mergeNestedSpanStyles: true }),
   ];
 
   return (
@@ -715,7 +720,12 @@ export const EditorProvider = ({
               handleCommandNavigation(event);
             },
           }}
-          extensions={[...defaultExtensions, ...(extensions ?? [])]}
+          extensions={[
+            ...defaultExtensions,
+            TextStyleKit,
+            ...(extensions ?? []),
+          ]}
+          immediatelyRender={false}
           {...props}
         />
       </div>
@@ -728,16 +738,16 @@ export type EditorFloatingMenuProps = Omit<FloatingMenuProps, "editor">;
 export const EditorFloatingMenu = ({
   className,
   ...props
-}: EditorFloatingMenuProps) => (
-  <FloatingMenu
-    className={cn("flex items-center bg-secondary", className)}
-    editor={null}
-    tippyOptions={{
-      offset: [32, 0],
-    }}
-    {...props}
-  />
-);
+}: EditorFloatingMenuProps) => {
+  const { editor } = useCurrentEditor();
+  return (
+    <FloatingMenu
+      className={cn("flex items-center bg-secondary", className)}
+      editor={editor ?? null}
+      {...props}
+    />
+  );
+};
 
 export type EditorBubbleMenuProps = Omit<BubbleMenuProps, "editor">;
 
@@ -745,34 +755,34 @@ export const EditorBubbleMenu = ({
   className,
   children,
   ...props
-}: EditorBubbleMenuProps) => (
-  <BubbleMenu
-    className={cn(
-      "flex rounded-xl border bg-background p-0.5 shadow",
-      "[&>*:first-child]:rounded-l-[9px]",
-      "[&>*:last-child]:rounded-r-[9px]",
-      className
-    )}
-    editor={null}
-    tippyOptions={{
-      maxWidth: "none",
-    }}
-    {...props}
-  >
-    {children && Array.isArray(children)
-      ? children.reduce((acc: ReactNode[], child, index) => {
-          if (index === 0) {
-            return [child];
-          }
+}: EditorBubbleMenuProps) => {
+  const { editor } = useCurrentEditor();
+  return (
+    <BubbleMenu
+      className={cn(
+        "flex rounded-xl border bg-background p-0.5 shadow",
+        "[&>*:first-child]:rounded-l-[9px]",
+        "[&>*:last-child]:rounded-r-[9px]",
+        className
+      )}
+      editor={editor ?? undefined}
+      {...props}
+    >
+      {children && Array.isArray(children)
+        ? children.reduce((acc: ReactNode[], child, index) => {
+            if (index === 0) {
+              return [child];
+            }
 
-          // biome-ignore lint/suspicious/noArrayIndexKey: "only iterator we have"
-          acc.push(<Separator key={index} orientation="vertical" />);
-          acc.push(child);
-          return acc;
-        }, [])
-      : children}
-  </BubbleMenu>
-);
+            // biome-ignore lint/suspicious/noArrayIndexKey: "only iterator we have"
+            acc.push(<Separator key={index} orientation="vertical" />);
+            acc.push(child);
+            return acc;
+          }, [])
+        : children}
+    </BubbleMenu>
+  );
+};
 
 type EditorButtonProps = {
   name: string;
@@ -790,7 +800,7 @@ const BubbleMenuButton = ({
   hideName,
 }: EditorButtonProps) => (
   <Button
-    className="flex gap-4"
+    className={`flex gap-4 ${hideName ? "" : "w-full"}`}
     onClick={() => command()}
     size="sm"
     variant="ghost"
@@ -979,7 +989,9 @@ export const EditorNodeTaskList = ({
 
   return (
     <BubbleMenuButton
-      command={() => editor.chain().focus().toggleTaskList().run()}
+      command={() =>
+        editor.chain().focus().toggleList("taskList", "taskItem").run()
+      }
       hideName={hideName}
       icon={CheckSquareIcon}
       isActive={() => editor.isActive("taskItem") ?? false}
@@ -1088,7 +1100,7 @@ export const EditorSelector = ({
   }
 
   return (
-    <Popover modal onOpenChange={onOpenChange} open={open}>
+    <Popover onOpenChange={onOpenChange} open={open}>
       <PopoverTrigger asChild>
         <Button
           className="gap-2 rounded-none border-none"
@@ -1256,7 +1268,6 @@ export const EditorFormatUnderline = ({
 
   return (
     <BubbleMenuButton
-      // @ts-expect-error "TipTap extensions are not typed"
       command={() => editor.chain().focus().toggleUnderline().run()}
       hideName={hideName}
       icon={UnderlineIcon}
@@ -1317,7 +1328,6 @@ export const EditorLinkSelector = ({
     const href = getUrlFromString(url);
 
     if (href) {
-      // @ts-expect-error "TipTap extensions are not typed"
       editor.chain().focus().setLink({ href }).run();
       onOpenChange?.(false);
     }
@@ -1362,7 +1372,6 @@ export const EditorLinkSelector = ({
             <Button
               className="flex h-8 items-center rounded-sm p-1 text-destructive transition-all hover:bg-destructive-foreground dark:hover:bg-destructive"
               onClick={() => {
-                // @ts-expect-error "TipTap extensions are not typed"
                 editor.chain().focus().unsetLink().run();
                 onOpenChange?.(false);
               }}
