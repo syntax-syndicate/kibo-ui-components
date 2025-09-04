@@ -31,7 +31,7 @@ export const ChoiceboxItem = ({
     className={cn(
       "text-left",
       '[&[data-state="checked"]]:border-primary',
-      '[&[data-state="checked"]]:bg-primary-foreground'
+      '[&[data-state="checked"]]:bg-primary/15'
     )}
     {...props}
   >
