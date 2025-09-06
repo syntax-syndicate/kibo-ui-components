@@ -1,6 +1,11 @@
 "use client";
 
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@repo/shadcn-ui/components/ui/tooltip";
+import {
   Snippet,
   SnippetCopyButton,
   SnippetHeader,
@@ -61,9 +66,23 @@ export const Installer = ({ packageName }: InstallerProps) => {
               />
               {command.label}
               {key === "namespace" && (
-                <Link href="/docs/namespace">
-                  <InfoIcon className="size-4 text-primary" />
-                </Link>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <InfoIcon className="size-4" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-sm text-sm">
+                    Kibo UI is a{" "}
+                    <a
+                      className="underline"
+                      href="https://github.com/shadcn-ui/ui/blob/main/apps/v4/public/r/registries.json"
+                    >
+                      trusted registry
+                    </a>{" "}
+                    so you can use it without configuring your{" "}
+                    <code className="font-mono text-xs">components.json</code>{" "}
+                    file.
+                  </TooltipContent>
+                </Tooltip>
               )}
             </SnippetTabsTrigger>
           ))}
