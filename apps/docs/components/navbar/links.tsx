@@ -17,21 +17,18 @@ type LinksProps = {
 };
 
 export const Links = ({ className, links }: LinksProps) => (
-  <NavigationMenu className={className}>
-    <NavigationMenuList>
-      {links.map((link) => (
-        <NavigationMenuItem key={link.href}>
-          <NavigationMenuLink
-            asChild
-            className={cn(
-              navigationMenuTriggerStyle(),
-              "h-auto bg-transparent px-3 py-1.5 shadow-none"
-            )}
-          >
-            <Link href={link.href}>{link.label}</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-      ))}
-    </NavigationMenuList>
-  </NavigationMenu>
+  <div className={className}>
+    {links.map((link) => (
+      <Link
+        className={cn(
+          navigationMenuTriggerStyle(),
+          "h-auto bg-transparent px-3 py-1.5 shadow-none"
+        )}
+        href={link.href}
+        key={link.href}
+      >
+        {link.label}
+      </Link>
+    ))}
+  </div>
 );
