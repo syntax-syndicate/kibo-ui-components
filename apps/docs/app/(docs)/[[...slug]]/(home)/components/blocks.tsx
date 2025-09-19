@@ -26,22 +26,22 @@ const examples = [
     ),
   },
   {
-    icon: roadmap?.data.icon,
-    name: roadmap?.data.title,
-    description: roadmap?.data.description,
-    component: () => (
-      <div className="aspect-square overflow-hidden">
-        <RoadmapExample />
-      </div>
-    ),
-  },
-  {
     icon: form?.data.icon,
     name: form?.data.title,
     description: form?.data.description,
     component: () => (
-      <div className="max-h-[40rem] overflow-y-auto">
+      <div className="aspect-square overflow-y-auto">
         <FormExample />
+      </div>
+    ),
+  },
+  {
+    icon: roadmap?.data.icon,
+    name: roadmap?.data.title,
+    description: roadmap?.data.description,
+    component: () => (
+      <div className="max-h-[40rem] overflow-clip">
+        <RoadmapExample />
       </div>
     ),
     className: "lg:col-span-2",
@@ -64,9 +64,9 @@ const ExampleCard = ({
   const Icon =
     icon && icon in icons
       ? (props: LucideProps) =>
-          createElement(icons[icon as keyof typeof icons], {
-            ...props,
-          })
+        createElement(icons[icon as keyof typeof icons], {
+          ...props,
+        })
       : null;
 
   return (

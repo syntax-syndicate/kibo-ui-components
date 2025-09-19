@@ -45,7 +45,7 @@ const Page = async (props: PageProps) => {
 
   return (
     <DocsPage
-      full={page.data.full}
+      full={page.data.full ?? page.slugs.includes('blocks')}
       tableOfContent={{
         style: "clerk",
         footer: page.data.dependencies && (
