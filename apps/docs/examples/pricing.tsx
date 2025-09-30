@@ -140,10 +140,10 @@ const Example = () => {
               <CardContent className="grid gap-2">
                 {plan.features.map((feature, index) => (
                   <div
-                    className="flex items-center gap-2 text-muted-foreground text-sm"
+                    className="flex gap-2 text-muted-foreground text-sm"
                     key={index}
                   >
-                    <BadgeCheck className="h-4 w-4" />
+                    <BadgeCheck className="w-4 flex-none h-[1lh]" />
                     {feature}
                   </div>
                 ))}
