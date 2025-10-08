@@ -1,5 +1,7 @@
-import { Separator } from "@repo/shadcn-ui/components/ui/separator";
+import path from "node:path";
+import { globSync } from "glob";
 import Link from "next/link";
+import { source } from "../../lib/source";
 import { GitHub } from "./github";
 import { Links } from "./links";
 import { Logo } from "./logo";
@@ -8,20 +10,13 @@ import { MobileSearch } from "./mobile-search";
 import { Search } from "./search";
 import { Theme } from "./theme";
 
-const links = [
-  {
-    label: "Docs",
-    href: "/docs",
-  },
-  {
-    label: "Components",
-    href: "/components",
-  },
-  {
-    label: "Blocks",
-    href: "/blocks",
-  },
-];
+const componentsCount = source
+  .getPages()
+  .filter(({ slugs }) => slugs[0] === "components").length;
+
+const blocksCount = source
+  .getPages()
+  .filter(({ slugs }) => slugs[0] === "blocks").length;
 
 export const Navbar = () => (
   <div className="fixed inset-x-0 top-(--fd-banner-height) z-40 flex items-center justify-between bg-fd-background/80 px-4 py-3 backdrop-blur-sm transition-colors">
@@ -32,15 +27,19 @@ export const Navbar = () => (
       >
         <Logo />
       </Link>
-      <Links className="hidden gap-1 md:flex" links={links} />
+      <Links
+        blocksCount={blocksCount}
+        className="hidden gap-1 md:flex"
+        componentsCount={componentsCount}
+      />
     </div>
 
     <div className="hidden items-center gap-3 md:flex">
       <Search />
-      <Separator className="hidden h-4! lg:flex" orientation="vertical" />
-      <GitHub className="hidden lg:flex" />
-      <Separator className="hidden h-4! lg:flex" orientation="vertical" />
-      <Theme className="hidden lg:flex" />
+      <div className="hidden items-center gap-1 lg:flex">
+        <GitHub />
+        <Theme />
+      </div>
     </div>
 
     <div className="flex items-center gap-3 md:hidden">
