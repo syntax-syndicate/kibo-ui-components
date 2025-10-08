@@ -1,6 +1,8 @@
 "use client";
 
-import { ThemeSwitcher } from "@repo/theme-switcher";
+import { Button } from "@repo/shadcn-ui/components/ui/button";
+import { cn } from "@repo/shadcn-ui/lib/utils";
+import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 
 type ThemeProps = {
@@ -8,15 +10,18 @@ type ThemeProps = {
 };
 
 export const Theme = ({ className }: ThemeProps) => {
-  const { setTheme, theme } = useTheme();
-  const resolvedTheme = typeof theme === "string" ? theme : "system";
+  const { resolvedTheme, setTheme } = useTheme();
+
+  const Icon = resolvedTheme === "dark" ? MoonIcon : SunIcon;
 
   return (
-    <ThemeSwitcher
-      className={className}
-      defaultValue="system"
-      onChange={setTheme}
-      value={resolvedTheme as "light" | "dark" | "system"}
-    />
+    <Button
+      className={cn(className, "h-8 w-8")}
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      size="icon"
+      variant="ghost"
+    >
+      <Icon className="size-4 text-muted-foreground" />
+    </Button>
   );
 };

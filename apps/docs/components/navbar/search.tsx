@@ -24,7 +24,7 @@ export const Search = ({ className }: SearchProps) => {
       variant="secondary"
     >
       <SearchIcon className="size-4" />
-      <p className="font-normal">Search documentation...</p>
+      <p className="font-normal">Search...</p>
       <span className="-translate-y-1/2 absolute top-1/2 right-1.5 flex items-center gap-0.5">
         <Kbd className="border bg-background">⌘</Kbd>
         <Kbd className="border bg-background">K</Kbd>
