@@ -78,7 +78,7 @@ const ChartPieDonutText = () => (
                       x={viewBox.cx}
                       y={viewBox.cy}
                     >
-                      {totalVisitors.toLocaleString()}
+                      {chartData.reduce((acc, curr) => acc + curr.visitors, 0).toLocaleString()}
                     </tspan>
                     <tspan
                       className="fill-muted-foreground"

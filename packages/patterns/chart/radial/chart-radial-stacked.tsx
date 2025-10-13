@@ -51,7 +51,7 @@ const ChartRadialStacked = () => (
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) - 16}
                     >
-                      {totalVisitors.toLocaleString()}
+                      {chartData.reduce((acc, curr) => acc + curr.desktop + curr.mobile, 0).toLocaleString()}
                     </tspan>
                     <tspan
                       className="fill-muted-foreground"
