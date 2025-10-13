@@ -66,7 +66,7 @@ const Example = () => (
               defaultOpen={collapsible.open}
               key={collapsible.id}
             >
-              <CollapsibleTrigger className="flex gap-2 font-medium tracking-tight [&[data-state=open]>svg]:rotate-180">
+              <CollapsibleTrigger className="flex gap-2 font-medium [&[data-state=open]>svg]:rotate-180">
                 <ChevronDown
                   aria-hidden="true"
                   className="mt-1 shrink-0 opacity-60 transition-transform duration-200"

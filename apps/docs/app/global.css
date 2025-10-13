@@ -171,9 +171,9 @@
   --fd-nav-height: calc(var(--spacing) * 14);
 }
 
-h1,
-h2,
-h3 {
+#nd-page h1,
+#nd-page h2,
+#nd-page h3 {
   @apply tracking-tight;
 }
 

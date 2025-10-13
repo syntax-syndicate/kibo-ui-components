@@ -31,7 +31,7 @@ const Example = () => (
         key={item.value}
         value={item.value}
       >
-        <AccordionTrigger className="flex-row-reverse px-4 py-3 text-[15px] leading-6 hover:no-underline [&_span]:flex-1">
+        <AccordionTrigger className="flex-row-reverse px-4 py-3 hover:no-underline [&_span]:flex-1">
           <span>{item.title}</span>
         </AccordionTrigger>
         <AccordionContent className="px-4 ps-11 pb-4">
