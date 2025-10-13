@@ -41,11 +41,16 @@ const Page = async (props: PageProps) => {
     ...page.data.toc,
   ];
 
-  const type = page.data._file.path.startsWith('blocks') ? 'block' : 'component'
+  const type = page.data.info.path.startsWith("blocks")
+    ? "block"
+    : "component";
 
   return (
     <DocsPage
-      full={page.data.full ?? page.slugs.includes('blocks')}
+      container={{
+        className: 'max-w-[75rem]'
+      }}
+      full={page.data.full ?? page.slugs.includes("blocks")}
       tableOfContent={{
         style: "clerk",
         footer: page.data.dependencies && (
@@ -79,9 +84,9 @@ const Page = async (props: PageProps) => {
 
 export const generateStaticParams = async () => source.generateParams();
 
-export async function generateMetadata(props: {
+export const generateMetadata = async (props: {
   params: Promise<{ slug?: string[] }>;
-}): Promise<Metadata> {
+}): Promise<Metadata> => {
   const params = await props.params;
   const page = source.getPage(params.slug);
 
@@ -113,6 +118,6 @@ export async function generateMetadata(props: {
       ],
     },
   };
-}
+};
 
 export default Page;

@@ -8,7 +8,6 @@ import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
 import { MobileSearch } from "./mobile-search";
 import { Search } from "./search";
-import { Theme } from "./theme";
 
 const componentsCount = source
   .getPages()
@@ -17,6 +16,9 @@ const componentsCount = source
 const blocksCount = source
   .getPages()
   .filter(({ slugs }) => slugs[0] === "blocks").length;
+
+const patternsPath = path.join(process.cwd(), "../../packages/patterns");
+const patternsCount = globSync(`${patternsPath}/**/*.tsx`).length;
 
 export const Navbar = () => (
   <div className="fixed inset-x-0 top-(--fd-banner-height) z-40 flex items-center justify-between bg-fd-background/80 px-4 py-3 backdrop-blur-sm transition-colors">
@@ -31,15 +33,13 @@ export const Navbar = () => (
         blocksCount={blocksCount}
         className="hidden gap-1 md:flex"
         componentsCount={componentsCount}
+        patternsCount={patternsCount}
       />
     </div>
 
     <div className="hidden items-center gap-3 md:flex">
       <Search />
-      <div className="hidden items-center gap-1 lg:flex">
-        <GitHub />
-        <Theme />
-      </div>
+      <GitHub />
     </div>
 
     <div className="flex items-center gap-3 md:hidden">

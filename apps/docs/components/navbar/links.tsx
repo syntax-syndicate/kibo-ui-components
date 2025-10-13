@@ -10,12 +10,14 @@ type LinksProps = {
   className: string;
   componentsCount: number;
   blocksCount: number;
+  patternsCount: number;
 };
 
 export const Links = ({
   className,
   componentsCount,
   blocksCount,
+  patternsCount,
 }: LinksProps) => {
   const pathname = usePathname();
 
@@ -26,7 +28,8 @@ export const Links = ({
       active:
         pathname !== "/" &&
         !pathname.startsWith("/components") &&
-        !pathname.startsWith("/blocks")
+        !pathname.startsWith("/blocks") &&
+        !pathname.startsWith("/patterns"),
     },
     {
       label: "Components",
@@ -39,6 +42,12 @@ export const Links = ({
       href: "/blocks",
       active: pathname.startsWith("/blocks"),
       count: blocksCount,
+    },
+    {
+      label: "Patterns",
+      href: "/patterns",
+      active: pathname.startsWith("/patterns"),
+      count: patternsCount,
     },
   ];
 
@@ -57,7 +66,10 @@ export const Links = ({
           {link.label}
           {Boolean(link.count) && (
             <Badge
-              className={cn("ml-1.5 bg-foreground/5", link.active && "bg-primary text-primary-foreground")}
+              className={cn(
+                "ml-1.5 hidden bg-foreground/5 lg:block",
+                link.active && "bg-primary text-primary-foreground"
+              )}
               variant="secondary"
             >
               {link.count}
