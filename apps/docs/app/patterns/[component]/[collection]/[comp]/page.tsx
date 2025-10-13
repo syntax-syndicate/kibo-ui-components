@@ -31,7 +31,7 @@ export const generateMetadata = async ({
     openGraph: {
       images: [
         {
-          url: new URL("/patterns.jpg", baseUrl).toString(),
+          url: new URL("/patterns.png", baseUrl).toString(),
           width: 1200,
           height: 630,
           alt: "Kibo UI Patterns",
