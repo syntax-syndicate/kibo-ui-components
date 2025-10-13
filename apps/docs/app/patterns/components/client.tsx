@@ -24,8 +24,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { CompSidebarLink } from "./link";
 
-const SCROLL_DELAY = 100;
-
 type Item = {
   name: string;
   url: string;
@@ -53,9 +51,8 @@ export const CompsSidebarClient = ({ pages }: CompsSidebarClientProps) => {
 
   // Helper function to check if a subgroup contains the active page
   const isSubgroupActive = useCallback(
-    (subgroup: Subgroup) => {
-      return subgroup.items.some((item) => item.url === pathname);
-    },
+    (subgroup: Subgroup) =>
+      subgroup.items.some((item) => item.url === pathname),
     [pathname]
   );
 
@@ -180,23 +177,6 @@ export const CompsSidebarClient = ({ pages }: CompsSidebarClientProps) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [pathname, allUrls, router]);
 
-  // Scroll active link into view
-  // biome-ignore lint/correctness/useExhaustiveDependencies: "Re-run when pathname changes"
-  useEffect(() => {
-    // Small delay to ensure the DOM has updated
-    const timer = setTimeout(() => {
-      const activeLink = document.querySelector('[data-active="true"]');
-      if (activeLink) {
-        activeLink.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }
-    }, SCROLL_DELAY);
-
-    return () => clearTimeout(timer);
-  }, [pathname]);
-
   return (
     <Sidebar className="absolute h-full border-none">
       <SidebarHeader className="px-4 py-2">
@@ -219,54 +199,54 @@ export const CompsSidebarClient = ({ pages }: CompsSidebarClientProps) => {
               <SidebarMenu>
                 {page.items?.length
                   ? page.items.map((item) => (
-                      <SidebarMenuItem key={item.name}>
-                        <SidebarMenuButton asChild>
-                          <Link className="truncate" href={item.url}>
-                            {item.name}
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))
+                    <SidebarMenuItem key={item.name}>
+                      <SidebarMenuButton asChild>
+                        <Link className="truncate" href={item.url}>
+                          {item.name}
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))
                   : null}
                 {page.subgroups?.length
                   ? page.subgroups.map((subgroup) => {
-                      const subgroupKey = `${page.name}-${subgroup.name}`;
-                      const isOpen = openSubgroups.has(subgroupKey);
+                    const subgroupKey = `${page.name}-${subgroup.name}`;
+                    const isOpen = openSubgroups.has(subgroupKey);
 
-                      return (
-                        <Collapsible
-                          key={subgroup.name}
-                          onOpenChange={(open) => {
-                            setOpenSubgroups((prev) => {
-                              const next = new Set(prev);
-                              if (open) {
-                                next.add(subgroupKey);
-                              } else {
-                                next.delete(subgroupKey);
-                              }
-                              return next;
-                            });
-                          }}
-                          open={isOpen}
-                        >
-                          <SidebarMenuItem>
-                            <CollapsibleTrigger asChild>
-                              <SidebarMenuButton className="capitalize">
-                                {subgroup.name}
-                                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-                              </SidebarMenuButton>
-                            </CollapsibleTrigger>
-                            <CollapsibleContent>
-                              <SidebarMenuSub>
-                                {subgroup.items.map((item) => (
-                                  <CompSidebarLink key={item.name} {...item} />
-                                ))}
-                              </SidebarMenuSub>
-                            </CollapsibleContent>
-                          </SidebarMenuItem>
-                        </Collapsible>
-                      );
-                    })
+                    return (
+                      <Collapsible
+                        key={subgroup.name}
+                        onOpenChange={(open) => {
+                          setOpenSubgroups((prev) => {
+                            const next = new Set(prev);
+                            if (open) {
+                              next.add(subgroupKey);
+                            } else {
+                              next.delete(subgroupKey);
+                            }
+                            return next;
+                          });
+                        }}
+                        open={isOpen}
+                      >
+                        <SidebarMenuItem>
+                          <CollapsibleTrigger asChild>
+                            <SidebarMenuButton className="capitalize">
+                              {subgroup.name}
+                              <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                            </SidebarMenuButton>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent>
+                            <SidebarMenuSub>
+                              {subgroup.items.map((item) => (
+                                <CompSidebarLink key={item.name} {...item} />
+                              ))}
+                            </SidebarMenuSub>
+                          </CollapsibleContent>
+                        </SidebarMenuItem>
+                      </Collapsible>
+                    );
+                  })
                   : null}
               </SidebarMenu>
             </SidebarGroupContent>
