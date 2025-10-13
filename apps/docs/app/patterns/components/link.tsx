@@ -23,7 +23,7 @@ export const CompSidebarLink = ({ name, url }: CompSidebarLinkProps) => {
         isActive={pathname === url}
       >
         <Link className="truncate" href={url}>
-          {name}
+          <span>{name}</span>
         </Link>
       </SidebarMenuSubButton>
     </SidebarMenuSubItem>
