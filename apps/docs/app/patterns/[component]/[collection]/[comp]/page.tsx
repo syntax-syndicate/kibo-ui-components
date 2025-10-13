@@ -25,19 +25,40 @@ export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
   const { component, collection, comp } = await params;
+
+  const title = `${processFolderName(component)} / ${processFolderName(collection)} / ${processFolderName(comp)} | Kibo UI`;
+  const description = "A pattern from Kibo UI";
+  const image = new URL("/patterns.png", baseUrl).toString();
+
   const metadata: Metadata = {
-    title: `${processFolderName(component)} / ${processFolderName(collection)} / ${processFolderName(comp)} | Kibo UI`,
-    description: "A pattern from Kibo UI",
+    title,
+    description,
     openGraph: {
+      title,
+      description,
+      type: "website",
       images: [
         {
-          url: new URL("/patterns.png", baseUrl).toString(),
+          url: image,
           width: 1200,
           height: 630,
           alt: "Kibo UI Patterns",
         },
       ],
     },
+    twitter: {
+      title,
+      description,
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+        },
+      ],
+      card: "summary_large_image",
+      creator: '@haydenbleasel',
+    }
   };
 
   return metadata;

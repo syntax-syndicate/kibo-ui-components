@@ -117,6 +117,19 @@ export const generateMetadata = async (props: {
         },
       ],
     },
+    twitter: {
+      title: page.data.title,
+      description: page.data.description,
+      images: [
+        {
+          url: `/og?slug=${params.slug?.join("/") ?? ""}`,
+          width: 1200,
+          height: 630,
+        },
+      ],
+      card: "summary_large_image",
+      creator: '@haydenbleasel',
+    }
   };
 };
 
