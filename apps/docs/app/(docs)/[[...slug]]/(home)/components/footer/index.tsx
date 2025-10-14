@@ -126,7 +126,7 @@ export const Footer = () => (
               <li key={folder.name}>
                 <Link
                   className="text-muted-foreground transition-colors hover:text-primary"
-                  href={folder.name}
+                  href={`/patterns/${folder.name}`}
                 >
                   {processFolderName(folder.name)}
                 </Link>
