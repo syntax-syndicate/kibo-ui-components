@@ -10,8 +10,8 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "ultracite lint",
-    "format": "ultracite format",
+    "check": "npx ultracite@latest check",
+    "fix": "npx ultracite@latest fix",
     "test": "turbo test",
     "analyze": "turbo analyze",
     "bump-deps": "npx npm-check-updates --deep -u -x shiki,next,recharts,require-in-the-middle && pnpm install",
