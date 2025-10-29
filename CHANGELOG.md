@@ -1,3 +1,15 @@
+# v1.1.5 (Wed Oct 29 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Update .autorc ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v1.1.4 (Wed Oct 29 2025)
 
 :tada: This release contains work from new contributors! :tada:
