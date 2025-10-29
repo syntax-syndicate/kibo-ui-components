@@ -1,3 +1,93 @@
+# v1.1.4 (Wed Oct 29 2025)
+
+:tada: This release contains work from new contributors! :tada:
+
+Thanks for all your work!
+
+:heart: Kunal Pal ([@000-KunalPal](https://github.com/000-KunalPal))
+
+:heart: Ahmed Abdullah  ([@ahmedivy](https://github.com/ahmedivy))
+
+:heart: Alex Carpenter ([@alexcarpenter](https://github.com/alexcarpenter))
+
+:heart: Rohit Gupta ([@rohitt-gupta](https://github.com/rohitt-gupta))
+
+#### 🐛 Bug Fix
+
+- Acquisition [#287](https://github.com/shadcnblocks/kibo/pull/287) ([@haydenbleasel](https://github.com/haydenbleasel))
+- Upgrade Ultracite [#287](https://github.com/shadcnblocks/kibo/pull/287) ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update shadcn/ui ([@haydenbleasel](https://github.com/haydenbleasel))
+- Remove unwanted Tailwind class causing icon visibility issue [#284](https://github.com/shadcnblocks/kibo/pull/284) ([@000-KunalPal](https://github.com/000-KunalPal))
+- Fix links, add redirects [#284](https://github.com/shadcnblocks/kibo/pull/284) ([@haydenbleasel](https://github.com/haydenbleasel))
+- Fix typos ([@haydenbleasel](https://github.com/haydenbleasel))
+- Refactor alert dialog components to remove unnecessary margin from icons [#280](https://github.com/shadcnblocks/kibo/pull/280) ([@ahmedivy](https://github.com/ahmedivy))
+- Update drawer-bottom-4.tsx [#280](https://github.com/shadcnblocks/kibo/pull/280) ([@haydenbleasel](https://github.com/haydenbleasel))
+- Patterns [#279](https://github.com/shadcnblocks/kibo/pull/279) ([@haydenbleasel](https://github.com/haydenbleasel))
+- Shadcn oct updates [#278](https://github.com/shadcnblocks/kibo/pull/278) ([@haydenbleasel](https://github.com/haydenbleasel))
+- fix: Pricing features icon alignment [#266](https://github.com/shadcnblocks/kibo/pull/266) ([@alexcarpenter](https://github.com/alexcarpenter))
+- Fix blocks pages and homepage [#266](https://github.com/shadcnblocks/kibo/pull/266) ([@haydenbleasel](https://github.com/haydenbleasel))
+- Docs improvements [#263](https://github.com/shadcnblocks/kibo/pull/263) ([@haydenbleasel](https://github.com/haydenbleasel))
+- Migrate shadcn-prose to Typography [#261](https://github.com/shadcnblocks/kibo/pull/261) ([@haydenbleasel](https://github.com/haydenbleasel))
+- Remove namespace docs [#261](https://github.com/shadcnblocks/kibo/pull/261) ([@haydenbleasel](https://github.com/haydenbleasel))
+- upgrade to tiptap v3 [#226](https://github.com/shadcnblocks/kibo/pull/226) ([@rohitt-gupta](https://github.com/rohitt-gupta) [@haydenbleasel](https://github.com/haydenbleasel))
+- feat: add copy button to Source/Code panels for quick access [#229](https://github.com/shadcnblocks/kibo/pull/229) ([@vcashwin](https://github.com/vcashwin))
+- Bump next from 15.4.6 to 15.4.7 in the npm_and_yarn group [#235](https://github.com/shadcnblocks/kibo/pull/235) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### ⚠️ Pushed to `main`
+
+- Update release.yml ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update package.json ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update biome.jsonc ([@haydenbleasel](https://github.com/haydenbleasel))
+- Fix tracking issue ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update link.tsx ([@haydenbleasel](https://github.com/haydenbleasel))
+- Remove auto scroll (weird issue) ([@haydenbleasel](https://github.com/haydenbleasel))
+- Improve metadata ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update page.tsx ([@haydenbleasel](https://github.com/haydenbleasel))
+- Fix navbar active states, add counts ([@haydenbleasel](https://github.com/haydenbleasel))
+- Misc fixes ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update links.tsx ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update index.tsx ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update mobile-menu.tsx ([@haydenbleasel](https://github.com/haydenbleasel))
+- Resolves #227 ([@haydenbleasel](https://github.com/haydenbleasel))
+- Fix code block background color ([@haydenbleasel](https://github.com/haydenbleasel))
+- Resolves #220 ([@haydenbleasel](https://github.com/haydenbleasel))
+- Bump deps ([@haydenbleasel](https://github.com/haydenbleasel))
+- Revert "Bump zod from 3.25.64 to 4.1.5 (#241)" ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update dependabot.yml ([@haydenbleasel](https://github.com/haydenbleasel))
+- Run Ultracite fix ([@haydenbleasel](https://github.com/haydenbleasel))
+- Upgrade Ultracite ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### 🔩 Dependency Updates
+
+- Bump react-player from 2.16.0 to 3.3.3 [#275](https://github.com/shadcnblocks/kibo/pull/275) ([@dependabot[bot]](https://github.com/dependabot[bot]) [@haydenbleasel](https://github.com/haydenbleasel))
+- Bump ts-morph from 26.0.0 to 27.0.0 [#273](https://github.com/shadcnblocks/kibo/pull/273) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump @tiptap/pm from 3.3.1 to 3.6.2 [#277](https://github.com/shadcnblocks/kibo/pull/277) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump react-resizable-panels from 3.0.5 to 3.0.6 [#274](https://github.com/shadcnblocks/kibo/pull/274) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump @tiptap/extension-typography from 3.3.1 to 3.6.2 [#272](https://github.com/shadcnblocks/kibo/pull/272) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump @hookform/resolvers from 5.2.1 to 5.2.2 [#271](https://github.com/shadcnblocks/kibo/pull/271) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump tw-animate-css from 1.3.8 to 1.4.0 [#270](https://github.com/shadcnblocks/kibo/pull/270) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump require-in-the-middle from 7.5.2 to 8.0.0 [#269](https://github.com/shadcnblocks/kibo/pull/269) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump jotai from 2.13.1 to 2.15.0 [#268](https://github.com/shadcnblocks/kibo/pull/268) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump actions/setup-node from 4 to 5 [#267](https://github.com/shadcnblocks/kibo/pull/267) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump @types/react-dom from 19.1.7 to 19.1.9 [#236](https://github.com/shadcnblocks/kibo/pull/236) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump shiki from 3.4.2 to 3.12.0 [#238](https://github.com/shadcnblocks/kibo/pull/238) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump @faker-js/faker from 9.9.0 to 10.0.0 [#239](https://github.com/shadcnblocks/kibo/pull/239) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump zod from 3.25.64 to 4.1.5 [#241](https://github.com/shadcnblocks/kibo/pull/241) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump @next/third-parties from 15.4.7 to 15.5.2 [#243](https://github.com/shadcnblocks/kibo/pull/243) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Bump actions/checkout from 4 to 5 [#246](https://github.com/shadcnblocks/kibo/pull/246) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 7
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Ahmed Abdullah  ([@ahmedivy](https://github.com/ahmedivy))
+- Alex Carpenter ([@alexcarpenter](https://github.com/alexcarpenter))
+- Ashwin V C  ([@vcashwin](https://github.com/vcashwin))
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+- Kunal Pal ([@000-KunalPal](https://github.com/000-KunalPal))
+- Rohit Gupta ([@rohitt-gupta](https://github.com/rohitt-gupta))
+
+---
+
 # v1.1.3 (Sat Aug 30 2025)
 
 #### ⚠️ Pushed to `main`
